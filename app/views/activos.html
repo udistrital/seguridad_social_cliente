@@ -1,0 +1,41 @@
+<br>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Activos
+  </div>
+
+  <h3> Seleccione una Nómina </h3>
+  <select ng-model="activos.nomina">
+    <option ng-repeat="n in activos.nominas" value="{{n.Id}}">{{n.Nomina.Descripcion}}</option>
+  </select>
+
+  <div>
+    <label for=""> Periodo </label> <br>
+    Año <input type="text" ng-model="activos.anioPeriodo"/>
+    Mes <input type="text" ng-model="activos.mesPeriodo"/> <br>
+    <button type="button" name="button" ng-click="activos.nominaSeleccionada()"> Buscar </button>
+  </div>
+
+  <div class="panel-body" ng-if="activos.activosDiv">
+    <table style="width:100%;">
+      <td>
+        <div ui-grid="activos.gridOptions" class="myGrid"></div>
+      </td>
+    </tr>
+  </table>
+
+  <div class="row" ng-if="activos.novedadesDiv">
+    <div class="col-sm-6" align="left" style="width:50%;">
+      <ingresos-de-cotizacion persona="activos.persona" liquidacion="activos.nomina"> </ingresos-de-cotizacion>
+    </div>
+    <div class="col-sm-6" align="rigth" style="width:50%;" >
+      <concepto-por-persona persona="activos.persona"> </concepto-por-persona>
+    </div>
+  </div>
+
+</div>
+
+<div class="panel-footer">
+  Panel Footer
+</div>
+</div>

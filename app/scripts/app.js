@@ -11,6 +11,7 @@
 angular
   .module('ssClienteApp', [
     'ngAnimate',
+    'ngAria',
     'ngCookies',
     'ngMessages',
     'ngResource',
@@ -54,6 +55,32 @@ angular
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
+        .when('/aportante', {
+                templateUrl: 'views/aportante.html',
+                controller: 'AportanteCtrl',
+                controllerAs: 'aportante'
+              })
+              .when('/calculos', {
+                templateUrl: 'views/calculos.html',
+                controller: 'CalculosCtrl',
+                controllerAs: 'calculos'
+              })
+              .when('/ibc', {
+                templateUrl: 'views/ibc.html',
+                controller: 'IbcCtrl',
+                controllerAs: 'ibc'
+              })
+              .when('/activos', {
+                templateUrl: 'views/activos.html',
+                controller: 'ActivosCtrl',
+                controllerAs: 'activos'
+              })
+              .when('/incapcidades', {
+                templateUrl: 'views/incapacidades.html',
+                controller: 'IncapacidadesCtrl',
+                controllerAs: 'incapacidades'
+              })
+
       .otherwise({
         redirectTo: '/'
       });

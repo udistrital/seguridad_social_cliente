@@ -1,0 +1,31 @@
+<br>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Ingreso Base de Cotización
+  </div>
+  <div class="panel-body">
+    <label> Seleccione los conceptos para establecer el Ingreso Base de Cotización</label>
+    <br>
+    <div class="col-md-3" ng-repeat="c in ibc.conceptosActivos" >
+      <div>
+        <div class="row">
+          <div class="col-md-2" >
+            <input class="form-control" type="checkbox" id="{{c.id}}" ng-model="item"
+            ng-true-value="{{c}}" ng-false-value="{{c}}"
+            ng-change="ibc.select(item)"/>
+          </div>
+          <div class="col-md-10">
+            <spam class="form-control" >
+              {{c.Descripcion}}
+            </spam>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row" align ="center">
+      <button type="button" class="btn btn-success" ng-click="ibc.guardar()"> Guardar </button>
+    </div>
+
+  </div>
+</div>

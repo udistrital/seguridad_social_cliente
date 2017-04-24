@@ -1,0 +1,105 @@
+<br>
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      incapacidades.
+    </div>
+    <div class="panel-body">
+      <form class="" action="incapacidades.html" method="post">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-2">
+            <label> Escriba el nombre del funcionario </label>
+          </div>
+          <div class="col-md-4">
+            <md-content class="md-padding">
+              <md-autocomplete ng-disabled="incapacidades.isDisabled"
+              md-no-cache="incapcidades.noCache"
+              md-selected-item="incapacidades.selectedItem"
+              md-search-text-change="ctincapacidadesrl.searchTextChange(incapacidades.searchText)"
+              md-search-text="incapacidades.searchText"
+              md-selected-item-change="incapacidades.selectedItemChange(item)"
+              md-items="item in incapacidades.querySearch(incapacidades.searchText)"
+              md-item-text="item.display"
+              md-min-length="0"
+              placeholder="Escribe el nombre de la persona">
+              <md-item-template>
+                <span md-highlight-text="incapcidades.searchText" md-highlight-flags="^i">{{item.display}}</span>
+              </md-item-template>
+              <md-not-found>
+                No se encontraron resultados de  "{{incapcidades.searchText}}".
+              </md-not-found>
+            </md-autocomplete>
+            <br>
+          </md-content>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-4 col-md-offset-2">
+          <label> Seleccione el tipo de Incapacidad</label>
+        </div>
+        <div class="col-md-4">
+          <select ng-model="incapacidades.tipoIncapacidad" class="form-control">
+            <option value="0" disabled>Seleccione una opción</option>
+            <option ng-repeat="i in incapacidades.incapacidades" value="{{i.Id}}">{{i.AliasConcepto}}</option>
+          </select>
+        </div>
+      </div>
+      <br>
+      <div class="form-group row">
+        <label class="col-md-4 col-md-offset-2 control-label" for="txtFechaDesde">Fecha de Inicio</label>
+        <div class="col-md-4">
+          <md-datepicker id="txtFechaDesde" name="txtFechaDesde" ng-model="incapacidades.fechaDesde" md-placeholder="Fecha de inicio"></md-datepicker>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-4 col-md-offset-2 control-label" for="txtFechaDesde">Fecha de Finalización</label>
+        <div class="col-md-4">
+          <md-datepicker id="txtFechaDesde" name="txtFechaDesde" ng-model="incapacidades.fechaHasta" md-placeholder="Fecha de inicio"></md-datepicker>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <button type="button" name="button" ng-click="incapacidades.registrarIncapacidad()" class="btn btn-success"> Guardar </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="panel-footer">
+    Panel Footer
+  </div>
+</div>
+
+<!--
+
+//Modal
+<div class="form-group row">
+<label for="Persona" class="col-sm-4 col-form-label">Persona</label>
+<div class="col-md-4">
+<input type="text" class="form-control" name="input_persona" ng-model="incapacidades.nomProveedor" placeholder="Persona" disabled/>
+<button type="button" data-toggle="modal" data-target="#modalPersonas"><i class="glyphicon glyphicon-search"></i></button>
+</div>
+</div>
+
+<div class="modal fade" id="modalPersonas" role="dialog">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h4> Seleccione una Persona</h4>
+</div>
+<div class="modal-body">
+<div ui-grid="incapacidades.gridOptions" ui-grid-selection class="grid"></div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+//Modal
+
+-->
+
+</div>

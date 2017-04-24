@@ -9,6 +9,67 @@
     <a class="navbar-brand" ng-href="#/">ssClienteApp</a>
   </div>
   <div id="navbar" class="navbar-collapse collapse in">
+
+    <ul class="nav navbar-top-links navbar-right">
+      <!--mi menu -->
+      <div class="miMenu">
+          <li>
+            <a class="btn btn-primary" ng-href="#/index"> Inicio </a>
+          </li>
+
+          <!--  Parametros -->
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+              Parámetros <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-messages">
+              <li>
+                <a ng-href="#/aportante">
+                  <div><i class="glyphicon glyphicon-list-alt"></i> Información del aportante</div>
+                </a>
+              </li>
+
+              <li class="divider"></li>
+              <li>
+                <a ng-href="#/calculos">
+                  <div><i class="glyphicon glyphicon-edit"></i>  Parámetros de cálculo</div>
+                </a>
+              </li>
+
+              <li class="divider"></li>
+              <li>
+                <a ng-href="{{menuCtrl.actual}}">
+                  <div><i class="glyphicon glyphicon-book"></i>  Entidades</div>
+                </a>
+              </li>
+
+              <li class="divider"></li>
+              <li>
+                <a ng-href="#/ibc">
+                  <div><i class="glyphicon glyphicon-check"></i>  Párametros IBC</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!--  Parametros -->
+
+          <!-- planillas -->
+          <li>
+            <a ng-href="#/planillas"> Planillas </a>
+          </li>
+
+          <!-- Incapacidades -->
+          <li>
+            <a ng-href="#/incapcidades"> Incapacidades </a>
+          </li>
+
+          <!-- Ver activos -->
+          <li>
+            <a ng-href="#/activos"> Ver activos </a>
+          </li>
+      </div>
+      <!--mi menu -->
+
     <ul class="nav navbar-top-links navbar-right">
       <li ng-repeat="nivel_1 in menu_service">
         <a ng-if="nivel_1.Opciones === null" ng-href="{{'#/' + nivel_1.Url}}">
