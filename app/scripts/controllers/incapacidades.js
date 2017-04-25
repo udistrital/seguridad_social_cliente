@@ -100,10 +100,12 @@ angular.module('ssClienteApp')
      };
 
      titanCrudService.post('concepto_por_persona',incapacidad).then(function(response) {
-       if(response.statusText === 'Created') alert('Incapacidad Registrada');
-
-       console.log(response.statusText);
+       if(response.statusText === 'Created') {
+         swal('Incapacidad Regisrtada Exitosamente');
+         console.log(response.statusText);
+       } else {
+         swal('No se ha logrado registrar la incapacidad');
+       }
      });
    }
-
 });

@@ -10,8 +10,9 @@
 angular.module('ssClienteApp')
   .service('rulerservice', function ($http) {
 
-    var path = 'http://127.0.0.1:8083/v1/';
-    
+    //var path = 'http://127.0.0.1:8083/v1/';
+    var path = 'http://10.20.0.254/ruler/v1/'
+
     return {
       get: function (tabla,params) {
         return $http.get(path+tabla+"/?"+params);

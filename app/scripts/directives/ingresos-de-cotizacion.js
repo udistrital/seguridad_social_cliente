@@ -46,8 +46,7 @@ angular.module('ssClienteApp')
               {
                 Concepto: { AliasConcepto: 'Pensión Empleador'},
                 ValorCalculado: $scope.persona.PensionUd
-              });
-            //self.gridOptions.data = response.data;
+              });              
             self.gridOptions.data = detalle_liquidacion;
           });
         });

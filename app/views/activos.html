@@ -3,14 +3,12 @@
   <div class="panel-heading">
     Activos
   </div>
-
-  <h3> Seleccione una Nómina </h3>
-  <select ng-model="activos.nomina">
-    <option ng-repeat="n in activos.nominas" value="{{n.Id}}">{{n.Nomina.Descripcion}}</option>
-  </select>
-
   <div>
-    <label for=""> Periodo </label> <br>
+    <label for=""> Seleccione una Nómina </label>
+    <select ng-model="activos.nomina">
+      <option ng-repeat="n in activos.nominas" value="{{n.Id}}">{{n.Nomina.Descripcion}}</option>
+    </select>
+    <br> <label for=""> Periodo </label>
     Año <input type="text" ng-model="activos.anioPeriodo"/>
     Mes <input type="text" ng-model="activos.mesPeriodo"/> <br>
     <button type="button" name="button" ng-click="activos.nominaSeleccionada()"> Buscar </button>

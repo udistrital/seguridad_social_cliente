@@ -7,13 +7,13 @@
       <form role="form">
         <h2> Establecer Parámetros de Cálculo </h2>
         <hr />
-        <div id="datosCalculo" class="col-md-6 col-md-offset-2">
+        <div id="datosCalculo" class="col-md-8 col-md-offset-2">
           <div class="form-group row">
-            <label for="input_resolucion" class="col-sm-2 col-form-label"><strong>Nombre de Resolución</strong></label>
+            <label for="input_resolucion" class="col-sm-6 col-form-label"><strong>Nombre de Resolución</strong></label>
             <div class="col-xs-4">
-              <input type="text" class="form-control" name="input_resolucion" placeholder="Nombre">
+              <textarea name="name" rows="2" class="form-control" placeholder="Escriba el nombre de la resolución al que harán referencía estos valores."/>
             </div>
-            <small id="resolucionHelp" class="form-text-left text-muted">Escriba el nombre de la resolución al que harán referencía estos valores.</small>
+
           </div>
 
           <div class="form-group row">
@@ -40,7 +40,7 @@
             <label for="input_arp" class="col-sm-6 col-form-label">Tarifa ARP</label>
             <div class="col-xs-4">
               <div class="input-group">
-                <input type="text" name="input_arp" class="form-control"/>
+                <input type="text" class="form-control" name="field" ng-model="number" ui-number-mask=4>
                 <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
               </div>
             </div>
@@ -87,10 +87,10 @@
           </div>
          </div>
 
-         <button type="button" class="col-md-offset-6 btn btn-primary">Guardar</button>
+
        </form>
     </div>
-    <div class="panel-footer">
-        Panel Footer
+    <div class="panel-footer" align="center">
+         <button type="button" class="btn btn-primary btn-outline">Guardar</button>
     </div>
 </div>

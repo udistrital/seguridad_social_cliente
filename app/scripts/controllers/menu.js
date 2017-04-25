@@ -1,42 +1,64 @@
 'use strict';
 /**
- * @ngdoc function
- * @name ssClienteApp.controller:menuCtrl
- * @description
- * # menuCtrl
- * Controller of the ssClienteApp
- */
+* @ngdoc function
+* @name ssClienteApp.controller:menuCtrl
+* @description
+* # menuCtrl
+* Controller of the ssClienteApp
+*/
 angular.module('ssClienteApp')
 .controller('menuCtrl', function($location, $http, $scope, token_service, notificacion, $translate) {
-    var paths = [];
-    $scope.language = {
-        es:"btn btn-primary btn-circle btn-outline active",
-        en:"btn btn-primary btn-circle btn-outline"
-    };
-    $scope.notificacion = notificacion;
-    $scope.actual = "";
-    $scope.token_service = token_service;
-    $scope.breadcrumb = [];
-    $scope.menu_service = [{ //aqui va el servicio de el app de configuracion
-      "Id": 2,
-      "Nombre": "nivel 1",
-      "Url": "url_nivel_1",
-      "Opciones": [{
-        "Id": 3,
-        "Nombre": "nivel 2",
-        "Url": "url_nivel_2",
-        "Opciones": [{
-          "Id": 7,
-          "Nombre": "nivel 3",
-          "Url": "url_nivel_3",
-          "Opciones": [{
-            "Id": 8,
-            "Nombre": "nivel 4 about",
-            "Url": "about",
-            "Opciones": null
-          }]
-        }]
-      }]
+  var paths = [];
+  $scope.language = {
+    es:"btn btn-primary btn-circle btn-outline active",
+    en:"btn btn-primary btn-circle btn-outline"
+  };
+  $scope.notificacion = notificacion;
+  $scope.actual = "";
+  $scope.token_service = token_service;
+  $scope.breadcrumb = [];
+  $scope.menu_service = [{ //aqui va el servicio de el app de configuracion
+    "Id": 2,
+    "Nombre": "Parametros",
+    "Url": "",
+    "Opciones": [{
+      "Id": 3,
+      "Nombre": "Aportante",
+      "Url": "aportante",
+      "Opciones": null
+    },{
+      "Id": 3,
+      "Nombre": "Cálculos",
+      "Url": "calculos",
+      "Opciones": null
+    },{
+      "Id": 4,
+      "Nombre": "Entidades",
+      "Url": "entidades",
+      "Opciones": null
+    }, {
+      "Id": 5,
+      "Nombre": "Parámetros IBC",
+      "Url": "ibc",
+      "Opciones": null
+    }]},
+    {
+      "Id": 6,
+      "Nombre": "Planillas",
+      "Url": "planillas",
+      "Opciones": null
+    },
+    {
+      "Id": 7,
+      "Nombre": "Incapacidades",
+      "Url": "incapcidades",
+      "Opciones": null
+    },
+    {
+      "Id": 8,
+      "Nombre": "Activos",
+      "Url": "activos",
+      "Opciones": null
     }];
 
     var recorrerArbol = function(item, padre) {
@@ -77,18 +99,18 @@ angular.module('ssClienteApp')
     });
 
     $scope.changeLanguage = function (key){
-        $translate.use(key);
-        switch (key) {
-            case 'es':
-                $scope.language.es = "btn btn-primary btn-circle btn-outline active";
-                $scope.language.en = "btn btn-primary btn-circle btn-outline";
-                break;
-            case 'en':
-                $scope.language.en = "btn btn-primary btn-circle btn-outline active";
-                $scope.language.es = "btn btn-primary btn-circle btn-outline";
-                break;
-            default:
-        }
+      $translate.use(key);
+      switch (key) {
+        case 'es':
+        $scope.language.es = "btn btn-primary btn-circle btn-outline active";
+        $scope.language.en = "btn btn-primary btn-circle btn-outline";
+        break;
+        case 'en':
+        $scope.language.en = "btn btn-primary btn-circle btn-outline active";
+        $scope.language.es = "btn btn-primary btn-circle btn-outline";
+        break;
+        default:
+      }
     };
     //Pendiente por definir json del menu
     (function($) {
