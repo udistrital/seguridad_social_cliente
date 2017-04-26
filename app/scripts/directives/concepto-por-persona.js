@@ -26,12 +26,15 @@ angular.module('ssClienteApp')
         columnDefs : [
           { field: 'Persona', visible: false },
           { field: 'Naturaleza', visible: false},
-          { field: 'AliasConcepto', visible: true, displayName: 'Novedad' },
-          { field: 'ValorCalculado', vislble: false, displayName: 'Valor', cellFilter: 'currency' },
-          { field: 'FechaDesde', visible: true, displayName: 'Fecha de Inicio',
-          cellTemplate: '<span>{{row.entity.FechaDesde | date:"yyyy-MM-dd":"+0900"}}</span>' },
-          { field: 'FechaHasta', visible: true, displayName: 'Fecha de Finlización',
-          cellTemplate: '<span>{{row.entity.FechaHasta | date:"yyyy-MM-dd":"+0900"}}</span>' }
+          { field: 'AliasConcepto', visible: true, displayName: 'Novedad', width: '30%',
+            cellTooltip: function(row, col) {
+              return row.entity.AliasConcepto;
+            },},
+          { field: 'ValorCalculado', vislble: false, displayName: 'Valor', cellTemplate: '<div align="right">{{row.entity.ValorCalculado | currency}}</div>', cellFilter: 'currency' },
+          { field: 'FechaDesde', visible: true, displayName: 'Fecha Inicio',
+          cellTemplate: '<div align="right"><span>{{row.entity.FechaDesde | date:"yyyy-MM-dd":"+0900"}}</span></div>' },
+          { field: 'FechaHasta', visible: true, displayName: 'Fecha Finlización',
+          cellTemplate: '<div align="right"><span>{{row.entity.FechaHasta | date:"yyyy-MM-dd":"+0900"}}</span></div>' }
         ]};
 
 

@@ -18,8 +18,19 @@ angular.module('ssClienteApp')
   self.anioPeriodo = new Date().getFullYear();
   self.mesPeriodo = new Date().getMonth();
 
+  self.anios = []
+
+  //Crea un arreglo de objetos para tener los años desde 1900 hasta el año actual con el metodo getFullYear()
+  function calcularAnios() {
+    for (var i = new Date().getFullYear(); i >= 1900 ; i--) {
+      self.anios.push({ anio: i });
+    }
+  }
+  calcularAnios();
+
   var fechaActual = new Date().getFullYear() + '-' + new Date().getMonth() + '-' + new Date().getDate()
-  //console.log(fechaActual);
+  self.meses = { Enero: 1, Febrero: 2, Marzo: 3, Abril: 4, Mayo: 5, Junio: 6,
+    Julio: 7, Agosto: 8, Septiembre: 9, Octubre: 10, Noviembre: 11, Diciembre: 12};
 
   self.nominaSeleccionada = function() {
     seguridadSocialService.getServicio("seg_social/CalcularSegSocial",self.nomina).then(function(response) {
@@ -55,11 +66,29 @@ angular.module('ssClienteApp')
 
       columnDefs : [
         {field: 'Persona', visible : false},
-        {field: 'Nombre', visible: true},
-        {field: 'SaludTotal', visible: true, displayName : 'Salud' , cellFilter : 'currency'},
-        {field: 'PensionTotal', visible: true, displayName : 'Pensión', cellFilter : 'currency'},
-        {field: 'Arl', visible: true, displayName : 'ARL', cellFilter : 'currency'},
-        {field: 'Novedades', cellTemplate: '<button class="btn btn-success" ng-click="grid.appScope.activos.novedad(row)"> Ver Detalle </button>' }
+        {field: 'Nombre', visible: true, width: '30%', headerCellTemplate: '<div align="center">Nombre</div>'},
+        {
+          field: 'SaludTotal', visible: true, displayName : 'Salud' ,
+          headerCellTemplate: '<div"><center>Salud<center></div>',
+          cellFilter : 'currency',
+          cellTemplate: '<div align="right">{{row.entity.SaludTotal | currency}}</div>'
+        },
+        {
+          field: 'PensionTotal', visible: true, displayName : 'Pensión',
+          headerCellTemplate: '<div align="center">Pensión</div>',
+          cellFilter : 'currency',
+          cellTemplate: '<div align="right">{{row.entity.PensionTotal | currency}}</div>'
+        },
+        {
+          field: 'Arl', visible: true, displayName : 'ARL',
+          headerCellTemplate: '<div align="center">Arl</div>',
+          cellFilter : 'currency',
+          cellTemplate: '<div align="right">{{row.entity.Arl | currency}}</div>'
+        },
+        {
+          field: 'Novedades',
+          headerCellTemplate: '<div align="center">Novedades</div>',
+          cellTemplate: '<center><button class="btn btn-success" ng-click="grid.appScope.activos.novedad(row)"> Ver Detalle </button></center>' }
       ]
     };
 

@@ -1,17 +1,27 @@
 <br>
 <div class="panel panel-default">
   <div class="panel-heading">
-    Activos
+    <h5>Activos</h5>
   </div>
   <div>
-    <label for=""> Seleccione una Nómina </label>
+    <center>
+    <label> Seleccion Nómina </label><br>
     <select ng-model="activos.nomina">
       <option ng-repeat="n in activos.nominas" value="{{n.Id}}">{{n.Nomina.Descripcion}}</option>
     </select>
-    <br> <label for=""> Periodo </label>
-    Año <input type="text" ng-model="activos.anioPeriodo"/>
-    Mes <input type="text" ng-model="activos.mesPeriodo"/> <br>
+    <hr>
+    <label> Periodo </label><br>
+    Año
+    <select ng-model="activos.anioPeriodo">
+      <option ng-repeat="a in activos.anios" value="{{a}}">{{a.anio}}</option>
+    </select>
+    Mes
+    <select ng-model="activos.mesPeriodo">
+      <option ng-repeat="(key, value) in activos.meses" value="{{value}}">{{key}}</option>
+    </select>
+    <br>
     <button type="button" name="button" ng-click="activos.nominaSeleccionada()"> Buscar </button>
+    </center>
   </div>
 
   <div class="panel-body" ng-if="activos.activosDiv">
@@ -37,3 +47,8 @@
   Panel Footer
 </div>
 </div>
+
+<!--
+Año <input type="text" ng-model="activos.anioPeriodo"/>
+Mes <input type="text" ng-model="activos.mesPeriodo"/> <br>
+-->

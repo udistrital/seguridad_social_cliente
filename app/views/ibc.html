@@ -4,15 +4,16 @@
     Ingreso Base de Cotización
   </div>
   <div class="panel-body">
+    <button type="button" class="btn btn-primary btn-outline" ng-click="ibc.habilitarEdicion()"> Editar </button> <br>
     <label> Seleccione los conceptos para establecer el Ingreso Base de Cotización</label>
     <br>
     <div class="col-md-3" ng-repeat="c in ibc.conceptosActivos" >
       <div>
         <div class="row">
           <div class="col-md-2" >
-            <input class="form-control" type="checkbox" id="{{c.id}}" ng-model="item"
+            <input class="form-control" type="checkbox" id="{{c.Id}}" ng-model="item"
             ng-true-value="{{c}}" ng-false-value="{{c}}"
-            ng-change="ibc.select(item)"/>
+            ng-change="ibc.select(item)" checked/>
           </div>
           <div class="col-md-10">
             <spam class="form-control" >
@@ -24,7 +25,31 @@
     </div>
     <hr>
     <div class="row" align ="center">
-      <button type="button" class="btn btn-success" ng-click="ibc.guardar()"> Guardar </button>
+      <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#myModal">Guardar</button>
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Conceptos Seleccionados</h4>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li ng-repeat="c in ibc.conceptos"> {{c.Descripcion}} </li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary btn-succes" ng-click="ibc.guardar()" data-dismiss="modal">Guardar</button>
+          </div>
+        </div>
+
+      </div>
     </div>
 
   </div>

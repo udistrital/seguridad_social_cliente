@@ -11,45 +11,47 @@ angular.module('ssClienteApp')
 .controller('IbcCtrl', function ($scope, rulerservice, seguridadSocialService) {
   var self = this;
   var conceptos = [];
-
-  seguridadSocialService.get('seg_social/ConceptosIbc', '').then(function(response) {
-    var conceptosIbc = response.data;
-    self.conceptosActivos = conceptosIbc;
-  });
+  var conceptosActivos = [];
 
   /*  Conceptos de IBC salud
   2,7,8,11,18,29,39,51,52,57,58,60,61,68,74,76,78,174,177,179,195,201,202,206,209,213,214,
   225,226,227,230,232, 239,240,242,245,248,249,250,251,252,253,254,257
   */
 
-  //Se ejecuta despues de cargado el doom
-  $scope.$$postDigest( function() {
-    //seleccionados();
+  seguridadSocialService.get('seg_social/ConceptosIbc', '').then(function(response) {
+    angular.forEach(response.data, function(data){
+      conceptosActivos.push(data)
+    });
+    //Se ejecuta despues de cargado el doom
+    $scope.$$postDigest( function() {
+      bloquearConceptos();
+    });
+    self.conceptosActivos = conceptosActivos;
   });
 
   /*
   Le asigna el atributo checked a todos los objetos del arreglo conceptosActivos
   con el estado 1 para que aparezcan seleccionados al cargar la pagina
   */
-  var seleccionados = function() {
+  var bloquearConceptos = function() {
     for (var i = 0; i < conceptosActivos.length; i++) {
-      if (conceptosActivos[i].estado === 1) {
-        document.getElementById(conceptosActivos[i].id).checked = true;
-      }
+      document.getElementById(conceptosActivos[i].Id).disabled = true;
     }
   };
 
   self.select = function(item) {
-    console.log(item);
+    //console.log(item);
     var encontrado = buscarConcepto(item);
-    console.log(encontrado);
+    //console.log(encontrado);
     if (encontrado <= 0) {
       conceptos.push(item);
     } else {
       conceptos.splice(encontrado,1);
     }
     console.log(conceptos);
+    self.conceptos = conceptos;
   };
+
 
   function buscarConcepto(item) {
     if (conceptos.length == 0) {
@@ -68,10 +70,13 @@ angular.module('ssClienteApp')
   }
 
   self.guardar = function() {
-    swal(
-      'The Internet?',
-      'That thing is still around?',
-      'question'
-    )
+    swal('Conceptos registrados exitosamente')
+  }
+
+  self.habilitarEdicion = function() {
+    swal('¿Continuar con la edición?')
+    for (var i = 0; i < conceptosActivos.length; i++) {
+      document.getElementById(conceptosActivos[i].Id).disabled = false;
+    }
   }
 });

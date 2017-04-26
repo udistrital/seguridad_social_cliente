@@ -25,13 +25,21 @@ angular.module('ssClienteApp')
         showTreeExpandNoChildren: false,
 
         columnDefs: [
-          {field: 'Concepto.AliasConcepto', visible: true, displayName: 'Concepto',
+          {field: 'Concepto.AliasConcepto', visible: true, displayName: 'Concepto', width: '50%',
             cellTooltip: function(row, col) {
                 return row.entity.Concepto.AliasConcepto;
               }},
-          {field: 'Persona.Id', visible: false, displayName: 'Persona'},
-          {field: 'ValorCalculado', visible: true, displayName: 'Valor', cellFilter: 'currency'},
-          {field: 'DiasLiquidados', visible: true, displayName: 'Días Liquidades'}
+          {
+            field: 'Persona.Id', visible: false, displayName: 'Persona'
+          },
+          {
+            field: 'ValorCalculado', visible: true, displayName: 'Valor',
+            cellFilter: 'currency', cellTemplate: '<div align="right">{{row.entity.ValorCalculado | currency}}</div>'
+          },
+          {
+            field: 'DiasLiquidados', visible: true, displayName: 'Días Liquidados',
+            cellTemplate: '<div align="right">{{row.entity.DiasLiquidados}}</div>'
+          }
         ]};
 
         $scope.$watch("persona", function(){
@@ -46,7 +54,7 @@ angular.module('ssClienteApp')
               {
                 Concepto: { AliasConcepto: 'Pensión Empleador'},
                 ValorCalculado: $scope.persona.PensionUd
-              });              
+              });
             self.gridOptions.data = detalle_liquidacion;
           });
         });
