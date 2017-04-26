@@ -35,7 +35,7 @@ angular.module('ssClienteApp')
   self.nominaSeleccionada = function() {
     seguridadSocialService.getServicio("seg_social/CalcularSegSocial",self.nomina).then(function(response) {
       var pagos = response.data;
-      console.log(pagos);
+      console.log('pagos: ' + pagos);
       angular.forEach(pagos,function(data){
         titanCrudService.get('informacion_proveedor', 'limit=-1&fields=Id,NomProveedor&query=Id:' + data.Persona).then(function(response) {
             self.nombre = response.data[0].NomProveedor;

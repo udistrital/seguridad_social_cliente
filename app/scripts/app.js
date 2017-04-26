@@ -81,6 +81,11 @@ angular
                 controllerAs: 'incapacidades'
               })
 
+      .when('/ver_incapacidades', {
+        templateUrl: 'views/ver_incapacidades.html',
+        controller: 'VerIncapacidadesCtrl',
+        controllerAs: 'verIncapacidades'
+      })
       .otherwise({
         redirectTo: '/'
       });

@@ -51,11 +51,22 @@ angular.module('ssClienteApp')
     {
       "Id": 7,
       "Nombre": "Incapacidades",
-      "Url": "incapcidades",
-      "Opciones": null
-    },
+      "Url": "",
+      "Opciones": [{
+          "Id": 8,
+          "Nombre": "Registrar Incapacidad",
+          "Url": "incapcidades",
+          "Opciones": null
+        },
+        {
+          "Id": 9,
+          "Nombre": "Ver Incapacidades",
+          "Url": "ver_incapacidades",
+          "Opciones": null
+        }]
+      },
     {
-      "Id": 8,
+      "Id": 10,
       "Nombre": "Activos",
       "Url": "activos",
       "Opciones": null
