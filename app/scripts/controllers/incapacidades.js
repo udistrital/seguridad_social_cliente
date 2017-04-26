@@ -101,7 +101,7 @@ angular.module('ssClienteApp')
 
      titanCrudService.post('concepto_por_persona',incapacidad).then(function(response) {
        if(response.statusText === 'Created') {
-         swal('Incapacidad Regisrtada Exitosamente');
+         swal('Incapacidad Registrada Exitosamente');
          console.log(response.statusText);
        } else {
          swal('No se ha logrado registrar la incapacidad');

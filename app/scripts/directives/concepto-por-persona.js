@@ -33,7 +33,7 @@ angular.module('ssClienteApp')
           { field: 'ValorCalculado', vislble: false, displayName: 'Valor', cellTemplate: '<div align="right">{{row.entity.ValorCalculado | currency}}</div>', cellFilter: 'currency' },
           { field: 'FechaDesde', visible: true, displayName: 'Fecha Inicio',
           cellTemplate: '<div align="right"><span>{{row.entity.FechaDesde | date:"yyyy-MM-dd":"+0900"}}</span></div>' },
-          { field: 'FechaHasta', visible: true, displayName: 'Fecha Finlización',
+          { field: 'FechaHasta', visible: true, displayName: 'Fecha Finalización',
           cellTemplate: '<div align="right"><span>{{row.entity.FechaHasta | date:"yyyy-MM-dd":"+0900"}}</span></div>' }
         ]};
 

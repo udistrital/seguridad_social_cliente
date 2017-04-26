@@ -19,7 +19,7 @@ angular.module('ssClienteApp')
   $scope.breadcrumb = [];
   $scope.menu_service = [{ //aqui va el servicio de el app de configuracion
     "Id": 2,
-    "Nombre": "Parametros",
+    "Nombre": "Parámetros",
     "Url": "",
     "Opciones": [{
       "Id": 3,
@@ -28,7 +28,7 @@ angular.module('ssClienteApp')
       "Opciones": null
     },{
       "Id": 3,
-      "Nombre": "Cálculos",
+      "Nombre": "Parámetros de Cálculo",
       "Url": "calculos",
       "Opciones": null
     },{
