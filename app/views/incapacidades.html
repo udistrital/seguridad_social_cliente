@@ -8,10 +8,10 @@
       <form class="" action="incapacidades.html" method="post">
         <div class="row">
           <div class="col-md-4 col-md-offset-2">
-            <label> Escriba el nombre del funcionario </label>
+            <label> Nombre </label>
           </div>
-          <div class="col-md-4">
-            <md-content class="md-padding">
+          <div class="col-xs-4">
+            <md-content class="form-control">
               <md-autocomplete ng-disabled="incapacidades.isDisabled"
               md-no-cache="incapcidades.noCache"
               md-selected-item="incapacidades.selectedItem"
@@ -21,7 +21,7 @@
               md-items="item in incapacidades.querySearch(incapacidades.searchText)"
               md-item-text="item.display"
               md-min-length="0"
-              placeholder="Escribe el nombre de la persona">
+              placeholder="Ingrese el nombre de la persona">
               <md-item-template>
                 <span md-highlight-text="incapcidades.searchText" md-highlight-flags="^i">{{item.display}}</span>
               </md-item-template>

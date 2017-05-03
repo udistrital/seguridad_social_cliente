@@ -1,33 +1,50 @@
 <br>
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h5>Activos</h5>
+    <h4>Activos</h4>
   </div>
-  <div>
-    <center>
-    <label> Selección Nómina </label><br>
-    <select ng-model="activos.nomina">
-      <option ng-repeat="n in activos.nominas" value="{{n.Id}}">{{n.Nomina.Descripcion}}</option>
-    </select>
-    <hr>
-    <label> Periodo </label><br>
-    Año
-    <select ng-model="activos.anioPeriodo">
-      <option ng-repeat="a in activos.anios" value="{{a}}">{{a.anio}}</option>
-    </select>
-    Mes
-    <select ng-model="activos.mesPeriodo">
-      <option ng-repeat="(key, value) in activos.meses" value="{{value}}">{{key}}</option>
-    </select>
-    <br>
-    <button type="button" name="button" ng-click="activos.nominaSeleccionada()"> Buscar </button>
-    </center>
+  <br>
+
+  <div class="form-group row">
+    <div class="col-md-1">
+      <label class="col-md-7 col-form-label"> Selección Nómina </label>
+    </div>
+    <div class="col-md-3">
+      <select ng-model="activos.nomina" class="form-control">
+        <option ng-repeat="n in activos.nominas" value="{{n.Id}}"><b>{{n.Nomina.Descripcion}}</b></option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-md-1">
+      <label class="col-md-7 col-form-label"> Año </label>
+    </div>
+    <div class="col-md-3">
+      <select ng-model="activos.anioPeriodo" class="form-control">
+        <option ng-repeat="a in activos.anios" value="{{a}}">{{a.anio}}</option>
+      </select>
+    </div>
+
+    <div class="col-md-1">
+      <label class="col-md-7 col-form-label"> Mes </label>
+    </div>
+    <div class="col-md-3">
+      <select ng-model="activos.mesPeriodo" class="form-control">
+        <option ng-repeat="(key, value) in activos.meses" value="{{value}}">{{key}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-offset-10 row">
+    <button type="button" class="btn btn-primary btn-outline" name="button" ng-click="activos.nominaSeleccionada()"> Buscar </button>
   </div>
 
   <div class="panel-body" ng-if="activos.activosDiv">
+    <hr size="50">
     <table style="width:100%;">
       <td>
-        <div ui-grid="activos.gridOptions" class="myGrid"></div>
+        <div ui-grid="activos.gridOptions" ui-grid-selection class="myGrid"></div>
       </td>
     </tr>
   </table>

@@ -3,3 +3,6 @@
 /.tmp
 /.sass-cache
 /bower_components
+app/scripts/services/rulerservice.js
+app/scripts/services/seguridadsocialservice.js
+app/scripts/services/titancrudservice.js

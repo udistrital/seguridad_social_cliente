@@ -33,23 +33,29 @@ angular.module('ssClienteApp')
     Julio: 7, Agosto: 8, Septiembre: 9, Octubre: 10, Noviembre: 11, Diciembre: 12};
 
   self.nominaSeleccionada = function() {
+    var pagosNombre = [];
     seguridadSocialService.getServicio("seg_social/CalcularSegSocial",self.nomina).then(function(response) {
-      var pagos = response.data;
-      console.log('pagos: ' + pagos);
-      angular.forEach(pagos,function(data){
-        titanCrudService.get('informacion_proveedor', 'limit=-1&fields=Id,NomProveedor&query=Id:' + data.Persona).then(function(response) {
-            self.nombre = response.data[0].NomProveedor;
-            self.gridOptions.data.push({
-              Persona: data.Persona,
-              Nombre: self.nombre,
-              PensionUd: data.PensionUd,
-              SaludUd: data.SaludUd,
-              SaludTotal: data.SaludTotal,
-              PensionTotal: data.PensionTotal,
-              Arl: data.Arl });
+      console.log(response.data);
+      if (response.data != null) {
+        var pagos = response.data;
+        angular.forEach(pagos,function(data){
+          titanCrudService.get('informacion_proveedor', 'limit=-1&fields=Id,NomProveedor&query=Id:' + data.Persona).then(function(response) {
+              self.nombre = response.data[0].NomProveedor;
+              pagosNombre.push({
+                Persona: data.Persona,
+                Nombre: self.nombre,
+                PensionUd: data.PensionUd,
+                SaludUd: data.SaludUd,
+                SaludTotal: data.SaludTotal,
+                PensionTotal: data.PensionTotal,
+                Arl: data.Arl });
+                self.gridOptions.data = pagosNombre;
+            });
           });
+        } else {
+          self.gridOptions.data = pagosNombre;
+        }
         });
-      });
       self.activosDiv = true;
     };
 
@@ -59,8 +65,11 @@ angular.module('ssClienteApp')
     });
 
     self.gridOptions = {
-      enableFiltering : false,
-      enableSorting : true,
+      enableFiltering : true,
+      enableSorting : false,
+      enableRowHeaderSelection: false,
+      enableRowSelection: true,
+      multiSelect: false,
       treeRowHeaderAlwaysVisible : false,
       showTreeExpandNoChildren : false,
 
