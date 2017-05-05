@@ -63,8 +63,7 @@ angular.module('ssClienteApp')
         "Nombre": "Ver Incapacidades",
         "Url": "ver_incapacidades",
         "Opciones": null
-      }]
-    },
+      }]},
     {
       "Id": 10,
       "Nombre": "Activos",
@@ -77,7 +76,7 @@ angular.module('ssClienteApp')
       "Url": "",
       "Opciones": [{
         "Id": 12,
-        "Nombre": "Registrar Nueva Persona UPC",
+        "Nombre": "Registrar Nueva UPC",
         "Url": "persona_upc",
         "Opciones": null
       },
@@ -89,7 +88,7 @@ angular.module('ssClienteApp')
       },
       {
         "Id": 14,
-        "Nombre": "Registrar Nuevo Valor UPC",
+        "Nombre": "Registrar Valor UPC",
         "Url": "tipo_upc",
         "Opciones": null
       }]

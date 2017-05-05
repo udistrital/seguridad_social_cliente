@@ -5,16 +5,31 @@
   </div>
   <div class="panel-body">
 
+
     <fieldset class="form-group" >
-      <button type="button" ng-click="info_responsables=!info_responsables" class="btn btn-outline btn-primary btn-lg btn-block"> Ver Valores Actuales
-        <span class="fa fa-plus pull-right"  ng-show="!info_responsables"></span>
-        <span class="fa fa-minus pull-right" ng-show="info_responsables"></span>
-      </button>
-      
-    </fieldset>
+      <legend class="text-primary"> Valores Actuales </legend class="text-primary">
+        <div>
+          <div ui-grid="tipoUpc.gridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-expandable class="grid"></div>
+        </div>
+      </fieldset>
+      <button type="button" class="btn btn-outline btn-primary btn-lg btn-block"> Registrar Nuevos Valores </button>
 
-    <button type="button" class="btn btn-outline btn-primary btn-lg btn-block"> Registrar Nuevos Valores </button>
+      <script type="text/ng-template"  id="expandableRowUpc.html">
+        <div ui-grid="row.entity.subGridOptions" style="height:200px;"></div>
+      </script>
 
-
+    </div>
   </div>
+
+  <!--
+  <fieldset class="form-group" >
+  <button type="button" ng-click="info_responsables=!info_responsables" class="btn btn-outline btn-primary btn-lg btn-block"> Ver Valores Actuales
+  <span class="fa fa-plus pull-right"  ng-show="!info_responsables"></span>
+  <span class="fa fa-minus pull-right" ng-show="info_responsables"></span>
+</button>
+<div ng-show="info_responsables">
+<div ui-grid="tipoUpc.gridOptions" ng-show="info_responsables" ui-grid-auto-resize class="grid"></div>
 </div>
+
+</fieldset>
+-->

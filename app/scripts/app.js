@@ -25,6 +25,8 @@ angular
     'ui.grid.edit',
     'ui.grid.rowEdit',
     'ui.grid.cellNav',
+    'ui.grid.expandable',
+    'ui.grid.pinning',
     'ui.grid.treeView',
     'ui.grid.selection',
     'ui.grid.exporter',

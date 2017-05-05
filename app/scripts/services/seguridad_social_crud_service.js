@@ -2,22 +2,17 @@
 
 /**
  * @ngdoc service
- * @name ssClienteApp.seguridadSocialService
+ * @name ssClienteApp.seguridadSocialCrudService
  * @description
- * # seguridadSocialService
+ * # seguridadSocialCrudService
  * Service in the ssClienteApp.
  */
 angular.module('ssClienteApp')
-  .service('seguridadSocialService', function ($http) {
+  .service('seguridadSocialCrudService', function ($http) {
+    var path = 'http://localhost:8086/v1/';
+    //var path = 'http://10.20.0.254/titan_api_crud/v1/'
 
-    var path = "http://localhost:8085/v1/";
-    //var path = "http://10.20.0.254/ss_mid_api/v1/"
-
-    // Public API here
     return {
-      getServicio: function(servicio, parametro) {
-        return $http.get(path+servicio+"/"+parametro);
-      },
       get: function (tabla,params) {
         return $http.get(path+tabla+"/?"+params);
       },
