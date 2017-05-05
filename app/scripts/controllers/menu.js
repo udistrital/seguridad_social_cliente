@@ -53,23 +53,46 @@ angular.module('ssClienteApp')
       "Nombre": "Incapacidades",
       "Url": "",
       "Opciones": [{
-          "Id": 8,
-          "Nombre": "Registrar Incapacidad",
-          "Url": "incapcidades",
-          "Opciones": null
-        },
-        {
-          "Id": 9,
-          "Nombre": "Ver Incapacidades",
-          "Url": "ver_incapacidades",
-          "Opciones": null
-        }]
+        "Id": 8,
+        "Nombre": "Registrar Incapacidad",
+        "Url": "incapcidades",
+        "Opciones": null
       },
+      {
+        "Id": 9,
+        "Nombre": "Ver Incapacidades",
+        "Url": "ver_incapacidades",
+        "Opciones": null
+      }]
+    },
     {
       "Id": 10,
       "Nombre": "Activos",
       "Url": "activos",
       "Opciones": null
+    },
+    {
+      "Id": 11,
+      "Nombre": "UPC",
+      "Url": "",
+      "Opciones": [{
+        "Id": 12,
+        "Nombre": "Registrar Nueva Persona UPC",
+        "Url": "persona_upc",
+        "Opciones": null
+      },
+      {
+        "Id": 13,
+        "Nombre": "Ver UPC Registradas",
+        "Url": "ver_upc",
+        "Opciones": null
+      },
+      {
+        "Id": 14,
+        "Nombre": "Registrar Nuevo Valor UPC",
+        "Url": "tipo_upc",
+        "Opciones": null
+      }]
     }];
 
     var recorrerArbol = function(item, padre) {

@@ -86,6 +86,21 @@ angular
         controller: 'VerIncapacidadesCtrl',
         controllerAs: 'verIncapacidades'
       })
+      .when('/tipo_upc', {
+        templateUrl: 'views/tipo_upc.html',
+        controller: 'TipoUpcCtrl',
+        controllerAs: 'tipoUpc'
+      })
+      .when('/ver_upc', {
+        templateUrl: 'views/ver_upc.html',
+        controller: 'VerUpcCtrl',
+        controllerAs: 'verUpc'
+      })
+      .when('/persona_upc', {
+        templateUrl: 'views/persona_upc.html',
+        controller: 'PersonaUpcCtrl',
+        controllerAs: 'personaUpc'
+      })
       .otherwise({
         redirectTo: '/'
       });

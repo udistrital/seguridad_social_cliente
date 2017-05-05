@@ -90,7 +90,7 @@ angular.module('ssClienteApp')
         },
         {
           field: 'Arl', visible: true, displayName : 'ARL',
-          headerCellTemplate: '<div align="center">Arl</div>',
+          headerCellTemplate: '<div align="center">ARL</div>',
           cellFilter : 'currency',
           cellTemplate: '<div align="right">{{row.entity.Arl | currency}}</div>'
         },
