@@ -8,6 +8,144 @@
  * Controller of the ssClienteApp
  */
 angular.module('ssClienteApp')
-  .controller('PersonaUpcCtrl', function () {
+  .controller('PersonaUpcCtrl', function (agoraService, seguridadSocialCrudService, titanCrudService, $scope, $timeout, $q, $log) {
     var self = this;
+    var idProveedor = 0;
+
+    self.sexo = [
+      {id: 1, display: 'Hombre'},
+      {id: 2, display: 'Mujer'}
+    ];
+
+    self.valorUpc = {"Valor": 0};
+
+    var proveedores = [];
+    agoraService.get('informacion_proveedor','fields=NomProveedor,Id').then(function(response) {
+       self.personas = response.data;
+
+       for (var i = 0; i < response.data.length; i++) {
+         proveedores.push(
+           {
+             display: response.data[i].NomProveedor,
+             value: response.data[i].NomProveedor.toLowerCase(),
+             id: response.data[i].Id
+           });
+       }
+       console.log('proveedores : ' , proveedores);
+     });
+
+  //autocomplete
+  // list of `state` value/display objects
+  self.states        = proveedores;
+  self.querySearch   = querySearch;
+  self.selectedItemChange = selectedItemChange;
+  self.searchTextChange   = searchTextChange;
+
+  // ******************************
+  // Internal methods
+  // ******************************
+
+  /**
+   * Search for states... use $timeout to simulate
+   * remote dataservice call.
+   */
+  function querySearch (query) {
+    var results = query ? self.states.filter( createFilterFor(query) ) : self.states,
+        deferred;
+    if (self.simulateQuery) {
+      deferred = $q.defer();
+      $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+      return deferred.promise;
+    } else {
+      return results;
+    }
+  }
+
+  function searchTextChange(text) {
+    $log.info('Text changed to ' + text);
+  }
+
+  function selectedItemChange(item) {
+    $log.info('Item changed to ' + JSON.stringify(item));
+    idProveedor = item.id;
+    console.log(idProveedor);
+  }
+
+  function createFilterFor(query) {
+    var lowercaseQuery = angular.lowercase(query);
+
+    return function filterFn(state) {
+      return (state.value.indexOf(lowercaseQuery) === 0);
+    };
+
+  }
+  //autocomplete
+
+  seguridadSocialCrudService.get('tipo_zona_upc','limit=-1').then(function(response) {
+    self.tipoZona = response.data;
   });
+
+  seguridadSocialCrudService.get('edad_upc', 'limit=-1&query=Vigencia:' + new Date().getFullYear() + '&sortby=EdadMin&order=asc').then(
+    function(response) {
+        console.log(response.data);
+        self.rangosEdad = response.data;
+    });
+
+    titanCrudService.get('categoria_beneficiario', 'limit=-1').then(function(response) {
+      self.tiposParentesco = response.data;
+    });
+
+    agoraService.get('parametro_estandar','query=ClaseParametro:Tipo%20Documento&limit=-1').then(function(response) {
+      /*self.tipoDocumento = [
+        {id: 1, display:'Cédula de Ciudadanía'},
+        {id: 2, display: 'Registro civil'},
+        {id: 3, display: 'Tarjeta de identidad'},
+        {id: 4, display: 'NIT'},
+        {id: 5, display: 'Cédula de Extranjería'}
+      ];*/
+      self.tipoDocumento = response.data;
+    });
+
+    self.cambiarZona = function() {
+      console.log('zona: ' + self.zona);
+      if (self.edad != null) {
+        traerValorUpc(self.zona, self.edad);
+        console.log('edad: ' + self.edad);
+      }
+    }
+
+    self.cambiarEdad = function() {
+      console.log('edad: ' + self.edad);
+      if (self.zona != null) {
+          traerValorUpc(self.zona, self.edad);
+          console.log('zona:' + self.zona);
+      }
+    }
+
+    function traerValorUpc(idZona, idRangoEdad) {
+      seguridadSocialCrudService.get('tipo_upc','limit=1&&query=IdTipoZonaUpc:'+ idZona +',idEdadUpc:' + idRangoEdad).then(function(response) {
+        self.valorUpc = response.data[0];
+        console.log('valor upc: ' + self.valorUpc);
+      });
+    }
+
+    self.guardarUpcAdicional = function() {
+
+      var idTipoUpc = { Id: self.valorUpc.Id };
+      var upcAdicional = {
+        PersonaAsociada: idProveedor,
+        TipoDocumento: self.tipoIdentificacion,
+        Documento: self.numDocumento,
+        Nombre: self.nombre,
+        Apellido: self.apellido,
+        IdParentesco: idProveedor,
+        IdTipoUpc: idTipoUpc
+      };
+
+      seguridadSocialCrudService.post('upc_adicional', upcAdicional).then(function(response) {
+        console.log(response.statusText);
+      });
+
+      console.log(upcAdicional);
+    };
+});

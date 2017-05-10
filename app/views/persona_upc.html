@@ -1,14 +1,112 @@
 <br>
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <h4> Registrar Nueva UPC </h4>
+  <div class="panel-heading">
+    <h4> Registrar Nueva UPC </h4>
+  </div>
+
+  <div class="panel-body">
+    <form class="" action="persona_upc.html" method="post">
+      <div class="form-group row">
+        <label for="input_identificacion" class="col-sm-4 col-form-label col-md-offset-1"> Tipo Identificación </label>
+        <div class="col-xs-4">
+          <select ng-model="personaUpc.tipoIdentificacion" class="form-control"
+            name="input_identificacion" ng-init="personaUpc.documento = personaUpc.tipoDocumento[0]"
+            ng-model="personaUpc.documento">
+            <option value="0"disabled> Seleccione una opción </option>
+            <option ng-repeat="d in personaUpc.tipoDocumento" value="{{d.Id}}"> {{d.ValorParametro}} </option>
+          </select>
+        </div>
+      </div>
+
+    <div class="form-group row">
+      <label for="input_num_documento" class="col-sm-4 col-form-label col-md-offset-1"> Número de Documento </label>
+      <div class="col-xs-4">
+        <input ng-model="personaUpc.numDocumento" type="text" class="form-control" name="input_num_documento" placeholder="Número de Documento">
+      </div>
     </div>
-    <div class="panel-body">
-        <p>
-          Ahora puede empezar a construir la vista de persona_upc.
-        </p>
+
+    <div class="form-group row">
+      <label for="input_nombre" class="col-sm-4 col-form-label col-md-offset-1"> Nombre de la UPC </label>
+      <div class="col-xs-4">
+        <input ng-model="personaUpc.nombre" type="text" class="form-control" name="input_nombre" placeholder="Nombre">
+      </div>
     </div>
-    <div class="panel-footer">
-        Panel Footer
+
+    <div class="form-group row">
+      <label for="input_apellido" class="col-sm-4 col-form-label col-md-offset-1"> Apellido de la UPC </label>
+      <div class="col-xs-4">
+        <input ng-model="personaUpc.apellido" type="text" class="form-control" name="input_apellido" placeholder="Apellido">
+      </div>
     </div>
+
+    <div class="form-group row">
+      <label for="input_zona" class="col-sm-4 col-form-label col-md-offset-1"> Tipo de Zona </label>
+      <div class="col-xs-2">
+        <select class="form-control" name="input_zona"
+          ng-init="personaUpc.zona = personaUpc.tipoZona[0]"
+          ng-model="personaUpc.zona" ng-change="personaUpc.cambiarZona()">
+          <option value="0"disabled> Seleccione una opción </option>
+          <option ng-repeat="z in personaUpc.tipoZona" value="{{z.Id}}"> {{z.Nombre}} </option>
+        </select>
+      </div>
+
+      <label for="input_edad" class="col-sm-2 col-form-label"> Rango de Edad</label>
+      <div class="col-xs-2">
+        <select class="form-control" name="input_edad"
+          ng-init="personaUpc.edad = personaUpc.rangosEdad[0]"
+          ng-model="personaUpc.edad" ng-change="personaUpc.cambiarEdad()">
+          <option value="0" disabled> Seleccione una opción </option>
+          <option ng-repeat="e in personaUpc.rangosEdad" value="{{e.Id}}"> De {{e.EdadMin}} a {{e.EdadMax}} Años {{e.AplicaGenero}} </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label col-md-offset-1"> Valor UPC</label>
+      <div class="col-xs-2">
+        <p> {{personaUpc.valorUpc.Valor | currency}} </p>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="input_persona" class="col-sm-4 col-form-label col-md-offset-1"> Responsable </label>
+      <div class="col-xs-4">
+          <md-autocomplete ng-disabled="personaUpc.isDisabled"
+          md-no-cache="personaUpc.noCache"
+          md-selected-item="personaUpc.selectedItem"
+          md-search-text-change="personaUpc.searchTextChange(personaUpc.searchText)"
+          md-search-text="personaUpc.searchText"
+          md-selected-item-change="personaUpc.selectedItemChange(item)"
+          md-items="item in personaUpc.querySearch(personaUpc.searchText)"
+          md-item-text="item.display"
+          md-min-length="0"
+          placeholder="Responsable">
+          <md-item-template>
+            <span md-highlight-text="personaUpc.searchText" md-highlight-flags="^i">{{item.display}}</span>
+          </md-item-template>
+          <md-not-found>
+            No se encontraron resultados de  "{{incappersonaUpccidades.searchText}}".
+          </md-not-found>
+        </md-autocomplete>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="input_parentesco" class="col-sm-4 col-form-label col-md-offset-1"> Parentesco </label>
+    <div class="col-xs-2">
+      <select ng-model="personaUpc.parentesco" class="form-control"
+        name="input_parentesco" ng-init="parentesco = personaUpc.tiposParentesco[2]"
+        ng-model="parentesco">
+        <option value="0"disabled> Seleccione una opción </option>
+        <option ng-repeat="p in personaUpc.tiposParentesco" value="{{p.Id}}"> {{p.NombreTipoBeneficiario}} </option>
+      </select>
+    </div>
+  </div>
+
+</form>
+</div>
+
+<div class="panel-footer">
+  <button type="button" ng-click="personaUpc.guardarUpcAdicional()" class="btn btn-success col-md-offset-6" name="button"> Guardar </button>
+</div>
 </div>
