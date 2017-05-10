@@ -12,12 +12,12 @@ angular.module('ssClienteApp')
     var self = this;
     var idProveedor = 0;
 
-    self.sexo = [
-      {id: 1, display: 'Hombre'},
-      {id: 2, display: 'Mujer'}
-    ];
-
-    self.valorUpc = {"Valor": 0};
+    self.variablesForm = {
+      numDocumento: self.numDocumento,
+      nombre: self.nombre,
+      apellido: self.apellido,
+      valorUpc: {"Valor": 0},
+    };
 
     var proveedores = [];
     agoraService.get('informacion_proveedor','fields=NomProveedor,Id').then(function(response) {
@@ -34,21 +34,11 @@ angular.module('ssClienteApp')
        console.log('proveedores : ' , proveedores);
      });
 
-  //autocomplete
-  // list of `state` value/display objects
   self.states        = proveedores;
   self.querySearch   = querySearch;
   self.selectedItemChange = selectedItemChange;
   self.searchTextChange   = searchTextChange;
 
-  // ******************************
-  // Internal methods
-  // ******************************
-
-  /**
-   * Search for states... use $timeout to simulate
-   * remote dataservice call.
-   */
   function querySearch (query) {
     var results = query ? self.states.filter( createFilterFor(query) ) : self.states,
         deferred;
@@ -96,13 +86,6 @@ angular.module('ssClienteApp')
     });
 
     agoraService.get('parametro_estandar','query=ClaseParametro:Tipo%20Documento&limit=-1').then(function(response) {
-      /*self.tipoDocumento = [
-        {id: 1, display:'Cédula de Ciudadanía'},
-        {id: 2, display: 'Registro civil'},
-        {id: 3, display: 'Tarjeta de identidad'},
-        {id: 4, display: 'NIT'},
-        {id: 5, display: 'Cédula de Extranjería'}
-      ];*/
       self.tipoDocumento = response.data;
     });
 
@@ -124,26 +107,36 @@ angular.module('ssClienteApp')
 
     function traerValorUpc(idZona, idRangoEdad) {
       seguridadSocialCrudService.get('tipo_upc','limit=1&&query=IdTipoZonaUpc:'+ idZona +',idEdadUpc:' + idRangoEdad).then(function(response) {
-        self.valorUpc = response.data[0];
+        self.variablesForm.valorUpc = response.data[0];
         console.log('valor upc: ' + self.valorUpc);
       });
     }
 
+    self.reset = function() {
+      self.variablesForm = {valorUpc: {"Valor": 0}};
+    }
+
     self.guardarUpcAdicional = function() {
 
-      var idTipoUpc = { Id: self.valorUpc.Id };
+      var idTipoUpc = { Id: self.variablesForm.valorUpc.Id };
       var upcAdicional = {
         PersonaAsociada: idProveedor,
         TipoDocumento: self.tipoIdentificacion,
-        Documento: self.numDocumento,
-        Nombre: self.nombre,
-        Apellido: self.apellido,
-        IdParentesco: idProveedor,
+        Documento: self.variablesForm.numDocumento,
+        Nombre: self.variablesForm.nombre,
+        Apellido: self.variablesForm.apellido,
+        IdParentesco: self.parentesco.Id,
         IdTipoUpc: idTipoUpc
       };
 
-      seguridadSocialCrudService.post('upc_adicional', upcAdicional).then(function(response) {
-        console.log(response.statusText);
+      seguridadSocialCrudService.post('upc_adicional',upcAdicional).then(function(response) {
+        if (response.statusText == 'Created') {
+          swal('UPC Registrada Exitosamente');
+          self.reset();
+        } else {
+          swal('No se ha Logrado Registrar la UPC');
+        }
+        console.log(response.data);
       });
 
       console.log(upcAdicional);

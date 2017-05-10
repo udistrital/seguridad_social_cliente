@@ -21,21 +21,21 @@
     <div class="form-group row">
       <label for="input_num_documento" class="col-sm-4 col-form-label col-md-offset-1"> Número de Documento </label>
       <div class="col-xs-4">
-        <input ng-model="personaUpc.numDocumento" type="text" class="form-control" name="input_num_documento" placeholder="Número de Documento">
+        <input ng-model="personaUpc.variablesForm.numDocumento" type="text" class="form-control" name="input_num_documento" placeholder="Número de Documento">
       </div>
     </div>
 
     <div class="form-group row">
       <label for="input_nombre" class="col-sm-4 col-form-label col-md-offset-1"> Nombre de la UPC </label>
       <div class="col-xs-4">
-        <input ng-model="personaUpc.nombre" type="text" class="form-control" name="input_nombre" placeholder="Nombre">
+        <input ng-model="personaUpc.variablesForm.nombre" type="text" class="form-control" name="input_nombre" placeholder="Nombre">
       </div>
     </div>
 
     <div class="form-group row">
       <label for="input_apellido" class="col-sm-4 col-form-label col-md-offset-1"> Apellido de la UPC </label>
       <div class="col-xs-4">
-        <input ng-model="personaUpc.apellido" type="text" class="form-control" name="input_apellido" placeholder="Apellido">
+        <input ng-model="personaUpc.variablesForm.apellido" type="text" class="form-control" name="input_apellido" placeholder="Apellido">
       </div>
     </div>
 
@@ -64,7 +64,7 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label col-md-offset-1"> Valor UPC</label>
       <div class="col-xs-2">
-        <p> {{personaUpc.valorUpc.Valor | currency}} </p>
+        <p> {{personaUpc.variablesForm.valorUpc.Valor | currency}} </p>
       </div>
     </div>
 
@@ -95,7 +95,7 @@
     <label for="input_parentesco" class="col-sm-4 col-form-label col-md-offset-1"> Parentesco </label>
     <div class="col-xs-2">
       <select ng-model="personaUpc.parentesco" class="form-control"
-        name="input_parentesco" ng-init="parentesco = personaUpc.tiposParentesco[2]"
+        name="input_parentesco" ng-init="parentesco = personaUpc.tiposParentesco[0]"
         ng-model="parentesco">
         <option value="0"disabled> Seleccione una opción </option>
         <option ng-repeat="p in personaUpc.tiposParentesco" value="{{p.Id}}"> {{p.NombreTipoBeneficiario}} </option>
@@ -103,10 +103,11 @@
     </div>
   </div>
 
-</form>
 </div>
 
 <div class="panel-footer">
-  <button type="button" ng-click="personaUpc.guardarUpcAdicional()" class="btn btn-success col-md-offset-6" name="button"> Guardar </button>
+  <button type="reset" ng-click="personaUpc.reset()" class="btn btn-primary btn-outline col-md-offset-5"> Limpiar </button>
+  <button type="button" ng-click="personaUpc.guardarUpcAdicional()" class="btn btn-success" name="button"> Guardar </button>
+  </form>
 </div>
 </div>
