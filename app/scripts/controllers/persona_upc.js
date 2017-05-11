@@ -126,12 +126,13 @@ angular.module('ssClienteApp')
         Nombre: self.variablesForm.nombre,
         Apellido: self.variablesForm.apellido,
         IdParentesco: self.parentesco.Id,
-        IdTipoUpc: idTipoUpc
+        IdTipoUpc: idTipoUpc,
+        Estado: 'Activo'
       };
 
       seguridadSocialCrudService.post('upc_adicional',upcAdicional).then(function(response) {
         if (response.statusText == 'Created') {
-          swal('UPC Registrada Exitosamente');
+          swal('UPC Adicional Registrada');
           self.reset();
         } else {
           swal('No se ha Logrado Registrar la UPC');
