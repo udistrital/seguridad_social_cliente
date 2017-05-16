@@ -34,7 +34,7 @@ angular.module('ssClienteApp')
 
   self.nominaSeleccionada = function() {
     var pagosNombre = [];
-    seguridadSocialService.getServicio("seg_social/CalcularSegSocial",self.nomina).then(function(response) {
+    seguridadSocialService.getServicio("desc_seguridad_social/CalcularSegSocial",self.nomina).then(function(response) {
       console.log(response.data);
       if (response.data != null) {
         var pagos = response.data;

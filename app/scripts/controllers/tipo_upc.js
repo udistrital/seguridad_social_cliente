@@ -17,7 +17,7 @@ angular.module('ssClienteApp')
     enableRowSelection: true,
     multiSelect: false,
     expandableRowTemplate: 'expandableRowUpc.html',
-    expandableRowHeight: 200,
+    expandableRowHeight: 250,
     onRegisterApi: function (gridApi) {
       gridApi.expandable.on.rowExpandedStateChanged($scope, function (row) {
         if (row.isExpanded) {

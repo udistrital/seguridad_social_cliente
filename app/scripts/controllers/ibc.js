@@ -18,7 +18,7 @@ angular.module('ssClienteApp')
   225,226,227,230,232, 239,240,242,245,248,249,250,251,252,253,254,257
   */
 
-  seguridadSocialService.get('seg_social/ConceptosIbc', '').then(function(response) {
+  seguridadSocialService.get('desc_seguridad_social/ConceptosIbc', '').then(function(response) {
     angular.forEach(response.data, function(data){
       conceptosActivos.push(data)
     });

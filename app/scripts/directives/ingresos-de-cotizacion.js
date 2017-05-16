@@ -38,7 +38,7 @@ angular.module('ssClienteApp')
           },
           {
             field: 'DiasLiquidados', visible: true, displayName: 'Días Liquidados',
-            cellTemplate: '<div align="right">{{row.entity.DiasLiquidados}}</div>'
+            cellTemplate: '<div align="center">{{row.entity.DiasLiquidados}}</div>'
           }
         ]};
 

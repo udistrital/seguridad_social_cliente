@@ -9,13 +9,13 @@
     <fieldset class="form-group" >
       <legend class="text-primary"> Valores Actuales </legend class="text-primary">
         <div>
-          <div ui-grid="tipoUpc.gridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-expandable class="grid"></div>
+          <div ui-grid="tipoUpc.gridOptions" ui-grid-selection ui-grid-expandable class="grid"></div>
         </div>
       </fieldset>
       <button type="button" class="btn btn-outline btn-primary btn-lg btn-block"> Registrar Nuevos Valores </button>
 
       <script type="text/ng-template"  id="expandableRowUpc.html">
-        <div ui-grid="row.entity.subGridOptions" style="height:200px;"></div>
+        <div ui-grid="row.entity.subGridOptions" class="grid" style="height:250px;"></div>
       </script>
 
     </div>

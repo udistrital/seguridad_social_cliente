@@ -3,9 +3,9 @@
     <div class="panel-heading">
         Registro de UPC Adicional
     </div>
-    <div class="panel-body">
+    <div class="panel-body" ng-init="verUpc.init()">
       <div>
-        <div ui-grid="verUpc.gridOptions" ui-grid-auto-resize
+        <div ui-grid="verUpc.gridOptions" ui-grid-auto-resize ng-class="{'ui-grid-row-dirty': row.isDirty, 'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError,'ui-grid-tree-header-row': row.treeLevel > -1,'ui-grid-row-selected': row.isSelected}"
          class="grid"></div>
       </div>
     </div>
