@@ -1,0 +1,17 @@
+<br>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Registrar Valores</h4>
+    </div>
+    <div class="panel-body">
+        <div ui-grid="registrarTipoUpc.gridOptions" ui-grid-expandable ui-grid-selection class="grid"></class>
+    </div>
+
+    <script type="text/ng-template"  id="expandableRowEdades.html">
+      <div ui-grid="row.entity.subGridOptions" ui-grid-selection ui-grid-edit class="grid" style="height:250px;"></div>
+    </script>
+
+    <div class="panel-footer">
+        <button type="button" class="btn btn-outline btn-success" ng-click="registrarTipoUpc.guardar()" name="button">Guardar</button>
+    </div>
+</div>

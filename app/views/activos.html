@@ -21,7 +21,7 @@
       <label class="col-md-7 col-form-label"> Año </label>
     </div>
     <div class="col-md-3">
-      <select ng-model="activos.anioPeriodo" class="form-control">
+      <select ng-model="activos.anioPeriodo" ng-init="activos.anioPeriodo" class="form-control">
         <option ng-repeat="a in activos.anios" value="{{a}}">{{a.anio}}</option>
       </select>
     </div>
@@ -30,7 +30,7 @@
       <label class="col-md-7 col-form-label"> Mes </label>
     </div>
     <div class="col-md-3">
-      <select ng-model="activos.mesPeriodo" class="form-control">
+      <select ng-model="activos.mesPeriodo" ng-init="activos.mesPeriodo" class="form-control">
         <option ng-repeat="(key, value) in activos.meses" value="{{value}}">{{key}}</option>
       </select>
     </div>

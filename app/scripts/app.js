@@ -103,6 +103,11 @@ angular
         controller: 'PersonaUpcCtrl',
         controllerAs: 'personaUpc'
       })
+      .when('/registrar_tipo_upc', {
+        templateUrl: 'views/registrar_tipo_upc.html',
+        controller: 'RegistrarTipoUpcCtrl',
+        controllerAs: 'registrarTipoUpc'
+      })
       .otherwise({
         redirectTo: '/'
       });

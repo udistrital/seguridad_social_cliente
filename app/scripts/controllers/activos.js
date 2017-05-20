@@ -33,6 +33,7 @@ angular.module('ssClienteApp')
     Julio: 7, Agosto: 8, Septiembre: 9, Octubre: 10, Noviembre: 11, Diciembre: 12};
 
   self.nominaSeleccionada = function() {
+    console.log(self.anio);
     var pagosNombre = [];
     seguridadSocialService.getServicio("desc_seguridad_social/CalcularSegSocial",self.nomina).then(function(response) {
       console.log(response.data);
@@ -61,7 +62,6 @@ angular.module('ssClienteApp')
 
     titanCrudService.get('liquidacion','fields=Nomina,Id').then(function(response) {
       self.nominas = response.data;
-      console.log(response.data);
     });
 
     self.gridOptions = {

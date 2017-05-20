@@ -32,6 +32,7 @@ angular.module('ssClienteApp')
 
             seguridadSocialCrudService.get('tipo_upc','?limit=-1&query=IdTipoZonaUpc:' + row.entity.Id)
               .then(function(response) {
+                console.log(response.data);
                 row.entity.subGridOptions.data = response.data;
             });
           }
