@@ -108,6 +108,11 @@ angular
         controller: 'RegistrarTipoUpcCtrl',
         controllerAs: 'registrarTipoUpc'
       })
+      .when('/planillas', {
+        templateUrl: 'views/planillas.html',
+        controller: 'PlanillasCtrl',
+        controllerAs: 'planillas'
+      })
       .otherwise({
         redirectTo: '/'
       });

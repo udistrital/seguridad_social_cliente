@@ -88,7 +88,7 @@ angular.module('ssClienteApp')
       },
       {
         "Id": 14,
-        "Nombre": "Registrar Valores para UPC",
+        "Nombre": "Listar Valores para UPC",
         "Url": "tipo_upc",
         "Opciones": null
       }]
