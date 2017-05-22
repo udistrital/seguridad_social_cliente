@@ -11,7 +11,11 @@ angular.module('ssClienteApp')
 .controller('RegistrarTipoUpcCtrl', function (seguridadSocialCrudService, $scope) {
 
   var self = this;
-  var zona = [];
+  var nombreZona;
+  var zonaNormal = [];
+  var zonaEspecial = [];
+  var grandesCiudades = [];
+  var zonasAlejadas = [];
 
   self.gridOptions = {
     enableRowHeaderSelection: false,
@@ -38,7 +42,24 @@ angular.module('ssClienteApp')
 
           seguridadSocialCrudService.get('edad_upc','limit=-1').then(function(response) {
             row.entity.subGridOptions.data = response.data;
-            zona += row.entity.subGridOptions.data;
+
+            switch (row.entity.Id) {
+              case 1: //Zona Normal
+                zonaNormal = row.entity.subGridOptions.data;
+                break;
+              case 2: //Zona Especial
+                zonaEspecial = row.entity.subGridOptions.data;
+              break;
+              case 3: //Grandes Ciudades
+                grandesCiudades = row.entity.subGridOptions.data;
+              break;
+              case 4: //Zonas Alejadas
+                zonasAlejadas = row.entity.subGridOptions.data;
+              break;
+              default:
+                console.log('Opción no implementada');
+              break;
+            }
           });
         }
       });
@@ -56,7 +77,54 @@ angular.module('ssClienteApp')
   });
 
   self.guardar = function() {
-    console.log(zona);
+    rectificarValores(zonaNormal, 'Zona Normal');
+    rectificarValores(zonaEspecial, 'Zona Especial');
+    rectificarValores(grandesCiudades, 'Grandes Ciudades');
+    rectificarValores(zonasAlejadas, 'Zonas Alejadas');
+    //console.log(rectificarValores(zonaEspecial, 'Zona Especial'));
   }
+
+  function rectificarValores(zona, sujeto) {
+    var error = 0 //si la variable se vuelve 1 entonces existe un error y el mensaje mostrado del swal va a ser de error
+    var mensaje = '';
+    if (zona.length == 0) {
+      mensaje = 'No has ingresado valores para ' + sujeto;
+      error = 1;
+    } else {
+      for (var i = 0; i < zona.length; i++) {
+        if (zona[i].Valor == 0) {
+          mensaje = 'Ingresa los Valores en el Rango de ' + zona[i].EdadMin + ' - ' + zona[i].EdadMax + ' para ' + sujeto;
+          error = 1;
+          break;
+        } else if (zona[i].Valor < 0 ) {
+          mensaje = 'Los Valores en el Rango de ' + zona[i].EdadMin + ' - ' + zona[i].EdadMax + ' no pueden ser negativos para ' + sujeto;
+          error = 1;
+          break;
+        } else {
+          mensaje = 'Valores de' + sujeto + ' Registrados Exitosamente';
+          error = 0;
+      }
+    }
+  }
+
+    if (error == 0) { //todo salio bien
+      swal (
+        'Registro Correcto',
+        mensaje,
+        'success'
+      )
+    } else { //hubo un error en el proceso  de rectificación
+      swal(
+        'Error',
+        mensaje,
+        'error'
+      )
+    }
+  };
+
+  function guardarValores(zona, idZona) {
+    zona.push(idZona);
+    console.log(zona);
+  };
 
 });
