@@ -34,7 +34,8 @@ angular
     'ngWebSocket',
     'angularMoment',
     'ui.utils.masks',
-    'pascalprecht.translate'
+    'pascalprecht.translate',
+    'ngAnimate'
   ])
     .run(function(amMoment) {
       amMoment.changeLocale('es');

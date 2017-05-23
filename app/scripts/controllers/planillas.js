@@ -22,7 +22,13 @@ angular.module('ssClienteApp')
       csvContent += index < data.length ? dataString+ "\n" : dataString;
     });*/
 
-    csvContent += '0110001UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS            \n prueba espac';
+    var cabecera = [];
+    var pagos = [["020000001"],["CC1010225713"],["0100"], ["11001RAMOS"]]
+
+    pagos.forEach(function (infoArray, index) {
+      var dataString = infoArray.join(",");
+      csvContent += dataString ;
+    });
 
     var encodedUri = encodeURI(csvContent);
     var link = document.createElement("a");
