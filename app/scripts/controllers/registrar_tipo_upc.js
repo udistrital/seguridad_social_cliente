@@ -62,21 +62,23 @@ angular.module('ssClienteApp')
   }
 
   function guardarValores(zona, edad, valor) {
-    var idZona = 0;
-    seguridadSocialCrudService.get('tipo_zona_upc','limit=1&query=Nombre:' + zona).then(function(response) {
-      idZona = response.data[0].Id;
-    });
-    var IdEdadUpc = { Id: edad };
-    var IdTipoZonaUpc = { Id: idZona };
-    var tipoUpc = {
-      Valor: parseInt(valor),
-      Acuerdo: '2017',
-      IdEdadUpc: IdEdadUpc,
-      IdTipoZonaUpc: IdTipoZonaUpc
-    }
+    seguridadSocialCrudService.get('tipo_zona_upc','limit=1&fields=Id&query=Nombre:' + zona).then(function(response) {
+      var idZona = response.data[0];
+      console.log(idZona.Id);
 
-    seguridadSocialCrudService.post('tipo_upc',tipoUpc).then(function(response) {
-      console.log(response.data)
+      var IdEdadUpc = { Id: edad };
+      var IdTipoZonaUpc = { Id: idZona.Id };
+
+      var tipoUpc = {
+        Valor: parseInt(valor),
+        Acuerdo: '2017',
+        IdEdadUpc: IdEdadUpc,
+        IdTipoZonaUpc: IdTipoZonaUpc
+      };
+
+      seguridadSocialCrudService.post('tipo_upc',tipoUpc).then(function(response) {
+        console.log(response.data)
+      });
     });
   }
 

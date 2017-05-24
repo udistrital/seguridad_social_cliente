@@ -48,11 +48,11 @@ angular.module('ssClienteApp')
             var detalle_liquidacion = response.data;
             detalle_liquidacion.push(
               {
-                Concepto: { AliasConcepto: 'Salud Empleador' },
+                Concepto: { AliasConcepto: 'Salud Universidad' },
                 ValorCalculado: $scope.persona.SaludUd
               },
               {
-                Concepto: { AliasConcepto: 'Pensión Empleador'},
+                Concepto: { AliasConcepto: 'Pensión Universidad'},
                 ValorCalculado: $scope.persona.PensionUd
               });
             self.gridOptions.data = detalle_liquidacion;

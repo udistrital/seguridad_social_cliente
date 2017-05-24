@@ -22,7 +22,7 @@ angular.module('ssClienteApp')
       csvContent += index < data.length ? dataString+ "\n" : dataString;
     });*/
 
-    var cabecera = [];
+    var cabecera = ["0110001UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS                                                                                                                                                          NI899999230       7E                    S01                                                14-23"];
     var pagos = [["020000001"],["CC1010225713"],["0100"], ["11001RAMOS"]]
 
     pagos.forEach(function (infoArray, index) {
