@@ -22,6 +22,9 @@ angular.module('ssClienteApp')
 
     pagos.forEach(function (infoArray, index) {
       var dataString = infoArray.join(",");
+      for (var i = 0; i < 10; i++) {
+        csvContent += " ";
+      }
       csvContent += dataString ;
     });
 
