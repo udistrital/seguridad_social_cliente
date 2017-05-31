@@ -8,12 +8,11 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-.controller('ActivosCtrl', function (seguridadSocialService, titanCrudService, $q) {
+.controller('ActivosCtrl', function (seguridadSocialService, titanCrudService, seguridadSocialCrudService, agoraService, $scope) {
   var self = this;
 
   self.novedadesDiv = false;
   self.activosDiv = false;
-  self.nomina = 0;
 
   self.anioPeriodo = new Date().getFullYear();
   self.mesPeriodo = new Date().getMonth();
@@ -32,33 +31,103 @@ angular.module('ssClienteApp')
   self.meses = { Enero: 1, Febrero: 2, Marzo: 3, Abril: 4, Mayo: 5, Junio: 6,
     Julio: 7, Agosto: 8, Septiembre: 9, Octubre: 10, Noviembre: 11, Diciembre: 12};
 
-  self.nominaSeleccionada = function() {
-    console.log(self.anio);
-    var pagosNombre = [];
-    seguridadSocialService.getServicio("desc_seguridad_social/CalcularSegSocial",self.nomina).then(function(response) {
-      console.log(response.data);
-      if (response.data != null) {
-        var pagos = response.data;
-        angular.forEach(pagos,function(data){
-          titanCrudService.get('informacion_proveedor', 'limit=-1&fields=Id,NomProveedor&query=Id:' + data.Persona).then(function(response) {
-              self.nombre = response.data[0].NomProveedor;
-              pagosNombre.push({
-                Persona: data.Persona,
-                Nombre: self.nombre,
-                PensionUd: data.PensionUd,
-                SaludUd: data.SaludUd,
-                SaludTotal: data.SaludTotal,
-                PensionTotal: data.PensionTotal,
-                Arl: data.Arl });
-                self.gridOptions.data = pagosNombre;
+    self.nominaSeleccionada = function() {
+      var pagosNombre = [];
+
+      seguridadSocialService.getServicio("desc_seguridad_social/CalcularSegSocial",self.nomina).then(function(response) {
+        if (response.data != null) {
+          var desc_seguridad_social =
+          {
+            Mes: parseInt(self.mesPeriodo),
+            Anio: parseInt(self.anioPeriodo),
+            idNomina: parseInt(self.nomina)
+          };
+          var pagos = response.data;
+          seguridadSocialCrudService.post('desc_seguridad_social', desc_seguridad_social).then(function(response) {
+            var idDesSeguridadSocial = response.data;
+            console.log(idDesSeguridadSocial);
+            //Aquí se va llenando el ui-grid con la información que viene en el arreglo pagso
+            angular.forEach(pagos,function(data){
+              titanCrudService.get('informacion_proveedor', 'limit=-1&fields=Id,NomProveedor&query=Id:' + data.Persona).then(function(response) {
+                self.nombre = response.data[0].NomProveedor;
+                pagosNombre.push({
+                  Persona: data.Persona,
+                  Nombre: self.nombre,
+                  PensionUd: data.PensionUd,
+                  SaludUd: data.SaludUd,
+                  SaludTotal: data.SaludTotal,
+                  PensionTotal: data.PensionTotal,
+                  Arl: data.Arl });
+                  self.gridOptions.data = pagosNombre;
+
+                  var desc_seguridad_social = { Id: parseInt(idDesSeguridadSocial.Id) };
+
+                  var desc_seguridad_social_detalle =
+                  {
+                    IdDetalleLiquidacion: data.IdDetalleLiquidacion,
+                    Valor: 0,
+                    IdDescSeguridadSocial: desc_seguridad_social,
+                    IdTipoPagoSeguridadSocial: -1
+                  };
+
+                  //Guarda salud
+                  seguridadSocialCrudService.get('tipo_pago_seguridad_social','limit=1&query=Nombre:Salud').then(function (response) {
+                    var IdTipoPagoSeguridadSocial = { Id: parseInt(response.data[0].Id) };
+                    desc_seguridad_social_detalle["Valor"] = data.SaludTotal;
+                    desc_seguridad_social_detalle["IdTipoPagoSeguridadSocial"] = IdTipoPagoSeguridadSocial;
+
+                    seguridadSocialCrudService.post('desc_seguridad_social_detalle',desc_seguridad_social_detalle).then(function(response) {
+                      if(typeof response.data === 'object') {
+                        console.log(response.data);
+                        console.log('Salud Registrada');
+                      } else {
+                        console.log('Error al registrar desc_seguridad_social_detalle ' + response.data);
+                      }
+                    });
+                  });
+
+                  //Guarda Pensión
+                  seguridadSocialCrudService.get('tipo_pago_seguridad_social','?limit=1&query=Nombre:Pension').then(function (response) {
+                    var IdTipoPagoSeguridadSocial = { Id: parseInt(response.data[0].Id) };
+                    desc_seguridad_social_detalle["Valor"] = data.PensionTotal;
+                    desc_seguridad_social_detalle["IdTipoPagoSeguridadSocial"] = IdTipoPagoSeguridadSocial;
+
+                    seguridadSocialCrudService.post('desc_seguridad_social_detalle',desc_seguridad_social_detalle).then(function(response) {
+                      if(typeof response.data === 'object') {
+                        console.log(response.data);
+                        console.log('Pensión registrada');
+                      } else {
+                        console.log('Error al registrar desc_seguridad_social_detalle ' + response.data);
+                      }
+                    });
+                  });
+
+                  //Guarda Pensión
+                  seguridadSocialCrudService.get('tipo_pago_seguridad_social','?limit=1&query=Nombre:ARL').then(function (response) {
+                    var IdTipoPagoSeguridadSocial = { Id: parseInt(response.data[0].Id) };
+                    desc_seguridad_social_detalle["Valor"] = data.Arl;
+                    desc_seguridad_social_detalle["IdTipoPagoSeguridadSocial"] = IdTipoPagoSeguridadSocial;
+
+                    seguridadSocialCrudService.post('desc_seguridad_social_detalle',desc_seguridad_social_detalle).then(function(response) {
+                      if(typeof response.data === 'object') {
+                        console.log(response.data);
+                        console.log('ARL Registrada');
+                      } else {
+                        console.log('Error al registrar desc_seguridad_social_detalle ' + response.data);
+                      }
+                    });
+                  });
+
+              });
             });
           });
         } else {
           self.gridOptions.data = pagosNombre;
         }
-        });
+      });
       self.activosDiv = true;
     };
+
 
     titanCrudService.get('liquidacion','fields=Nomina,Id').then(function(response) {
       self.nominas = response.data;
@@ -98,13 +167,13 @@ angular.module('ssClienteApp')
           field: 'Novedades',
           headerCellTemplate: '<div align="center">Novedades</div>',
           cellTemplate: '<center><button class="btn btn-success" ng-click="grid.appScope.activos.novedad(row)"> Ver Detalle </button></center>' }
-      ]
-    };
+        ]
+      };
 
-    self.novedad = function(row) {
-      self.novedadesDiv = false;
-      self.novedadesDiv = true;
-      self.persona = row.entity;
-    };
+      self.novedad = function(row) {
+        self.novedadesDiv = false;
+        self.novedadesDiv = true;
+        self.persona = row.entity;
+      };
 
-  });
+    });
