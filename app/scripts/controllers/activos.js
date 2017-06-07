@@ -17,7 +17,7 @@ angular.module('ssClienteApp')
   self.anioPeriodo = new Date().getFullYear();
   self.mesPeriodo = new Date().getMonth();
 
-  self.anios = []
+  self.anios = [];
 
   //Crea un arreglo de objetos para tener los años desde 1900 hasta el año actual con el metodo getFullYear()
   function calcularAnios() {
