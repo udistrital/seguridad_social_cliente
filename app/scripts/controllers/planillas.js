@@ -8,10 +8,15 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-.controller('PlanillasCtrl', function (seguridadSocialCrudService, agoraService) {
+.controller('PlanillasCtrl', function (seguridadSocialCrudService, seguridadSocialService) {
   var self = this;
   var csvContent = '';     //variable para generar el archivo plano
-  var tipoRegistro = "02"  //Dato obligatorio
+  var descuentos = []     //Tendrá todos los decuentos de desc_seguridad_social
+  var descuento = {}      //Tendrá un descuento de desc_seguridad_social
+
+  seguridadSocialCrudService.get('desc_seguridad_social','').then(function(response) {
+    descuentos = response.data;
+  });
 
   self.anios = [];
   self.proveedores = [];
@@ -33,20 +38,38 @@ angular.module('ssClienteApp')
     /* Función para generar el archivo, llamada desde el ng-click de la vista
     */
     self.genearArchivo = function() {
-      if (comprobarPeriodo()) {
+      if (comprobarPeriodo() && comprobarDescuentos()) {
         console.log('generar Archivo');
         csvContent = "data:text/csv;charset=utf-8,"; //Se inicializa para que no se concatene la información en case de generar varios archivos seguidos
-        //crearCabecera(self.mesPeriodo,self.anioPeriodo);
-        crearCuerpo(self.mesPeriodo,self.anioPeriodo);
-        console.log(self.proveedores);
-        var encodedUri = encodeURI(csvContent);
-        var link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", "PlanillaTipoE.csv");
-        link.click();
-        console.log('Descargo el archivo');
+        seguridadSocialService.getServicio('desc_seguridad_social','GenerarPlanillaActivos/'+descuento.Id).then(function(response) {
+          console.log('desc_seguridad_social','GenerarPlanillaActivos/'+descuento.Id);
+          console.log(response.data);
+          crearCabecera(self.mesPeriodo, self.anioPeriodo)
+          csvContent += "\n"
+          csvContent += response.data;
+          var encodedUri = encodeURI(csvContent);
+          var link = document.createElement("a");
+          link.setAttribute("href", encodedUri);
+          link.setAttribute("download", "PlanillaTipoE.csv");
+          link.click();
+          console.log('Descargo el archivo');
+        });
       }
     }
+
+    function comprobarDescuentos() {
+      for (var i = 0; i < descuentos.length; i++) {
+        if (descuentos[i].Mes === parseInt(self.mesPeriodo) && descuentos[i].Anio === parseInt(self.anioPeriodo)) {
+          self.divError = false;
+          descuento = descuentos[i];
+          return true
+        } else {
+          self.divError = true;
+          self.errorMensaje = 'El periodo ingresado no tiene información.';
+          return false
+        }
+      }
+    };
 
     /* Función para crear la cabecera del archivo plano
     */
@@ -72,38 +95,6 @@ angular.module('ssClienteApp')
           self.divError = true;
           self.errorMensaje = 'El periodo ingresado no tiene información.';
           console.log('Response es null');
-        }
-      });
-    };
-
-    /* Función para crear el cuerpo del archivo
-    */
-    function crearCuerpo(mes,anio) {
-      escribirArchivo(':v',4);
-      csvContent += '\n';
-      var data = [];
-      agoraService.get('informacion_proveedor','limit=-1&query=TipoPersona:NATURAL').then(function(response) {
-        if (typeof response.data === 'object') {
-          self.proveedores = response.data;
-          data = response.data;
-        } else {
-          console.log("response no es un object");
-        }
-      });
-
-      for(var i = 1; i < data.length; i++) {
-        escribirArchivo(tipoRegistro,2);
-        escribirArchivo(completarSecuencia(i),5);
-        csvContent += '\n';
-        console.log('func');
-      };
-
-      seguridadSocialCrudService.get('desc_seguridad_social_detalle','limit=0&query=IdDescSeguridadSocial.Mes:'+mes+'&IdDescSeguridadSocial.Anio:'+anio)
-      .then(function(response) {
-        if (typeof response.data === 'object') {
-          console.log(response.data);
-        } else {
-          console.log("response no es un object");
         }
       });
     };
