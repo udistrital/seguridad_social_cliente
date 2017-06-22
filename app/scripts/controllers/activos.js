@@ -10,6 +10,7 @@
 angular.module('ssClienteApp')
 .controller('ActivosCtrl', function (seguridadSocialService, titanCrudService, seguridadSocialCrudService, agoraService, $scope) {
   var self = this;
+  var dataSeguridadSocial;
 
   self.novedadesDiv = false;
   self.activosDiv = false;
@@ -23,137 +24,44 @@ angular.module('ssClienteApp')
   * Tipos de pago de seguridad social
   var tiposPagoSeguridadSocial = [];
   seguridadSocialCrudService.get('tipo_pago_seguridad_social','limit=0').then(function(response) {
-    tiposPagoSeguridadSocial = response.data;
-  });
-  */
+  tiposPagoSeguridadSocial = response.data;
+});
+*/
 
-  //Crea un arreglo de objetos para tener los años desde el 1900 hasta el año actual con el metodo getFullYear()
-  function calcularAnios() {
-    for (var i = new Date().getFullYear(); i >= 1900 ; i--) {
-      self.anios.push({ anio: i });
-    }
+//Crea un arreglo de objetos para tener los años desde el 1900 hasta el año actual con el metodo getFullYear()
+function calcularAnios() {
+  for (var i = new Date().getFullYear(); i >= 1900 ; i--) {
+    self.anios.push({ anio: i });
   }
-  calcularAnios();
+}
+calcularAnios();
 
-  var fechaActual = new Date().getFullYear() + '-' + new Date().getMonth() + '-' + new Date().getDate()
-  self.meses = { Enero: 1, Febrero: 2, Marzo: 3, Abril: 4, Mayo: 5, Junio: 6,
-    Julio: 7, Agosto: 8, Septiembre: 9, Octubre: 10, Noviembre: 11, Diciembre: 12};
+var fechaActual = new Date().getFullYear() + '-' + new Date().getMonth() + '-' + new Date().getDate()
+self.meses = { Enero: 1, Febrero: 2, Marzo: 3, Abril: 4, Mayo: 5, Junio: 6,
+  Julio: 7, Agosto: 8, Septiembre: 9, Octubre: 10, Noviembre: 11, Diciembre: 12};
 
-    self.nominaSeleccionada = function() {
-      var pagosNombre = [];
+  self.nominaSeleccionada = function() {
+    var pagosNombre = [];
+    seguridadSocialService.getServicio("desc_seguridad_social/CalcularSegSocial",self.nomina).then(function(response) {
+      if (response.data != null) {
+        var pagos = response.data;
+        //Aquí se va llenando el ui-grid con la información que viene en el arreglo pagos
+        angular.forEach(pagos,function(data){
+          titanCrudService.get('informacion_proveedor', 'limit=-1&fields=Id,NomProveedor&query=Id:' + data.Persona).then(function(response) {
+            self.nombre = response.data[0].NomProveedor;
+            pagosNombre.push({
+              Persona: data.Persona,
+              Nombre: self.nombre,
+              PensionUd: data.PensionUd,
+              SaludUd: data.SaludUd,
+              SaludTotal: data.SaludTotal,
+              PensionTotal: data.PensionTotal,
+              Arl: data.Arl,
+              Caja: data.Caja,
+              Icbf: data.Icbf });
+              self.gridOptions.data = pagosNombre;
+              dataSeguridadSocial = data
 
-      seguridadSocialService.getServicio("desc_seguridad_social/CalcularSegSocial",self.nomina).then(function(response) {
-        if (response.data != null) {
-          var desc_seguridad_social =
-          {
-            Mes: parseInt(self.mesPeriodo),
-            Anio: parseInt(self.anioPeriodo),
-            idNomina: parseInt(self.nomina)
-          };
-          var pagos = response.data;
-          seguridadSocialCrudService.post('desc_seguridad_social', desc_seguridad_social).then(function(response) {
-            var idDesSeguridadSocial = response.data;
-            //Aquí se va llenando el ui-grid con la información que viene en el arreglo pagos
-            angular.forEach(pagos,function(data){
-              titanCrudService.get('informacion_proveedor', 'limit=-1&fields=Id,NomProveedor&query=Id:' + data.Persona).then(function(response) {
-                self.nombre = response.data[0].NomProveedor;
-                pagosNombre.push({
-                  Persona: data.Persona,
-                  Nombre: self.nombre,
-                  PensionUd: data.PensionUd,
-                  SaludUd: data.SaludUd,
-                  SaludTotal: data.SaludTotal,
-                  PensionTotal: data.PensionTotal,
-                  Arl: data.Arl,
-                  Caja: data.Caja,
-                  Icbf: data.Icbf });
-                  self.gridOptions.data = pagosNombre;
-                  var desc_seguridad_social = { Id: parseInt(idDesSeguridadSocial.Id) };
-
-                  var desc_seguridad_social_detalle =
-                  {
-                    IdDetalleLiquidacion: data.IdDetalleLiquidacion,
-                    Valor: 0,
-                    IdDescSeguridadSocial: desc_seguridad_social,
-                    IdTipoPagoSeguridadSocial: -1
-                  };
-
-                  //Guarda salud
-                  seguridadSocialCrudService.get('tipo_pago_seguridad_social','limit=1&query=Nombre:Salud').then(function (response) {
-                    var IdTipoPagoSeguridadSocial = { Id: parseInt(response.data[0].Id) };
-                    desc_seguridad_social_detalle["Valor"] = data.SaludTotal;
-                    desc_seguridad_social_detalle["IdTipoPagoSeguridadSocial"] = IdTipoPagoSeguridadSocial;
-
-                    seguridadSocialCrudService.post('desc_seguridad_social_detalle',desc_seguridad_social_detalle).then(function(response) {
-                      if(typeof response.data === 'object') {
-                        console.log('Salud Registrada');
-                      } else {
-                        console.log('Error al registrar desc_seguridad_social_detalle ' + response.data);
-                      }
-                    });
-                  });
-
-                  //Guarda Pensión
-                  seguridadSocialCrudService.get('tipo_pago_seguridad_social','?limit=1&query=Nombre:Pension').then(function (response) {
-                    var IdTipoPagoSeguridadSocial = { Id: parseInt(response.data[0].Id) };
-                    desc_seguridad_social_detalle["Valor"] = data.PensionTotal;
-                    desc_seguridad_social_detalle["IdTipoPagoSeguridadSocial"] = IdTipoPagoSeguridadSocial;
-
-                    seguridadSocialCrudService.post('desc_seguridad_social_detalle',desc_seguridad_social_detalle).then(function(response) {
-                      if(typeof response.data === 'object') {
-                        console.log('Pensión registrada');
-                      } else {
-                        console.log('Error al registrar desc_seguridad_social_detalle ' + response.data);
-                      }
-                    });
-                  });
-
-                  //Guarda Pensión
-                  seguridadSocialCrudService.get('tipo_pago_seguridad_social','?limit=1&query=Nombre:ARL').then(function (response) {
-                    var IdTipoPagoSeguridadSocial = { Id: parseInt(response.data[0].Id) };
-                    desc_seguridad_social_detalle["Valor"] = data.Arl;
-                    desc_seguridad_social_detalle["IdTipoPagoSeguridadSocial"] = IdTipoPagoSeguridadSocial;
-
-                    seguridadSocialCrudService.post('desc_seguridad_social_detalle',desc_seguridad_social_detalle).then(function(response) {
-                      if(typeof response.data === 'object') {
-                        console.log('ARL Registrada');
-                      } else {
-                        console.log('Error al registrar desc_seguridad_social_detalle ' + response.data);
-                      }
-                    });
-                  });
-
-                  //Guarda Caja
-                  seguridadSocialCrudService.get('tipo_pago_seguridad_social','?limit=1&query=Nombre:Caja').then(function (response) {
-                    var IdTipoPagoSeguridadSocial = { Id: parseInt(response.data[0].Id) };
-                    desc_seguridad_social_detalle["Valor"] = data.Caja;
-                    desc_seguridad_social_detalle["IdTipoPagoSeguridadSocial"] = IdTipoPagoSeguridadSocial;
-
-                    seguridadSocialCrudService.post('desc_seguridad_social_detalle',desc_seguridad_social_detalle).then(function(response) {
-                      if(typeof response.data === 'object') {
-                        console.log('Caja Registrada');
-                      } else {
-                        console.log('Error al registrar desc_seguridad_social_detalle ' + response.data);
-                      }
-                    });
-                  });
-
-                  //Guarda ICBF
-                  seguridadSocialCrudService.get('tipo_pago_seguridad_social','?limit=1&query=Nombre:ICBF').then(function (response) {
-                    var IdTipoPagoSeguridadSocial = { Id: parseInt(response.data[0].Id) };
-                    desc_seguridad_social_detalle["Valor"] = data.Icbf;
-                    desc_seguridad_social_detalle["IdTipoPagoSeguridadSocial"] = IdTipoPagoSeguridadSocial;
-
-                    seguridadSocialCrudService.post('desc_seguridad_social_detalle',desc_seguridad_social_detalle).then(function(response) {
-                      if(typeof response.data === 'object') {
-                        console.log('Icbf Registrada');
-                      } else {
-                        console.log('Error al registrar desc_seguridad_social_detalle ' + response.data);
-                      }
-                    });
-                  });
-
-              });
             });
           });
         } else {
@@ -167,6 +75,108 @@ angular.module('ssClienteApp')
     titanCrudService.get('liquidacion','fields=Nomina,Id').then(function(response) {
       self.nominas = response.data;
     });
+
+    /*
+    * Para guardar los valores de pagos seguridad social
+    */
+    self.guardarValores = function() {
+      var desc_seguridad_social =
+      {
+        Mes: parseInt(self.mesPeriodo),
+        Anio: parseInt(self.anioPeriodo),
+        idNomina: parseInt(self.nomina)
+      };
+
+      seguridadSocialCrudService.post('desc_seguridad_social', desc_seguridad_social).then(function(response) {
+        var idDesSeguridadSocial = response.data;
+        var desc_seguridad_social = { Id: parseInt(idDesSeguridadSocial.Id) };
+        var data = dataSeguridadSocial
+
+        var desc_seguridad_social_detalle =
+        {
+          IdDetalleLiquidacion: data.IdDetalleLiquidacion,
+          Valor: 0,
+          IdDescSeguridadSocial: desc_seguridad_social,
+          IdTipoPagoSeguridadSocial: -1
+        };
+
+        //Guarda salud
+        seguridadSocialCrudService.get('tipo_pago_seguridad_social','limit=1&query=Nombre:Salud').then(function (response) {
+          var IdTipoPagoSeguridadSocial = { Id: parseInt(response.data[0].Id) };
+          desc_seguridad_social_detalle["Valor"] = data.SaludTotal;
+          desc_seguridad_social_detalle["IdTipoPagoSeguridadSocial"] = IdTipoPagoSeguridadSocial;
+
+          console.log('desc_seguridad_social_detalle',desc_seguridad_social_detalle);
+          seguridadSocialCrudService.post('desc_seguridad_social_detalle',desc_seguridad_social_detalle).then(function(response) {
+            if(typeof response.data === 'object') {
+              console.log('Salud Registrada');
+            } else {
+              console.log('Error al registrar desc_seguridad_social_detalle ' + response.data);
+            }
+          });
+        });
+
+        //Guarda Pensión
+        seguridadSocialCrudService.get('tipo_pago_seguridad_social','?limit=1&query=Nombre:Pension').then(function (response) {
+          var IdTipoPagoSeguridadSocial = { Id: parseInt(response.data[0].Id) };
+          desc_seguridad_social_detalle["Valor"] = data.PensionTotal;
+          desc_seguridad_social_detalle["IdTipoPagoSeguridadSocial"] = IdTipoPagoSeguridadSocial;
+
+          seguridadSocialCrudService.post('desc_seguridad_social_detalle',desc_seguridad_social_detalle).then(function(response) {
+            if(typeof response.data === 'object') {
+              console.log('Pensión registrada');
+            } else {
+              console.log('Error al registrar desc_seguridad_social_detalle ' + response.data);
+            }
+          });
+        });
+
+        //Guarda Pensión
+        seguridadSocialCrudService.get('tipo_pago_seguridad_social','?limit=1&query=Nombre:ARL').then(function (response) {
+          var IdTipoPagoSeguridadSocial = { Id: parseInt(response.data[0].Id) };
+          desc_seguridad_social_detalle["Valor"] = data.Arl;
+          desc_seguridad_social_detalle["IdTipoPagoSeguridadSocial"] = IdTipoPagoSeguridadSocial;
+
+          seguridadSocialCrudService.post('desc_seguridad_social_detalle',desc_seguridad_social_detalle).then(function(response) {
+            if(typeof response.data === 'object') {
+              console.log('ARL Registrada');
+            } else {
+              console.log('Error al registrar desc_seguridad_social_detalle ' + response.data);
+            }
+          });
+        });
+
+        //Guarda Caja
+        seguridadSocialCrudService.get('tipo_pago_seguridad_social','?limit=1&query=Nombre:Caja').then(function (response) {
+          var IdTipoPagoSeguridadSocial = { Id: parseInt(response.data[0].Id) };
+          desc_seguridad_social_detalle["Valor"] = data.Caja;
+          desc_seguridad_social_detalle["IdTipoPagoSeguridadSocial"] = IdTipoPagoSeguridadSocial;
+
+          seguridadSocialCrudService.post('desc_seguridad_social_detalle',desc_seguridad_social_detalle).then(function(response) {
+            if(typeof response.data === 'object') {
+              console.log('Caja Registrada');
+            } else {
+              console.log('Error al registrar desc_seguridad_social_detalle ' + response.data);
+            }
+          });
+        });
+
+        //Guarda ICBF
+        seguridadSocialCrudService.get('tipo_pago_seguridad_social','?limit=1&query=Nombre:ICBF').then(function (response) {
+          var IdTipoPagoSeguridadSocial = { Id: parseInt(response.data[0].Id) };
+          desc_seguridad_social_detalle["Valor"] = data.Icbf;
+          desc_seguridad_social_detalle["IdTipoPagoSeguridadSocial"] = IdTipoPagoSeguridadSocial;
+
+          seguridadSocialCrudService.post('desc_seguridad_social_detalle',desc_seguridad_social_detalle).then(function(response) {
+            if(typeof response.data === 'object') {
+              console.log('Icbf Registrada');
+            } else {
+              console.log('Error al registrar desc_seguridad_social_detalle ' + response.data);
+            }
+          });
+        });
+      });
+    }
 
     self.gridOptions = {
       enableFiltering : true,

@@ -81,7 +81,7 @@ angular.module('ssClienteApp')
         self.rangosEdad = response.data;
     });
 
-    titanCrudService.get('categoria_beneficiario', 'limit=-1&query=AplicaSeguridadSocial:SI').then(function(response) {
+    titanCrudService.get('categoria_beneficiario', '').then(function(response) {
       self.tiposParentesco = response.data;
     });
 
