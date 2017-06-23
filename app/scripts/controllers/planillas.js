@@ -58,17 +58,24 @@ angular.module('ssClienteApp')
     }
 
     function comprobarDescuentos() {
-      for (var i = 0; i < descuentos.length; i++) {
-        if (descuentos[i].Mes === parseInt(self.mesPeriodo) && descuentos[i].Anio === parseInt(self.anioPeriodo)) {
-          self.divError = false;
-          descuento = descuentos[i];
-          return true
-        } else {
-          self.divError = true;
-          self.errorMensaje = 'El periodo ingresado no tiene información.';
-          return false
+      if (descuentos == null) {
+        self.divError = true;
+        self.errorMensaje = 'No se encontraron registros de descuentos';
+        return false
+      } else {
+        for (var i = 0; i < descuentos.length; i++) {
+          if (descuentos[i].Mes === parseInt(self.mesPeriodo) && descuentos[i].Anio === parseInt(self.anioPeriodo)) {
+            self.divError = false;
+            descuento = descuentos[i];
+            return true
+          } else {
+            self.divError = true;
+            self.errorMensaje = 'El periodo ingresado no tiene información.';
+            return false
+          }
         }
       }
+
     };
 
     /* Función para crear la cabecera del archivo plano
