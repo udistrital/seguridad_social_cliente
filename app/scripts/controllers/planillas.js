@@ -42,8 +42,6 @@ angular.module('ssClienteApp')
         console.log('generar Archivo');
         csvContent = "data:text/csv;charset=utf-8,"; //Se inicializa para que no se concatene la información en case de generar varios archivos seguidos
         seguridadSocialService.getServicio('desc_seguridad_social','GenerarPlanillaActivos/'+descuento.Id).then(function(response) {
-          console.log('desc_seguridad_social','GenerarPlanillaActivos/'+descuento.Id);
-          console.log(response.data);
           crearCabecera(self.mesPeriodo, self.anioPeriodo)
           csvContent += "\n"
           csvContent += response.data;
