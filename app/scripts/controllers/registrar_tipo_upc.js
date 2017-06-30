@@ -38,7 +38,7 @@ angular.module('ssClienteApp')
     cellTemplate: '<div align="center" ng-init="row.entity.ZonasAlejadas=0">{{row.entity.ZonasAlejadas | currency:undefined:0}}</div>' }
   ];
 
-  seguridadSocialCrudService.get('edad_upc','limit=-1&query=Vigencia:' + new Date().getFullYear() + '&sortby=EdadMin&order=asc').then(function(response) {
+  seguridadSocialCrudService.get('rango_edad_upc','limit=-1&sortby=EdadMin&order=asc').then(function(response) {
     self.gridOptions.data = response.data;
   });
 
@@ -62,7 +62,7 @@ angular.module('ssClienteApp')
   }
 
   function guardarValores(zona, edad, valor) {
-    seguridadSocialCrudService.get('tipo_zona_upc','limit=1&fields=Id&query=Nombre:' + zona).then(function(response) {
+    seguridadSocialCrudService.get('zona_upc','limit=1&fields=Id&query=Nombre:' + zona).then(function(response) {
       var idZona = response.data[0];
       console.log(idZona.Id);
 

@@ -14,7 +14,7 @@ angular.module('ssClienteApp')
   var descuentos = []     //Tendrá todos los decuentos de desc_seguridad_social
   var descuento = {}      //Tendrá un descuento de desc_seguridad_social
 
-  seguridadSocialCrudService.get('desc_seguridad_social','').then(function(response) {
+  seguridadSocialCrudService.get('periodo_pago','').then(function(response) {
     descuentos = response.data;
   });
 
@@ -41,7 +41,7 @@ angular.module('ssClienteApp')
       if (comprobarPeriodo() && comprobarDescuentos()) {
         console.log('generar Archivo');
         csvContent = "data:text/csv;charset=utf-8,"; //Se inicializa para que no se concatene la información en case de generar varios archivos seguidos
-        seguridadSocialService.getServicio('desc_seguridad_social','GenerarPlanillaActivos/'+descuento.Id).then(function(response) {
+        seguridadSocialService.getServicio('planillas','GenerarPlanillaActivos/'+descuento.Id).then(function(response) {
           crearCabecera(self.mesPeriodo, self.anioPeriodo)
           csvContent += "\n"
           csvContent += response.data;
@@ -86,7 +86,7 @@ angular.module('ssClienteApp')
       escribirArchivo("S01",51);
       escribirArchivo("14-23",6);
 
-      seguridadSocialCrudService.get('desc_seguridad_social','limit=1&query=Mes:'+self.mesPeriodo+',Anio:'+self.anioPeriodo).then(function(response) {
+      seguridadSocialCrudService.get('periodo_pago','limit=1&query=Mes:'+self.mesPeriodo+',Anio:'+self.anioPeriodo).then(function(response) {
         if (response.data !== null) {
           self.divError = false;
           console.log("Response: " + response.data);

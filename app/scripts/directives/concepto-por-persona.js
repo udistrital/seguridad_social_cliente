@@ -14,7 +14,7 @@ angular.module('ssClienteApp')
       persona:'='
     },
     templateUrl: 'views/directives/concepto-por-persona.html',
-    controller:function(seguridadSocialService, titanCrudService, $scope){
+    controller:function(titanCrudService, $scope){
       var self = this;
 
       self.gridOptions = {

@@ -25,7 +25,7 @@ angular.module('ssClienteApp')
       { field: 'Documento', cellTemplate: '<div align="center">{{row.entity.Documento}}</div>', headerCellTemplate: '<div align="center"><h5> Documento </h5></div>' },
       { field: 'Nombre', cellTemplate: '<div align="center">{{row.entity.Nombre}}</div>', headerCellTemplate: '<div align="center"><h5> Nombre </h5></div>' },
       { field: 'Apellido', cellTemplate: '<div align="center">{{row.entity.Apellido}}</div>', headerCellTemplate: '<div align="center"><h5> Apellido </h5></div>' },
-      { field: 'IdTipoUpc.Valor',  cellTemplate: '<div align="center">{{row.entity.IdTipoUpc.Valor | currency:"$":0}}</div>', headerCellTemplate: '<div align="center"><h5> Valor </h5></div>'},
+      { field: 'TipoUpc.Valor',  cellTemplate: '<div align="center">{{row.entity.IdTipoUpc.Valor | currency:"$":0}}</div>', headerCellTemplate: '<div align="center"><h5> Valor </h5></div>'},
       { name: 'Opciones',
       cellTemplate:
       '<center>' +
@@ -55,7 +55,7 @@ self.load_row = function(row,opcion) {
       cancelButtonText: 'Cancelar'
 }).then(function () {
     var upcAdicional = row.entity;
-    upcAdicional.Estado = "Inactivo";
+    upcAdicional.Activo = false;
     seguridadSocialCrudService.put('upc_adicional',upcAdicional.Id,upcAdicional).then(function(response) {
       console.log(response.data);
       if(response.data === 'OK') {
@@ -79,7 +79,7 @@ self.load_row = function(row,opcion) {
 };
 
 function cargarGrilla() {
-  seguridadSocialCrudService.get('upc_adicional','limit=-1&query=Estado:Activo').then(function(response) {
+  seguridadSocialCrudService.get('upc_adicional','limit=-1&query=Activo:true').then(function(response) {
     self.gridOptions.data = response.data;
   });
 }

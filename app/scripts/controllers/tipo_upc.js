@@ -25,12 +25,12 @@ angular.module('ssClienteApp')
             columnDefs: [
               { name: 'Id', visible: false},
               { name: 'Valor', cellTemplate: '<div align="center">{{row.entity.Valor | currency:"$":0}}</div>', headerCellTemplate: '<div align="center"><h5>Valor</h5></div>'},
-              { name: 'IdEdadUpc.EdadMin', cellTemplate: '<div align="center">{{row.entity.IdEdadUpc.EdadMin}}</div>', headerCellTemplate: '<div align="center"><h5>Edad Mínima</h5></div>'},
-              { name: 'IdEdadUpc.EdadMax', cellTemplate: '<div align="center">{{row.entity.IdEdadUpc.EdadMax}}</div>', headerCellTemplate: '<div align="center"><h5>Edad Máxima</h5></div>'},
-              { name: 'IdEdadUpc.AplicaGenero', cellTemplate: '<div align="center">{{row.entity.IdEdadUpc.AplicaGenero}}</div>', headerCellTemplate: '<div align="center"><h5>Aplica Genero</h5></div>'}
+              { name: 'RangoEdadUpc.EdadMin', cellTemplate: '<div align="center">{{row.entity.IdEdadUpc.EdadMin}}</div>', headerCellTemplate: '<div align="center"><h5>Edad Mínima</h5></div>'},
+              { name: 'RangoEdadUpc.EdadMax', cellTemplate: '<div align="center">{{row.entity.IdEdadUpc.EdadMax}}</div>', headerCellTemplate: '<div align="center"><h5>Edad Máxima</h5></div>'},
+              { name: 'RangoEdadUpc.AplicaGenero', cellTemplate: '<div align="center">{{row.entity.IdEdadUpc.AplicaGenero}}</div>', headerCellTemplate: '<div align="center"><h5>Aplica Genero</h5></div>'}
             ]};
 
-            seguridadSocialCrudService.get('tipo_upc','?limit=-1&query=IdTipoZonaUpc:' + row.entity.Id)
+            seguridadSocialCrudService.get('tipo_upc','?limit=-1&query=ZonaUpc:' + row.entity.Id)
               .then(function(response) {
                 console.log(response.data);
                 row.entity.subGridOptions.data = response.data;
@@ -45,7 +45,7 @@ angular.module('ssClienteApp')
       {field: 'Nombre', visible: true, cellTemplate: '<div class="col-xs-offset-1"><label>{{row.entity.Nombre}}</label></div>',headerCellTemplate: '<div align="center"><h5>Zonas</h5></div>'},
     ];
 
-    seguridadSocialCrudService.get('tipo_zona_upc','limit=-1').then(function(response) {
+    seguridadSocialCrudService.get('zona_upc','limit=-1').then(function(response) {
       self.gridOptions.data = response.data;
     });
   });

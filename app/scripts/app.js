@@ -114,6 +114,11 @@ angular
         controller: 'PlanillasCtrl',
         controllerAs: 'planillas'
       })
+        .when('/vista_prueba', {
+        templateUrl: 'views/vista_prueba.html',
+        controller: 'VistaPruebaCtrl',
+        controllerAs: 'vistaPrueba'
+      })
       .otherwise({
         redirectTo: '/'
       });

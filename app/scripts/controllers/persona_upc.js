@@ -71,11 +71,11 @@ angular.module('ssClienteApp')
   }
   //autocomplete
 
-  seguridadSocialCrudService.get('tipo_zona_upc','limit=-1').then(function(response) {
+  seguridadSocialCrudService.get('zona_upc','limit=-1').then(function(response) {
     self.tipoZona = response.data;
   });
 
-  seguridadSocialCrudService.get('edad_upc', 'limit=-1&query=Vigencia:' + new Date().getFullYear() + '&sortby=EdadMin&order=asc').then(
+  seguridadSocialCrudService.get('rango_edad_upc', 'limit=-1&query=Vigencia:' + new Date().getFullYear() + '&sortby=EdadMin&order=asc').then(
     function(response) {
         console.log(response.data);
         self.rangosEdad = response.data;
@@ -106,7 +106,7 @@ angular.module('ssClienteApp')
     }
 
     function traerValorUpc(idZona, idRangoEdad) {
-      seguridadSocialCrudService.get('tipo_upc','limit=1&&query=IdTipoZonaUpc:'+ idZona +',idEdadUpc:' + idRangoEdad).then(function(response) {
+      seguridadSocialCrudService.get('tipo_upc','limit=1&&query=TipoZonaUpc:'+ idZona +',RangoEdadUpc:' + idRangoEdad).then(function(response) {
         self.variablesForm.valorUpc = response.data[0];
         console.log('valor upc: ' + self.valorUpc);
       });
