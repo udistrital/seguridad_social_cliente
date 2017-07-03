@@ -10,11 +10,14 @@
 var text_es = {
   TITULO: "GENERATOR-OAS",
   MENSAJE_INICIAL: "Ahora puede comenzar con el desarrollo ...",
+  ACTIVO: "Activo",
+  PENSION: "Pensión"
 };
 
 var text_en = {
   TITULO: "GENERATOR-OAS",
-  MENSAJE_INICIAL: "Now get to start to develop ..."
+  MENSAJE_INICIAL: "Now get to start to develop ...",
+  ACTIVO: "Active"
 };
 
 angular.module('ssClienteApp')

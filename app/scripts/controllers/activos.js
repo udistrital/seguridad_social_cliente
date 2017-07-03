@@ -8,7 +8,7 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-.controller('ActivosCtrl', function (seguridadSocialService, titanCrudService, seguridadSocialCrudService, agoraService, $scope) {
+.controller('ActivosCtrl', function (seguridadSocialService, titanCrudService, seguridadSocialCrudService, agoraService, $scope, $translate) {
   var self = this;
   var dataDescuentos = [];
 
@@ -234,8 +234,8 @@ self.nominaSeleccionada = function() {
         cellTemplate: '<div align="right">{{row.entity.SaludTotal | currency}}</div>'
       },
       {
-        field: 'PensionTotal', visible: true, displayName : 'Pensión',
-        headerCellTemplate: '<div align="center">Pensión</div>',
+        field: 'PensionTotal', visible: true, displayName : $translate.instant('PENSION'),
+        headerCellTemplate: '<div align="center">{{\'PENSION\' | translate }}</div>',
         cellFilter : 'currency',
         cellTemplate: '<div align="right">{{row.entity.PensionTotal | currency}}</div>'
       },
