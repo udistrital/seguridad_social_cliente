@@ -6,4 +6,5 @@
 app/scripts/services/rulerservice.js
 app/scripts/services/seguridadsocialservice.js
 app/scripts/services/titancrudservice.js
+app/scripts/services/seguridad_social_crud_service.js
 .DS_Store
