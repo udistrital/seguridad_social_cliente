@@ -12,40 +12,45 @@
           <div class="form-group row">
             <label for="input_nombre" class="col-sm-4 col-form-label">Nombre</label>
             <div class="col-xs-4">
-              <input type="text" class="form-control" name="input_nombre" placeholder="Nombre">
+              <input type="text" class="form-control" name="input_nombre" placeholder="Nombre"
+                ng-model="aportante.infoAportante.Nombre">
             </div>
           </div>
 
            <div class="form-group row">
              <label for="input_identificacion" class="col-sm-4 col-form-label">Identificación</label>
              <div class="col-xs-4">
-               <input type="text" class="form-control" name="input_identificacion" placeholder="Identificación">
+               <input type="text" class="form-control" name="input_identificacion" placeholder="Identificación"
+                ng-model="aportante.infoAportante.Identificacion">
             </div>
            </div>
 
            <div class="form-group row">
              <label for="input_arp" class="col-sm-4 col-form-label">Código ARL</label>
              <div class="col-xs-4">
-               <input type="text" class="form-control" name="input_arp" placeholder="Código ARP">
+               <input type="text" class="form-control" name="input_arp" placeholder="Código ARP"
+                ng-model="aportante.infoAportante.CodArl">
              </div>
            </div>
 
            <div class="form-group row">
              <label for="input_departamento" class="col-sm-4 col-form-label">Cód Departamento</label>
              <div class="col-xs-4">
-               <input type="text" class="form-control" name="input_departamento" placeholder="Código Departamento">
+               <input type="text" class="form-control" name="input_departamento" placeholder="Código Departamento"
+                ng-model="aportante.infoAportante.CodDepartamento">
              </div>
            </div>
 
            <div class="form-group row">
              <label for="input_municipio" class="col-sm-4 col-form-label">Cód Municipio</label>
              <div class="col-xs-4">
-               <input type="text" class="form-control" name="input_municipio" placeholder="Código Municipio">
+               <input type="text" class="form-control" name="input_municipio" placeholder="Código Municipio"
+                ng-model="aportante.infoAportante.CodMunicipio">
              </div>
            </div>
          </div>
 
-         <button type="button" class="col-md-offset-6 btn btn-primary">Guardar</button>
+         <button type="button" class="col-md-offset-6 btn btn-primary" ng-click="aportante.guardar()">Guardar</button>
        </form>
     </div>
 

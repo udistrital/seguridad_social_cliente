@@ -119,6 +119,16 @@ angular
         controller: 'VistaPruebaCtrl',
         controllerAs: 'vistaPrueba'
       })
+      .when('/ingreso', {
+        templateUrl: 'views/ingreso.html',
+        controller: 'IngresoCtrl',
+        controllerAs: 'ingreso'
+      })
+      .when('/retiro', {
+        templateUrl: 'views/retiro.html',
+        controller: 'RetiroCtrl',
+        controllerAs: 'retiro'
+      })
       .otherwise({
         redirectTo: '/'
       });
