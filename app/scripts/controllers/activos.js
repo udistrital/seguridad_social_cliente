@@ -83,7 +83,6 @@ self.nominaSeleccionada = function() {
             Icbf: data.Icbf });
             self.gridOptions.data = pagosNombre;
             dataDescuentos.push(data)
-
           });
         });
       } else {

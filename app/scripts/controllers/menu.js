@@ -32,11 +32,6 @@ angular.module('ssClienteApp')
       "Url": "calculos",
       "Opciones": null
     },{
-      "Id": 4,
-      "Nombre": "Entidades",
-      "Url": "entidades",
-      "Opciones": null
-    }, {
       "Id": 5,
       "Nombre": "Parámetros IBC",
       "Url": "ibc",
