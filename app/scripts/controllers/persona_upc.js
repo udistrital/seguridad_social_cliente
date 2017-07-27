@@ -75,7 +75,7 @@ angular.module('ssClienteApp')
     self.tipoZona = response.data;
   });
 
-  seguridadSocialCrudService.get('rango_edad_upc', 'limit=-1&query=Vigencia:' + new Date().getFullYear() + '&sortby=EdadMin&order=asc').then(
+  seguridadSocialCrudService.get('rango_edad_upc', 'limit=-1&sortby=EdadMin&order=asc').then(
     function(response) {
         console.log(response.data);
         self.rangosEdad = response.data;
@@ -106,7 +106,7 @@ angular.module('ssClienteApp')
     }
 
     function traerValorUpc(idZona, idRangoEdad) {
-      seguridadSocialCrudService.get('tipo_upc','limit=1&&query=TipoZonaUpc:'+ idZona +',RangoEdadUpc:' + idRangoEdad).then(function(response) {
+      seguridadSocialCrudService.get('tipo_upc','limit=1&query=ZonaUpc:'+ idZona +',RangoEdadUpc:' + idRangoEdad).then(function(response) {
         self.variablesForm.valorUpc = response.data[0];
         console.log('valor upc: ' + self.valorUpc);
       });
@@ -121,13 +121,15 @@ angular.module('ssClienteApp')
       var idTipoUpc = { Id: self.variablesForm.valorUpc.Id };
       var upcAdicional = {
         PersonaAsociada: idProveedor,
-        TipoDocumento: self.tipoIdentificacion,
-        Documento: self.variablesForm.numDocumento,
-        Nombre: self.variablesForm.nombre,
-        Apellido: self.variablesForm.apellido,
-        IdParentesco: self.parentesco.Id,
-        IdTipoUpc: idTipoUpc,
-        Estado: 'Activo'
+        ParametroEstandar: parseInt(self.tipoIdentificacion),
+        NumDocumento: self.variablesForm.numDocumento,
+        TipoUpc: idTipoUpc,
+        PrimerNombre: self.variablesForm.nombre,
+        SegundoNombre: self.variablesForm.segundoNombre,
+        PrimerApellido: self.variablesForm.apellido,
+        SegundoApellido: self.variablesForm.segundoApellido,
+        FechaDeNacimiento: self.variablesForm.fechaNacimiento,
+        Activo: true
       };
 
       seguridadSocialCrudService.post('upc_adicional',upcAdicional).then(function(response) {

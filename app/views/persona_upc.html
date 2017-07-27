@@ -25,17 +25,34 @@
       </div>
     </div>
 
+    <h3> Información de la UPC </h3>
+    <hr>
     <div class="form-group row">
-      <label for="input_nombre" class="col-sm-4 col-form-label col-md-offset-1"> Nombre de la UPC </label>
+      <label for="input_nombre" class="col-sm-4 col-form-label col-md-offset-1"> Primer Nombre </label>
       <div class="col-xs-4">
-        <input ng-model="personaUpc.variablesForm.nombre" type="text" class="form-control" name="input_nombre" placeholder="Nombre">
+        <input ng-model="personaUpc.variablesForm.nombre" type="text" class="form-control" name="input_nombre" placeholder="Primer Nombre">
+      </div>
+      <label for="input_nombre2" class="col-sm-4 col-form-label col-md-offset-1"> Segundo Nombre </label>
+      <div class="col-xs-4">
+        <input ng-model="personaUpc.variablesForm.segundoNombre" type="text" class="form-control" name="input_nombre2" placeholder="Segundo Nombre">
       </div>
     </div>
 
     <div class="form-group row">
-      <label for="input_apellido" class="col-sm-4 col-form-label col-md-offset-1"> Apellido de la UPC </label>
+      <label for="input_apellido" class="col-sm-4 col-form-label col-md-offset-1"> Primer Apellido </label>
       <div class="col-xs-4">
-        <input ng-model="personaUpc.variablesForm.apellido" type="text" class="form-control" name="input_apellido" placeholder="Apellido">
+        <input ng-model="personaUpc.variablesForm.apellido" type="text" class="form-control" name="input_apellido" placeholder="Primer Apellido">
+      </div>
+      <label for="input_apellido2" class="col-sm-4 col-form-label col-md-offset-1"> Segundo Apellido </label>
+      <div class="col-xs-4">
+        <input ng-model="personaUpc.variablesForm.segundoApellido" type="text" class="form-control" name="input_apellido2" placeholder="Segundo Apellido">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="input_fechaNacimiento" class="col-sm-4 col-form-label col-md-offset-1"> Fecha de Nacimiento </label>
+      <div class="col-xs-4">
+        <input ng-model="personaUpc.variablesForm.fechaNacimiento" type="date" class="form-control" name="input_fechaNacimiento">
       </div>
     </div>
 
@@ -91,6 +108,7 @@
     </div>
   </div>
 
+<!-- Parantesco
   <div class="form-group row">
     <label for="input_parentesco" class="col-sm-4 col-form-label col-md-offset-1"> Parentesco </label>
     <div class="col-xs-2">
@@ -102,6 +120,7 @@
       </select>
     </div>
   </div>
+-->
 
 </div>
 

@@ -57,23 +57,23 @@ angular.module('ssClienteApp')
         'Registro Correcto',
         'Nuevos Valores Asignados',
         'success'
-      )
+      );
     }
   }
 
   function guardarValores(zona, edad, valor) {
     seguridadSocialCrudService.get('zona_upc','limit=1&fields=Id&query=Nombre:' + zona).then(function(response) {
       var idZona = response.data[0];
-      console.log(idZona.Id);
 
       var IdEdadUpc = { Id: edad };
       var IdTipoZonaUpc = { Id: idZona.Id };
 
       var tipoUpc = {
         Valor: parseInt(valor),
-        Acuerdo: '2017',
-        IdEdadUpc: IdEdadUpc,
-        IdTipoZonaUpc: IdTipoZonaUpc
+        Vigencia: 2017,
+        ZonaUpc: IdTipoZonaUpc,
+        RangoEdadUpc: IdEdadUpc,
+        Resolucon: ''
       };
 
       seguridadSocialCrudService.post('tipo_upc',tipoUpc).then(function(response) {

@@ -66,6 +66,12 @@ angular.module('ssClienteApp')
       "Opciones": null
     },
     {
+      "Id":  4,
+      "Nombre": "Cambio de EPS",
+      "Url": "cambio_entidad",
+      "Opciones": null
+    },
+    {
       "Id": 11,
       "Nombre": "UPC",
       "Url": "",

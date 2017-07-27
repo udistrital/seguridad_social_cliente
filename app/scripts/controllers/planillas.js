@@ -56,6 +56,7 @@ angular.module('ssClienteApp')
     }
 
     function comprobarDescuentos() {
+
       if (descuentos == null) {
         self.divError = true;
         self.errorMensaje = 'No se encontraron registros de descuentos';
@@ -66,14 +67,12 @@ angular.module('ssClienteApp')
             self.divError = false;
             descuento = descuentos[i];
             return true
-          } else {
-            self.divError = true;
-            self.errorMensaje = 'El periodo ingresado no tiene información.';
-            return false
           }
         }
+        self.divError = true;
+        self.errorMensaje = 'El periodo ingresado no tiene información.';
+        return false
       }
-
     };
 
     /* Función para crear la cabecera del archivo plano

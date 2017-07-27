@@ -129,6 +129,11 @@ angular
         controller: 'RetiroCtrl',
         controllerAs: 'retiro'
       })
+      .when('/cambio_entidad', {
+        templateUrl: 'views/cambio_entidad.html',
+        controller: 'CambioEntidadCtrl',
+        controllerAs: 'cambioEntidad'
+      })
       .otherwise({
         redirectTo: '/'
       });
