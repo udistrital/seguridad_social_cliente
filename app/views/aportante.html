@@ -1,24 +1,23 @@
 <br>
 <div class="panel panel-default">
     <div class="panel-heading">
-      <h4>Información del Aportante</h4>
+      <h4>{{'APORTANTE.INFORMACION_APORTANTE' | translate}}</h4>
     </div>
     <div class="panel-body">
       <form role="form">
         <div id="datosAportante">
-          <h2> Información del Aportante </h2>
+          <h2>{{ 'APORTANTE.INFORMACION_APORTANTE' | translate }}</h2>
           <hr />
 
           <div class="form-group row">
-            <label for="input_nombre" class="col-sm-4 col-form-label">Nombre</label>
+            <label for="input_nombre" class="col-sm-4 col-form-label">{{ 'APORTANTE.NOMBRE' | translate }}</label>
             <div class="col-xs-4">
               <input type="text" class="form-control" name="input_nombre" placeholder="Nombre"
                 ng-model="aportante.infoAportante.Nombre">
             </div>
           </div>
-
            <div class="form-group row">
-             <label for="input_identificacion" class="col-sm-4 col-form-label">Identificación</label>
+             <label for="input_identificacion" class="col-sm-4 col-form-label">{{ 'APORTANTE.IDENTIFICACION' | translate }}</label>
              <div class="col-xs-4">
                <input type="text" class="form-control" name="input_identificacion" placeholder="Identificación"
                 ng-model="aportante.infoAportante.Identificacion">
@@ -26,7 +25,7 @@
            </div>
 
            <div class="form-group row">
-             <label for="input_arp" class="col-sm-4 col-form-label">Código ARL</label>
+             <label for="input_arp" class="col-sm-4 col-form-label">{{ 'APORTANTE.COD_ARL' | translate }}</label>
              <div class="col-xs-4">
                <input type="text" class="form-control" name="input_arp" placeholder="Código ARP"
                 ng-model="aportante.infoAportante.CodArl">
@@ -34,7 +33,7 @@
            </div>
 
            <div class="form-group row">
-             <label for="input_departamento" class="col-sm-4 col-form-label">Cód Departamento</label>
+             <label for="input_departamento" class="col-sm-4 col-form-label">{{ 'APORTANTE.COD_DEPARTAMENTO' | translate }}</label>
              <div class="col-xs-4">
                <input type="text" class="form-control" name="input_departamento" placeholder="Código Departamento"
                 ng-model="aportante.infoAportante.CodDepartamento">
@@ -42,7 +41,7 @@
            </div>
 
            <div class="form-group row">
-             <label for="input_municipio" class="col-sm-4 col-form-label">Cód Municipio</label>
+             <label for="input_municipio" class="col-sm-4 col-form-label">{{ 'APORTANTE.COD_MUNICIPIO' | translate }}</label>
              <div class="col-xs-4">
                <input type="text" class="form-control" name="input_municipio" placeholder="Código Municipio"
                 ng-model="aportante.infoAportante.CodMunicipio">
@@ -50,7 +49,7 @@
            </div>
          </div>
 
-         <button type="button" class="col-md-offset-6 btn btn-primary" ng-click="aportante.guardar()">Guardar</button>
+         <button type="button" class="col-md-offset-6 btn btn-primary" ng-click="aportante.guardar()">{{ 'BTN.GUARDAR' | translate }}</button>
        </form>
     </div>
 
