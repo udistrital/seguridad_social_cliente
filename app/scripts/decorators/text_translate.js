@@ -36,6 +36,15 @@ var text_es = {
     TARIFA_CCF: "Tarifa de Caja de Compensación Familiar",
     APORTE_ICBF: "Aporte ICBF"
   },
+  INCAPACIDADES: {
+    TITULO: "Incapacidades",
+    NOMBRE: "Nombre",
+    TIPO: "Tipo de Incapacidad",
+    FECHA_INCIO: "Fecha de Inicio",
+    FECHA_FIN: "Fecha de Finalización",
+    SIN_RESULTADOS: "No se encontraron resultados de ",
+    SELECCIONE_OPCION: "Seleccione una opción"
+  },
   ACTIVO: {
     ANIO: "Año",
     MES: "Mes"
@@ -69,6 +78,15 @@ var text_en = {
     LICENCIA_NO_REMUNERADA: "Unpaid License",
     TARIFA_CCF: "Family Compensation Fund Rate",
     APORTE_ICBF: "ICBF Rate"
+  },
+  INCAPACIDADES: {
+    TITULO: "Disabilities",
+    NOMBRE: "Name",
+    TIPO: "Disabilities Type",
+    FECHA_INCIO: "Start date",
+    FECHA_FIN: "Finish date",
+    SIN_RESULTADOS: "No result found ",
+    SELECCIONE_OPCION: "Select one"
   },
   ACTIVO: {
     ANIO: "Year",

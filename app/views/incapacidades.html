@@ -2,13 +2,13 @@
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h4>Incapacidades</h4>
+      <h4> {{ 'INCAPACIDADES.TITULO' | translate }} </h4>
     </div>
     <div class="panel-body">
       <form class="" action="incapacidades.html" method="post">
         <div class="row">
           <div class="col-md-4 col-md-offset-2">
-            <label> Nombre </label>
+            <label> {{ 'INCAPACIDADES.NOMBRE' | translate }} </label>
           </div>
           <div class="col-xs-4">
             <md-content class="form-control">
@@ -26,7 +26,7 @@
                 <span md-highlight-text="incapcidades.searchText" md-highlight-flags="^i">{{item.display}}</span>
               </md-item-template>
               <md-not-found>
-                No se encontraron resultados de  "{{incapcidades.searchText}}".
+                {{ 'INCAPACIDADES.SIN_RESULTADOS' | translate }} "{{incapcidades.searchText}}".
               </md-not-found>
             </md-autocomplete>
             <br>
@@ -37,11 +37,11 @@
 
       <div class="row">
         <div class="col-md-4 col-md-offset-2">
-          <label> Seleccione el tipo de Incapacidad</label>
+          <label> {{ 'INCAPACIDADES.TIPO' | translate }} </label>
         </div>
         <div class="col-md-4">
           <select ng-model="incapacidades.tipoIncapacidad" class="form-control">
-            <option value="0" disabled>Seleccione una opción</option>
+            <option value="0" disabled> {{ 'INCAPACIDADES.SELECCIONE_OPCION' | translate }} </option>
             <option ng-repeat="i in incapacidades.incapacidades" value="{{i.Id}}">{{i.AliasConcepto}}</option>
           </select>
         </div>
@@ -49,14 +49,14 @@
       <br>
 
       <div class="form-group row">
-        <label class="col-md-4 col-md-offset-2 control-label" for="txtFechaDesde">Fecha de Inicio</label>
+        <label class="col-md-4 col-md-offset-2 control-label" for="txtFechaDesde"> {{ 'INCAPACIDADES.FECHA_INCIO' | translate }} </label>
         <div class="col-md-4">
           <md-datepicker id="txtFechaDesde" name="txtFechaDesde" ng-model="incapacidades.fechaDesde" md-placeholder="Fecha de inicio"></md-datepicker>
         </div>
       </div>
 
       <div class="form-group row">
-        <label class="col-md-4 col-md-offset-2 control-label" for="txtFechaDesde">Fecha de Finalización</label>
+        <label class="col-md-4 col-md-offset-2 control-label" for="txtFechaDesde"> {{ 'INCAPACIDADES.FECHA_FIN' | translate }} </label>
         <div class="col-md-4">
           <md-datepicker id="txtFechaDesde" name="txtFechaDesde" ng-model="incapacidades.fechaHasta" md-placeholder="Fecha de inicio"></md-datepicker>
         </div>
@@ -64,7 +64,7 @@
 
       <div class="row">
         <div class="col-md-4">
-          <button type="button" name="button" ng-click="incapacidades.registrarIncapacidad()" class="btn btn-success"> Guardar </button>
+          <button type="button" name="button" ng-click="incapacidades.registrarIncapacidad()" class="btn btn-success"> {{ 'BTN.GUARDAR' | translate }} </button>
         </div>
       </div>
     </form>
