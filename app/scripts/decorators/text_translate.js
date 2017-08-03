@@ -24,6 +24,18 @@ var text_es = {
     COD_DEPARTAMENTO: "Código Departamento",
     COD_MUNICIPIO: "Código Municipio"
   },
+  CALCULO: {
+    TITULO_PARAMETROS: "Parámetros de Cálculo",
+    PARAMETROS_CALCULO: "Establecer Parámetros de Cálculo",
+    RESOLUCION: "Nombre de Resolución",
+    APORTE_SALUD: "Aporte Salud",
+    APORTE_PENSION: "Aporte Pensión",
+    TARIFA_ARL: "Tarifa ARL",
+    COMISION_NO_REMUNERADA: "Comisión no Remunerada",
+    LICENCIA_NO_REMUNERADA: "Licencia no Remunerada",
+    TARIFA_CCF: "Tarifa de Caja de Compensación Familiar",
+    APORTE_ICBF: "Aporte ICBF"
+  },
   ACTIVO: {
     ANIO: "Año",
     MES: "Mes"
@@ -45,6 +57,22 @@ var text_en = {
     COD_ARL: "ARL Code",
     COD_DEPARTAMENTO: "Departament Code",
     COD_MUNICIPIO: "Municipality Code"
+  },
+  CALCULO: {
+    TITULO_PARAMETROS: "Calculation Parameters",
+    ESTABLECER_PARAMETROS_CALCULO: "Set Calculation Parameters",
+    RESOLUCION: "Resolution Name",
+    APORTE_SALUD: "Health",
+    APORTE_PENSION: "Pension",
+    TARIFA_ARL: "ARL Rate",
+    COMISION_NO_REMUNERADA: "Unpaid commission",
+    LICENCIA_NO_REMUNERADA: "Unpaid License",
+    TARIFA_CCF: "Family Compensation Fund Rate",
+    APORTE_ICBF: "ICBF Rate"
+  },
+  ACTIVO: {
+    ANIO: "Year",
+    MES: "Month"
   }
 };
 
