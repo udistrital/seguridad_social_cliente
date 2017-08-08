@@ -48,8 +48,40 @@ var text_es = {
   ACTIVO: {
     ANIO: "Año",
     MES: "Mes"
+  },
+  UPC_ADICIONAL: {
+    TITULO_REGISTRO: "Registrar Nueva UPC",
+    TIPO_DOCUMENTO: "Tipo de Documento",
+    NUM_DOCUMENTO: "Número de Documento",
+    INFO_UPC: "Información de la UPC",
+    PRIMER_NOMBRE: "Primer Nombre",
+    SEGUNDO_NOMBRE: "Segundo Nombre",
+    PRIMER_APELLIDO: "Primer Apellido",
+    SEGUNDO_APELLIDO: "Segundo Apellido",
+    FECHA_NACIMIENTO: "Fecha de Nacimiento",
+    TIPO_ZONA: "Tipo de Zona",
+    RANGO_EDAD: "Rango de Edad",
+    VALOR_UPC: "Valor UPC",
+    RESPONSABLE: "Responsable",
+    SELECCIONE_OPCION: "Seleccione una opción",
+    SIN_RESULTADOS: "No se encontraron resultados de ",
+    DOCUMENTO: "Documento",
+    NOMBRE: "Nombre",
+    APELLIDO: "Apellido",
+    LISTA_UPC: "Lista de UPC Adicional",
+    TITULO_LISTAR_VALORES: "Valor UPC Adicional",
+    VALORES_ACTUALES: "Valores Actuales",
+    ZONAS: "Zonas",
+    VALOR: "Valor",
+    EDAD_MINIMA: "Edad Miníma",
+    EDAD_MAXIMA: "Edad Máxima",
+    APLICA_GENERO: "Aplica Genero",
+    ZONA_NORMAL: "Zona Normal",
+    ZONA_ESPECIAL: "Zona Especial",
+    GRANDES_CIUDADES: "Grandes Ciudades",
+    ZONAS_ALEJADAS: "Zonas Alejadas",
+    TITULO_REGISTRAR_TIPO: "Registrar Valores"
   }
-
 };
 
 var text_en = {
@@ -91,6 +123,39 @@ var text_en = {
   ACTIVO: {
     ANIO: "Year",
     MES: "Month"
+  },
+  UPC_ADICIONAL: {
+    TITULO_REGISTRO: "New UPC Register",
+    TIPO_DOCUMENTO: "Document Type",
+    NUM_DOCUMENTO: "Document Id",
+    INFO_UPC: "UPC Information",
+    PRIMER_NOMBRE: "Fist Name",
+    SEGUNDO_NOMBRE: "Second Name",
+    PRIMER_APELLIDO: "Surname",
+    SEGUNDO_APELLIDO: "Second Surname",
+    FECHA_NACIMIENTO: "Birthdate",
+    TIPO_ZONA: "Zone Type",
+    RANGO_EDAD: "Age Range",
+    VALOR_UPC: "UPC Cost",
+    RESPONSABLE: "Responsable",
+    SELECCIONE_OPCION: "Select one",
+    SIN_RESULTADOS: "No result found ",
+    DOCUMENTO: "Document",
+    NOMBRE: "Name",
+    APELLIDO: "Lastname",
+    LISTA_UPC: "UPC List",
+    TITULO_LISTAR_VALORES: "UPC Values",
+    VALORES_ACTUALES: "Today Values",
+    ZONAS: "Zones",
+    VALOR: "Value",
+    EDAD_MINIMA: "Min Age",
+    EDAD_MAXIMA: "Max Age",
+    APLICA_GENERO: "Gener",
+    ZONA_NORMAL: "Normal Zone",
+    ZONA_ESPECIAL: "Special Zone",
+    GRANDES_CIUDADES: "Citys",
+    ZONAS_ALEJADAS: "Far Away Zones",
+    TITULO_REGISTRAR_TIPO: "Values Register"
   }
 };
 

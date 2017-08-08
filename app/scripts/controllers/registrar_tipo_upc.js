@@ -22,19 +22,19 @@ angular.module('ssClienteApp')
 
   self.gridOptions.columnDefs = [
     { name: 'Id', visible: false, enableCellEdit: false },
-    { name: 'EdadMin', headerCellTemplate: '<div align="center"><h5>Rango de Edad</h5></div>', enableCellEdit: false,
+    { name: 'EdadMin', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.RANGO_EDAD\' | translate }} </h5></div>', enableCellEdit: false,
     cellTemplate: '<div align="center">De {{row.entity.EdadMin}} a {{row.entity.EdadMax}} años {{row.entity.AplicaGenero}}</div>' },
 
-    { name: 'ZonaNormal', headerCellTemplate: '<div align="center"><h5>Zona normal</h5></div>', enableCellEdit: true ,
+    { name: 'ZonaNormal', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.ZONA_NORMAL\' | translate }} </h5></div>', enableCellEdit: true ,
     cellTemplate: '<div align="center" ng-init="row.entity.ZonaNormal=0">{{row.entity.ZonaNormal | currency:undefined:0}}</div>' },
 
-    { name: 'ZonaEspecial', headerCellTemplate: '<div align="center"><h5>Zona especial</h5></div>', enableCellEdit: true,
+    { name: 'ZonaEspecial', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.ZONA_ESPECIAL\' | translate }} </h5></div>', enableCellEdit: true,
     cellTemplate: '<div align="center" ng-init="row.entity.ZonaEspecial=0">{{row.entity.ZonaEspecial | currency:undefined:0}}</div>' },
 
-    { name: 'GrandesCiudades', headerCellTemplate: '<div align="center"><h5>Grandes ciudades</h5></div>', enableCellEdit: true,
+    { name: 'GrandesCiudades', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.GRANDES_CIUDADES\' | translate }} </h5></div>', enableCellEdit: true,
     cellTemplate: '<div align="center" ng-init="row.entity.GrandesCiudades=0">{{row.entity.GrandesCiudades | currency:undefined:0}}</div>' },
 
-    { name: 'ZonasAlejadas', headerCellTemplate: '<div align="center"><h5>Zonas alejadas</h5></div>', enableCellEdit: true,
+    { name: 'ZonasAlejadas', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.ZONAS_ALEJADAS\' | translate }} </h5></div>', enableCellEdit: true,
     cellTemplate: '<div align="center" ng-init="row.entity.ZonasAlejadas=0">{{row.entity.ZonasAlejadas | currency:undefined:0}}</div>' }
   ];
 

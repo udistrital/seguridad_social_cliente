@@ -1,68 +1,68 @@
 <br>
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4> Registrar Nueva UPC </h4>
+    <h4> {{ 'UPC_ADICIONAL.TITULO_REGISTRO' | translate }} </h4>
   </div>
 
   <div class="panel-body">
     <form class="" action="persona_upc.html" method="post">
       <div class="form-group row">
-        <label for="input_identificacion" class="col-sm-4 col-form-label col-md-offset-1"> Tipo Identificación </label>
+        <label for="input_identificacion" class="col-sm-4 col-form-label col-md-offset-1"> {{ 'UPC_ADICIONAL.TIPO_DOCUMENTO' | translate }} </label>
         <div class="col-xs-4">
           <select ng-model="personaUpc.tipoIdentificacion" class="form-control"
             name="input_identificacion" ng-init="personaUpc.documento = personaUpc.tipoDocumento[0]"
             ng-model="personaUpc.documento">
-            <option value="0"disabled> Seleccione una opción </option>
+            <option value="0"disabled> {{ 'UPC_ADICIONAL.SELECCIONE_OPCION' | translate }} </option>
             <option ng-repeat="d in personaUpc.tipoDocumento" value="{{d.Id}}"> {{d.ValorParametro}} </option>
           </select>
         </div>
       </div>
 
     <div class="form-group row">
-      <label for="input_num_documento" class="col-sm-4 col-form-label col-md-offset-1"> Número de Documento </label>
+      <label for="input_num_documento" class="col-sm-4 col-form-label col-md-offset-1"> {{ 'UPC_ADICIONAL.NUM_DOCUMENTO' | translate }} </label>
       <div class="col-xs-4">
         <input ng-model="personaUpc.variablesForm.numDocumento" type="text" class="form-control" name="input_num_documento" placeholder="Número de Documento">
       </div>
     </div>
 
-    <h3> Información de la UPC </h3>
+    <h3> {{ 'UPC_ADICIONAL.INFO_UPC' | translate }} </h3>
     <hr>
     <div class="form-group row">
-      <label for="input_nombre" class="col-sm-4 col-form-label col-md-offset-1"> Primer Nombre </label>
+      <label for="input_nombre" class="col-sm-4 col-form-label col-md-offset-1"> {{ 'UPC_ADICIONAL.PRIMER_NOMBRE' | translate }} </label>
       <div class="col-xs-4">
         <input ng-model="personaUpc.variablesForm.nombre" type="text" class="form-control" name="input_nombre" placeholder="Primer Nombre">
       </div>
-      <label for="input_nombre2" class="col-sm-4 col-form-label col-md-offset-1"> Segundo Nombre </label>
+      <label for="input_nombre2" class="col-sm-4 col-form-label col-md-offset-1"> {{ 'UPC_ADICIONAL.SEGUNDO_NOMBRE' | translate }} </label>
       <div class="col-xs-4">
         <input ng-model="personaUpc.variablesForm.segundoNombre" type="text" class="form-control" name="input_nombre2" placeholder="Segundo Nombre">
       </div>
     </div>
 
     <div class="form-group row">
-      <label for="input_apellido" class="col-sm-4 col-form-label col-md-offset-1"> Primer Apellido </label>
+      <label for="input_apellido" class="col-sm-4 col-form-label col-md-offset-1"> {{ 'UPC_ADICIONAL.PRIMER_APELLIDO' | translate }} </label>
       <div class="col-xs-4">
         <input ng-model="personaUpc.variablesForm.apellido" type="text" class="form-control" name="input_apellido" placeholder="Primer Apellido">
       </div>
-      <label for="input_apellido2" class="col-sm-4 col-form-label col-md-offset-1"> Segundo Apellido </label>
+      <label for="input_apellido2" class="col-sm-4 col-form-label col-md-offset-1"> {{ 'UPC_ADICIONAL.SEGUNDO_APELLIDO' | translate }} </label>
       <div class="col-xs-4">
         <input ng-model="personaUpc.variablesForm.segundoApellido" type="text" class="form-control" name="input_apellido2" placeholder="Segundo Apellido">
       </div>
     </div>
 
     <div class="form-group row">
-      <label for="input_fechaNacimiento" class="col-sm-4 col-form-label col-md-offset-1"> Fecha de Nacimiento </label>
+      <label for="input_fechaNacimiento" class="col-sm-4 col-form-label col-md-offset-1"> {{ 'UPC_ADICIONAL.FECHA_NACIMIENTO' | translate }} </label>
       <div class="col-xs-4">
         <input ng-model="personaUpc.variablesForm.fechaNacimiento" type="date" class="form-control" name="input_fechaNacimiento">
       </div>
     </div>
 
     <div class="form-group row">
-      <label for="input_zona" class="col-sm-4 col-form-label col-md-offset-1"> Tipo de Zona </label>
+      <label for="input_zona" class="col-sm-4 col-form-label col-md-offset-1"> {{ 'UPC_ADICIONAL.TIPO_ZONA' }} </label>
       <div class="col-xs-2">
         <select class="form-control" name="input_zona"
           ng-init="personaUpc.zona = personaUpc.tipoZona[0]"
           ng-model="personaUpc.zona" ng-change="personaUpc.cambiarZona()">
-          <option value="0"disabled> Seleccione una opción </option>
+          <option value="0"disabled> {{ 'UPC_ADICIONAL.SELECCIONE_OPCION' | translate }} </option>
           <option ng-repeat="z in personaUpc.tipoZona" value="{{z.Id}}"> {{z.Nombre}} </option>
         </select>
       </div>
@@ -79,14 +79,14 @@
     </div>
 
     <div class="form-group row">
-      <label class="col-sm-4 col-form-label col-md-offset-1"> Valor UPC</label>
+      <label class="col-sm-4 col-form-label col-md-offset-1"> {{ 'UPC_ADICIONAL.RANGO_EDAD' | translate }} </label>
       <div class="col-xs-2">
         <p> {{personaUpc.variablesForm.valorUpc.Valor | currency}} </p>
       </div>
     </div>
 
     <div class="form-group row">
-      <label for="input_persona" class="col-sm-4 col-form-label col-md-offset-1"> Responsable </label>
+      <label for="input_persona" class="col-sm-4 col-form-label col-md-offset-1"> {{ 'UPC_ADICIONAL.RESPONSABLE' | translate }} </label>
       <div class="col-xs-4">
           <md-autocomplete ng-disabled="personaUpc.isDisabled"
           md-no-cache="personaUpc.noCache"
@@ -102,7 +102,7 @@
             <span md-highlight-text="personaUpc.searchText" md-highlight-flags="^i">{{item.display}}</span>
           </md-item-template>
           <md-not-found>
-            No se encontraron resultados de  "{{incappersonaUpccidades.searchText}}".
+            {{ 'UPC_ADICIONAL.SIN_RESULTADOS' | translate }}  "{{incappersonaUpccidades.searchText}}".
           </md-not-found>
         </md-autocomplete>
     </div>

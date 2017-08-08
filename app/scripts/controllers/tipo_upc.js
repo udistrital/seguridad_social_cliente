@@ -24,10 +24,10 @@ angular.module('ssClienteApp')
           row.entity.subGridOptions = {
             columnDefs: [
               { name: 'Id', visible: false},
-              { name: 'Valor', cellTemplate: '<div align="center">{{row.entity.Valor | currency:"$":0}}</div>', headerCellTemplate: '<div align="center"><h5>Valor</h5></div>'},
-              { name: 'RangoEdadUpc.EdadMin', cellTemplate: '<div align="center">{{row.entity.IdEdadUpc.EdadMin}}</div>', headerCellTemplate: '<div align="center"><h5>Edad Mínima</h5></div>'},
-              { name: 'RangoEdadUpc.EdadMax', cellTemplate: '<div align="center">{{row.entity.IdEdadUpc.EdadMax}}</div>', headerCellTemplate: '<div align="center"><h5>Edad Máxima</h5></div>'},
-              { name: 'RangoEdadUpc.AplicaGenero', cellTemplate: '<div align="center">{{row.entity.IdEdadUpc.AplicaGenero}}</div>', headerCellTemplate: '<div align="center"><h5>Aplica Genero</h5></div>'}
+              { name: 'Valor', cellTemplate: '<div align="center">{{row.entity.Valor | currency:"$":0}}</div>', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.VALOR\' | translate }} </h5></div>'},
+              { name: 'RangoEdadUpc.EdadMin', cellTemplate: '<div align="center">{{row.entity.IdEdadUpc.EdadMin}}</div>', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.EDAD_MINIMA\' | translate }} </h5></div>'},
+              { name: 'RangoEdadUpc.EdadMax', cellTemplate: '<div align="center">{{row.entity.IdEdadUpc.EdadMax}}</div>', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.EDAD_MAXIMA\' | translate }} </h5></div>'},
+              { name: 'RangoEdadUpc.AplicaGenero', cellTemplate: '<div align="center">{{row.entity.IdEdadUpc.AplicaGenero}}</div>', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.APLICA_GENERO\' | translate }} </h5></div>'}
             ]};
 
             seguridadSocialCrudService.get('tipo_upc','?limit=-1&query=ZonaUpc:' + row.entity.Id)

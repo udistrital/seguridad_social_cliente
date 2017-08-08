@@ -8,7 +8,7 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-.controller('VerUpcCtrl', function (seguridadSocialCrudService) {
+.controller('VerUpcCtrl', function (seguridadSocialCrudService, $translate) {
   var self = this;
 
   self.init = function() {
@@ -21,11 +21,11 @@ angular.module('ssClienteApp')
     enableRowSelection: true,
     columnDefs: [
       { field: 'Id', visible: false},
-      { name: 'TipoDocumento', cellTemplate: '<div align="center">{{row.entity.TipoDocumento}}</div>', headerCellTemplate: '<div align="center"><h5> Tipo Documento </h5></div>' },
-      { field: 'Documento', cellTemplate: '<div align="center">{{row.entity.Documento}}</div>', headerCellTemplate: '<div align="center"><h5> Documento </h5></div>' },
-      { field: 'Nombre', cellTemplate: '<div align="center">{{row.entity.Nombre}}</div>', headerCellTemplate: '<div align="center"><h5> Nombre </h5></div>' },
-      { field: 'Apellido', cellTemplate: '<div align="center">{{row.entity.Apellido}}</div>', headerCellTemplate: '<div align="center"><h5> Apellido </h5></div>' },
-      { field: 'TipoUpc.Valor',  cellTemplate: '<div align="center">{{row.entity.IdTipoUpc.Valor | currency:"$":0}}</div>', headerCellTemplate: '<div align="center"><h5> Valor </h5></div>'},
+      { name: 'TipoDocumento', cellTemplate: '<div align="center">{{row.entity.TipoDocumento}}</div>', headerCellTemplate: '<div align="center"><h5> {{\'UPC_ADICIONAL.TIPO_DOCUMENTO\' | translate }} </h5></div>' },
+      { field: 'Documento', cellTemplate: '<div align="center">{{row.entity.Documento}}</div>', headerCellTemplate: '<div align="center"><h5> {{\'UPC_ADICIONAL.DOCUMENTO\' | translate }} </h5></div>' },
+      { field: 'Nombre', cellTemplate: '<div align="center">{{row.entity.Nombre}}</div>', headerCellTemplate: '<div align="center"><h5> {{\'UPC_ADICIONAL.NOMBRE\' | translate }} </h5></div>' },
+      { field: 'Apellido', cellTemplate: '<div align="center">{{row.entity.Apellido}}</div>', headerCellTemplate: '<div align="center"><h5> {{\'UPC_ADICIONAL.APELLIDO\' | translate }} </h5></div>' },
+      { field: 'TipoUpc.Valor',  cellTemplate: '<div align="center">{{row.entity.IdTipoUpc.Valor | currency:"$":0}}</div>', headerCellTemplate: '<div align="center"><h5> {{\'UPC_ADICIONAL.VALOR_UPC\' | translate }} </h5></div>'},
       { name: 'Opciones',
       cellTemplate:
       '<center>' +
