@@ -12,9 +12,13 @@ var text_es = {
   MENSAJE_INICIAL: "Ahora puede comenzar con el desarrollo ...",
   ACTIVO: "Activo",
   PENSION: "Pensión",
+  ERROR: "Error!",
+  ALERTA: "Alerta!",
   BTN: {
     GUARDAR: "Guardar",
-    BUSCAR: "Buscar"
+    BUSCAR: "Buscar",
+    VER_REGISTROS: "Ver Registros",
+    GENERAR_PLANILLA: "Generar Planilla"
   },
   APORTANTE: {
     INFORMACION_APORTANTE: "Información del Aportate",
@@ -46,8 +50,10 @@ var text_es = {
     SELECCIONE_OPCION: "Seleccione una opción"
   },
   ACTIVO: {
+    TITULO: "Activos",
     ANIO: "Año",
-    MES: "Mes"
+    MES: "Mes",
+    SELECCION_NOMINA: "Selección Nómina"
   },
   UPC_ADICIONAL: {
     TITULO_REGISTRO: "Registrar Nueva UPC",
@@ -83,6 +89,10 @@ var text_es = {
     TITULO_REGISTRAR_TIPO: "Registrar Valores",
     TITULO_TIPO_UPC: "Valor UPC Adicional",
     REGISTRAR_VALORES: "Registrar Nuevos Valores"
+  },
+  PLANILLAS: {
+    ANIO: "Año",
+    MES: "Mes"
   }
 };
 
@@ -90,6 +100,8 @@ var text_en = {
   TITULO: "GENERATOR-OAS",
   MENSAJE_INICIAL: "Now get to start to develop ...",
   ACTIVO: "Active",
+  ERROR: "Error!",
+  ALERTA: "Alert!",
   BTN: {
     GUARDAR: "Save"
   },
@@ -160,6 +172,10 @@ var text_en = {
     TITULO_REGISTRAR_TIPO: "Values Register",
     TITULO_TIPO_UPC: "UPC Cost",
     REGISTRAR_VALORES: "Register New Values"
+  },
+  PLANILLAS: {
+    ANIO: "Year",
+    MES: "Month"
   }
 };
 

@@ -1,13 +1,13 @@
 <br>
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4>{{'ACTIVO' | translate}}</h4>
+    <h4>{{'ACTIVO.TITULO' | translate}}</h4>
   </div>
   <br>
 
   <div class="form-group row">
     <div class="col-md-1">
-      <label class="col-md-7 col-form-label"> Año </label>
+      <label class="col-md-7 col-form-label"> {{ 'ACTIVO.ANIO' | translate }} </label>
     </div>
     <div class="col-md-3">
       <select ng-model="activos.anioPeriodo" ng-init="activos.anioPeriodo" class="form-control">
@@ -16,7 +16,7 @@
     </div>
 
     <div class="col-md-1">
-      <label class="col-md-7 col-form-label"> Mes </label>
+      <label class="col-md-7 col-form-label"> {{ 'ACTIVO.MES' | translate }} </label>
     </div>
     <div class="col-md-3">
       <select ng-model="activos.mesPeriodo" ng-init="activos.mesPeriodo" class="form-control">
@@ -26,23 +26,23 @@
   </div>
 
   <div class="col-md-offset-10 row">
-    <button type="button" class="btn btn-primary btn-outline" name="button" ng-click="activos.buscarNomina()"> Buscar </button>
+    <button type="button" class="btn btn-primary btn-outline" name="button" ng-click="activos.buscarNomina()"> {{ 'BTN.BUSCAR' | translate }} </button>
   </div>
 
   <div class="form-group row" ng-if="activos.divNominas">
     <div class="col-md-1">
-      <label class="col-md-7 col-form-label"> Selección Nómina </label>
+      <label class="col-md-7 col-form-label"> {{ 'ACTIVO.SELECCION_NOMINA' | translate }} </label>
     </div>
     <div class="col-md-3">
       <select ng-model="activos.nomina" class="form-control">
         <option ng-repeat="n in activos.nominas" value="{{n.Id}}"><b>{{n.Nomina.Descripcion}}</b></option>
       </select>
     </div>
-    <button type="button" class="btn btn-primary btn-outline" name="button" ng-click="activos.nominaSeleccionada()"> Ver Registros </button>
+    <button type="button" class="btn btn-primary btn-outline" name="button" ng-click="activos.nominaSeleccionada()"> {{ 'BTN.VER_REGISTROS' }} </button>
   </div>
 
   <div class="alert alert-danger" ng-if="activos.divError">
-    <strong>Error!</strong><br> {{activos.errorMensaje}}
+    <strong> {{ 'ERROR' | translate }} </strong><br> {{activos.errorMensaje}}
   </div>
 
   <div class="panel-body" ng-if="activos.activosDiv">
@@ -68,12 +68,7 @@
   </div>
 
   <div class="col-md-offset-10 row">
-    <button type="button" class="btn btn-primary btn-outline" name="button" ng-click="activos.guardar()"> Guardar </button>
+    <button type="button" class="btn btn-primary btn-outline" name="button" ng-click="activos.guardar()"> {{ 'BTN.GUARDAR' | translate }} </button>
   </div>
 </div>
 </div>
-
-<!--
-Año <input type="text" ng-model="activos.anioPeriodo"/>
-Mes <input type="text" ng-model="activos.mesPeriodo"/> <br>
--->
