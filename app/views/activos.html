@@ -1,13 +1,13 @@
 <br>
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4>{{'ACTIVO.TITULO' | translate}}</h4>
+    <h4>{{'ACTIVOS.TITULO' | translate}}</h4>
   </div>
   <br>
 
   <div class="form-group row">
     <div class="col-md-1">
-      <label class="col-md-7 col-form-label"> {{ 'ACTIVO.ANIO' | translate }} </label>
+      <label class="col-md-7 col-form-label"> {{ 'ACTIVOS.ANIO' | translate }} </label>
     </div>
     <div class="col-md-3">
       <select ng-model="activos.anioPeriodo" ng-init="activos.anioPeriodo" class="form-control">
@@ -16,7 +16,7 @@
     </div>
 
     <div class="col-md-1">
-      <label class="col-md-7 col-form-label"> {{ 'ACTIVO.MES' | translate }} </label>
+      <label class="col-md-7 col-form-label"> {{ 'ACTIVOS.MES' | translate }} </label>
     </div>
     <div class="col-md-3">
       <select ng-model="activos.mesPeriodo" ng-init="activos.mesPeriodo" class="form-control">
@@ -31,7 +31,7 @@
 
   <div class="form-group row" ng-if="activos.divNominas">
     <div class="col-md-1">
-      <label class="col-md-7 col-form-label"> {{ 'ACTIVO.SELECCION_NOMINA' | translate }} </label>
+      <label class="col-md-7 col-form-label"> {{ 'ACTIVOS.SELECCION_NOMINA' | translate }} </label>
     </div>
     <div class="col-md-3">
       <select ng-model="activos.nomina" class="form-control">

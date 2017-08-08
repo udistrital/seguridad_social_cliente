@@ -228,25 +228,25 @@ self.nominaSeleccionada = function() {
       {field: 'Nombre', visible: true, width: '30%', headerCellTemplate: '<div align="center">Nombre</div>'},
       {
         field: 'SaludTotal', visible: true, displayName : 'Salud' ,
-        headerCellTemplate: '<div"><center>Salud<center></div>',
+        headerCellTemplate: '<div"><center> {{ \'ACTVIOS.SALUD\' | translate }} <center></div>',
         cellFilter : 'currency',
         cellTemplate: '<div align="right">{{row.entity.SaludTotal | currency}}</div>'
       },
       {
         field: 'PensionTotal', visible: true, displayName : $translate.instant('PENSION'),
-        headerCellTemplate: '<div align="center">{{\'PENSION\' | translate }}</div>',
+        headerCellTemplate: '<div align="center"> {{ \'ACTIVOS.PENSION\' | translate }} </div>',
         cellFilter : 'currency',
         cellTemplate: '<div align="right">{{row.entity.PensionTotal | currency}}</div>'
       },
       {
         field: 'Arl', visible: true, displayName : 'ARL',
-        headerCellTemplate: '<div align="center">ARL</div>',
+        headerCellTemplate: '<div align="center"> {{ \'ACTIVOS.ARL\' | translate }} </div>',
         cellFilter : 'currency',
         cellTemplate: '<div align="right">{{row.entity.Arl | currency}}</div>'
       },
       {
         field: 'Novedades',
-        headerCellTemplate: '<div align="center">Novedades</div>',
+        headerCellTemplate: '<div align="center"> {{ \'ACTIVOS.NOVEDADES\' | translate }} </div>',
         cellTemplate: '<center><button class="btn btn-success" ng-click="grid.appScope.activos.novedad(row)"> Ver Detalle </button></center>' }
       ]
     };

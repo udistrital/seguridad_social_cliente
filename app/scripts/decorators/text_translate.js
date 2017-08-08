@@ -49,11 +49,15 @@ var text_es = {
     SIN_RESULTADOS: "No se encontraron resultados de ",
     SELECCIONE_OPCION: "Seleccione una opción"
   },
-  ACTIVO: {
+  ACTIVOS: {
     TITULO: "Activos",
     ANIO: "Año",
     MES: "Mes",
-    SELECCION_NOMINA: "Selección Nómina"
+    SELECCION_NOMINA: "Selección Nómina",
+    PENSION: "Pensión",
+    SALUD: "Salud",
+    ARL: "ARL",
+    NOVEDADES: "Novedades"
   },
   UPC_ADICIONAL: {
     TITULO_REGISTRO: "Registrar Nueva UPC",
@@ -134,9 +138,13 @@ var text_en = {
     SIN_RESULTADOS: "No result found ",
     SELECCIONE_OPCION: "Select one"
   },
-  ACTIVO: {
+  ACTIVOS: {
     ANIO: "Year",
-    MES: "Month"
+    MES: "Month",
+    PENSION: "Pensión",
+    SALUD: "Health",
+    ARL: "ARL",
+    NOVEDADES: "News"
   },
   UPC_ADICIONAL: {
     TITULO_REGISTRO: "New UPC Register",
