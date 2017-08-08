@@ -18,7 +18,9 @@ var text_es = {
     GUARDAR: "Guardar",
     BUSCAR: "Buscar",
     VER_REGISTROS: "Ver Registros",
-    GENERAR_PLANILLA: "Generar Planilla"
+    GENERAR_PLANILLA: "Generar Planilla",
+    CERRAR: "Cerrar",
+    EDITAR: "Editar"
   },
   APORTANTE: {
     INFORMACION_APORTANTE: "Información del Aportate",
@@ -95,8 +97,14 @@ var text_es = {
     REGISTRAR_VALORES: "Registrar Nuevos Valores"
   },
   PLANILLAS: {
+    TITULO: "Planillas",
     ANIO: "Año",
     MES: "Mes"
+  },
+  IBC: {
+    TITULO: "Ingreso Base de Cotización",
+    SELECCION_CONCEPTOS: "Seleccione los conceptos para establecer el Ingreso Base de Cotiazción",
+    CONCEPTOS_SELECCIONADOS: "Conceptos Seleccionados"
   }
 };
 
@@ -107,7 +115,12 @@ var text_en = {
   ERROR: "Error!",
   ALERTA: "Alert!",
   BTN: {
-    GUARDAR: "Save"
+    GUARDAR: "Save",
+    BUSCAR: "Search",
+    VER_REGISTROS: "Register View",
+    GENERAR_PLANILLA: "Generate Form",
+    CERRAR: "Clonse",
+    EDITAR: "Edit"
   },
   APORTANTE: {
     INFORMACION_APORTANTE: "Contributor information",
@@ -182,8 +195,14 @@ var text_en = {
     REGISTRAR_VALORES: "Register New Values"
   },
   PLANILLAS: {
+    TITULO: "Forms",
     ANIO: "Year",
     MES: "Month"
+  },
+  IBC: {
+    TITULO: "IBC",
+    SELECCION_CONCEPTOS: "Select the IBC Concepts",
+    CONCEPTOS_SELECCIONADOS: "Selectd Concepts"
   }
 };
 
