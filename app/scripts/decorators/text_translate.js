@@ -80,7 +80,9 @@ var text_es = {
     ZONA_ESPECIAL: "Zona Especial",
     GRANDES_CIUDADES: "Grandes Ciudades",
     ZONAS_ALEJADAS: "Zonas Alejadas",
-    TITULO_REGISTRAR_TIPO: "Registrar Valores"
+    TITULO_REGISTRAR_TIPO: "Registrar Valores",
+    TITULO_TIPO_UPC: "Valor UPC Adicional",
+    REGISTRAR_VALORES: "Registrar Nuevos Valores"
   }
 };
 
@@ -155,7 +157,9 @@ var text_en = {
     ZONA_ESPECIAL: "Special Zone",
     GRANDES_CIUDADES: "Citys",
     ZONAS_ALEJADAS: "Far Away Zones",
-    TITULO_REGISTRAR_TIPO: "Values Register"
+    TITULO_REGISTRAR_TIPO: "Values Register",
+    TITULO_TIPO_UPC: "UPC Cost",
+    REGISTRAR_VALORES: "Register New Values"
   }
 };
 
