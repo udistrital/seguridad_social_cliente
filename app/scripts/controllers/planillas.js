@@ -10,9 +10,10 @@
 angular.module('ssClienteApp')
 .controller('PlanillasCtrl', function (seguridadSocialCrudService, seguridadSocialService) {
   var self = this;
-  var csvContent = '';     //variable para generar el archivo plano
-  var descuentos = []     //Tendrá todos los decuentos de desc_seguridad_social
-  var descuento = {}      //Tendrá un descuento de desc_seguridad_social
+  var csvContent = '';     // variable para generar el archivo plano
+  var descuentos = [];     // Tiene todos los registros de periodo_pago
+  var descuento = {};      // Corresponde a un periodo_pago
+  //var tipoLiquidacion;     // El tipo de liquidacion de titan
 
   seguridadSocialCrudService.get('periodo_pago','').then(function(response) {
     descuentos = response.data;
@@ -20,6 +21,12 @@ angular.module('ssClienteApp')
 
   self.anios = [];
   self.proveedores = [];
+
+  self.tiposLiquidacion = [
+    {Nombre: 'Hora Catedra Salarios', Acronimo:'HC-SALARIOS'},
+    {Nombre: 'Funcioarios de Planta', Acronimo:'FP'},
+    {Nombre: 'Docentes de Planta', Acronimo: 'DP'},
+    {Nombre: 'Pensionados', Acronimo: 'PE'}];
 
   /*  Modifica el arreglo self.anios para tener los años desde 2016 hasta el año actual
   *   con el metodo getFullYear()
@@ -38,10 +45,10 @@ angular.module('ssClienteApp')
     /* Función para generar el archivo, llamada desde el ng-click de la vista
     */
     self.genearArchivo = function() {
-      if (comprobarPeriodo() && comprobarDescuentos()) {
-        console.log('generar Archivo');
+      if (comprobarPeriodo() && comprobarPagos()) {
         csvContent = "data:text/csv;charset=utf-8,"; //Se inicializa para que no se concatene la información en case de generar varios archivos seguidos
         seguridadSocialService.getServicio('planillas','GenerarPlanillaActivos/'+descuento.Id).then(function(response) {
+          console.log('FP');
           crearCabecera(self.mesPeriodo, self.anioPeriodo)
           csvContent += "\n"
           csvContent += response.data;
@@ -50,22 +57,24 @@ angular.module('ssClienteApp')
           link.setAttribute("href", encodedUri);
           link.setAttribute("download", "PlanillaTipoE.csv");
           link.click();
-          console.log('Descargo el archivo');
         });
       }
     }
 
-    function comprobarDescuentos() {
-
+    // Busca en todo el arreglo descuentos y busca un objeto que tenga como Mes y Anio los mismos enviados desde el formulario
+    function comprobarPagos() {
+      console.log(self.tipoLiquidacion);
       if (descuentos == null) {
         self.divError = true;
         self.errorMensaje = 'No se encontraron registros de descuentos';
         return false
       } else {
         for (var i = 0; i < descuentos.length; i++) {
-          if (descuentos[i].Mes === parseInt(self.mesPeriodo) && descuentos[i].Anio === parseInt(self.anioPeriodo)) {
+          if (descuentos[i].Mes === parseInt(self.mesPeriodo) && descuentos[i].Anio === parseInt(self.anioPeriodo) && descuentos[i].TipoLiquidacion === self.tipoLiquidacion) {
             self.divError = false;
             descuento = descuentos[i];
+            console.log(self.tipoLiquidacion);
+            console.log(descuentos[i].TipoLiquidacion);
             return true
           }
         }
@@ -88,7 +97,6 @@ angular.module('ssClienteApp')
       seguridadSocialCrudService.get('periodo_pago','limit=1&query=Mes:'+self.mesPeriodo+',Anio:'+self.anioPeriodo).then(function(response) {
         if (response.data !== null) {
           self.divError = false;
-          console.log("Response: " + response.data);
           var anio = self.anioPeriodo;
           var mes = self.mesPeriodo;
           var mes = (mes < 10 ? "0"+mes : ""+mes); //Si el mes es menor de 10, le agrega un 0 al inicio del número ej: 5 -> 05
@@ -98,7 +106,6 @@ angular.module('ssClienteApp')
         } else {
           self.divError = true;
           self.errorMensaje = 'El periodo ingresado no tiene información.';
-          console.log('Response es null');
         }
       });
     };
@@ -124,18 +131,21 @@ angular.module('ssClienteApp')
     *   validando que anioPeriodo y mesPeriodo tengan un valor
     */
     function comprobarPeriodo() {
+      var mensaje = '';
+      var estado = false;;
+      var alerta = false;
       if (self.anioPeriodo == null) {
-        self.divAlerta = true;
-        self.errorAlerta = 'Por favor selecciona un año.';
-        return false;
+        alerta = true;
+        mensaje = 'Por favor selecciona un año';
       } else if (self.mesPeriodo == null) {
-        self.divAlerta = true;
-        self.errorAlerta = 'Por favor selecciona un mes.';
-        return false;
+        alerta = true;
+        mensaje = 'Por favor selecciona un mes';
       } else {
-        self.divAlerta = false;
-        return true;
+        estado = true;
       }
+      self.divAlerta = alerta;
+      self.errorAlerta = mensaje;
+      return estado;
     };
 
     /*  Función para completar la secuencia de los registros

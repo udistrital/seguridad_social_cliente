@@ -228,7 +228,7 @@ self.nominaSeleccionada = function() {
       {field: 'Nombre', visible: true, width: '30%', headerCellTemplate: '<div align="center">Nombre</div>'},
       {
         field: 'SaludTotal', visible: true, displayName : 'Salud' ,
-        headerCellTemplate: '<div"><center> {{ \'ACTVIOS.SALUD\' | translate }} <center></div>',
+        headerCellTemplate: '<div"><center> {{ \'ACTIVOS.SALUD\' | translate }} <center></div>',
         cellFilter : 'currency',
         cellTemplate: '<div align="right">{{row.entity.SaludTotal | currency}}</div>'
       },

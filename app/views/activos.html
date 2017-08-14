@@ -38,7 +38,7 @@
         <option ng-repeat="n in activos.nominas" value="{{n.Id}}"><b>{{n.Nomina.Descripcion}}</b></option>
       </select>
     </div>
-    <button type="button" class="btn btn-primary btn-outline" name="button" ng-click="activos.nominaSeleccionada()"> {{ 'BTN.VER_REGISTROS' }} </button>
+    <button type="button" class="btn btn-primary btn-outline" name="button" ng-click="activos.nominaSeleccionada()"> {{ 'BTN.VER_REGISTROS' | translate }} </button>
   </div>
 
   <div class="alert alert-danger" ng-if="activos.divError">
