@@ -24,7 +24,7 @@ angular.module('ssClienteApp')
 
   self.tiposLiquidacion = [
     {Nombre: 'Hora Catedra Salarios', Acronimo:'HC-SALARIOS'},
-    {Nombre: 'Funcioarios de Planta', Acronimo:'FP'},
+    {Nombre: 'Funcionarios de Planta', Acronimo:'FP'},
     {Nombre: 'Docentes de Planta', Acronimo: 'DP'},
     {Nombre: 'Pensionados', Acronimo: 'PE'}];
 

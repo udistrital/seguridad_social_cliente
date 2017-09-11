@@ -4,52 +4,63 @@
       <h4>{{'APORTANTE.INFORMACION_APORTANTE' | translate}}</h4>
     </div>
     <div class="panel-body">
-      <form role="form">
+      <form name="myForm" ng-submit="aportante.guardar()">
         <div id="datosAportante">
           <h2>{{ 'APORTANTE.INFORMACION_APORTANTE' | translate }}</h2>
           <hr />
 
-          <div class="form-group row">
-            <label for="input_nombre" class="col-sm-4 col-form-label">{{ 'APORTANTE.NOMBRE' | translate }}</label>
+          <!-- NOMBRE DEL APORTANTE -->
+          <div class="form-group row" ng-class="{ 'has-error' : myForm.nombre.$invalid && !myForm.nombre.$pristine }">
+            <label for="nombre" class="col-sm-4 col-form-label">{{'APORTANTE.NOMBRE'|translate}} (*)</label>
             <div class="col-xs-4">
-              <input type="text" class="form-control" name="input_nombre" placeholder="Nombre"
-                ng-model="aportante.infoAportante.Nombre">
+              <input type="text" class="form-control" name="nombre" placeholder="Nombre"
+                ng-model="aportante.infoAportante.Nombre" required>
+                <p ng-show="myForm.nombre.$invalid && !myForm.nombre.$pristine" class="help-block">{{'VALIDACION.NOMBRE' | translate}}</p>
             </div>
           </div>
-           <div class="form-group row">
-             <label for="input_identificacion" class="col-sm-4 col-form-label">{{ 'APORTANTE.IDENTIFICACION' | translate }}</label>
+
+          <!-- IDENTIFICACION DEL APORTANTE -->
+           <div class="form-group row" ng-class="{ 'has-error' : myForm.identificacion.$invalid && !myForm.identificacion.$pristine }">
+             <label for="identificacion" class="col-sm-4 col-form-label">{{ 'APORTANTE.IDENTIFICACION' | translate }} (*)</label>
              <div class="col-xs-4">
-               <input type="text" class="form-control" name="input_identificacion" placeholder="Identificación"
-                ng-model="aportante.infoAportante.Identificacion">
+               <input type="text" class="form-control" name="identificacion" placeholder="Identificación"
+                ng-model="aportante.infoAportante.Identificacion" required>
+                <p ng-show="myForm.identificacion.$invalid && !myForm.identificacion.$pristine" class="help-block">{{'VALIDACION.IDENTIFICACION' | translate}}</p>
             </div>
            </div>
 
-           <div class="form-group row">
-             <label for="input_arp" class="col-sm-4 col-form-label">{{ 'APORTANTE.COD_ARL' | translate }}</label>
+           <!-- CODIGO ARL -->
+           <div class="form-group row" ng-class="{ 'has-error' : myForm.arl.$invalid && !myForm.arl.$pristine }">
+             <label for="arl" class="col-sm-4 col-form-label">{{ 'APORTANTE.COD_ARL' | translate }} (*)</label>
              <div class="col-xs-4">
-               <input type="text" class="form-control" name="input_arp" placeholder="Código ARP"
-                ng-model="aportante.infoAportante.CodArl">
+               <input type="text" class="form-control" name="arl" placeholder="Código ARL"
+                ng-model="aportante.infoAportante.CodArl" required>
+                <p ng-show="myForm.arl.$invalid && !myForm.arl.$pristine" class="help-block">{{'VALIDACION.COD_ARL' | translate}}</p>
              </div>
            </div>
 
-           <div class="form-group row">
-             <label for="input_departamento" class="col-sm-4 col-form-label">{{ 'APORTANTE.COD_DEPARTAMENTO' | translate }}</label>
+           <!-- CODIGO DEPARTMENTO -->
+           <div class="form-group row" ng-class="{ 'has-error' : myForm.departamento.$invalid && !myForm.departamento.$pristine }">
+             <label for="departamento" class="col-sm-4 col-form-label">{{ 'APORTANTE.COD_DEPARTAMENTO' | translate }} (*)</label>
              <div class="col-xs-4">
-               <input type="text" class="form-control" name="input_departamento" placeholder="Código Departamento"
-                ng-model="aportante.infoAportante.CodDepartamento">
+               <input type="text" class="form-control" name="departamento" placeholder="Código Departamento"
+                ng-model="aportante.infoAportante.CodDepartamento" required>
+                <p ng-show="myForm.departamento.$invalid && !myForm.departamento.$pristine" class="help-block">{{'VALIDACION.COD_DEPARTAMENTO' | translate}}</p>
              </div>
            </div>
 
-           <div class="form-group row">
-             <label for="input_municipio" class="col-sm-4 col-form-label">{{ 'APORTANTE.COD_MUNICIPIO' | translate }}</label>
+           <!-- CODIGO MUNICIPIO -->
+           <div class="form-group row" ng-class="{ 'has-error' : myForm.municipio.$invalid && !myForm.municipio.$pristine }">
+             <label for="municipio" class="col-sm-4 col-form-label">{{ 'APORTANTE.COD_MUNICIPIO' | translate }} (*)</label>
              <div class="col-xs-4">
-               <input type="text" class="form-control" name="input_municipio" placeholder="Código Municipio"
-                ng-model="aportante.infoAportante.CodMunicipio">
+               <input type="text" class="form-control" name="municipio" placeholder="Código Municipio"
+                ng-model="aportante.infoAportante.CodMunicipio" required>
+                <p ng-show="myForm.municipio.$invalid && !myForm.municipio.$pristine" class="help-block">{{'VALIDACION.COD_MUNICIPIO' | translate}}</p>
              </div>
            </div>
          </div>
 
-         <button type="button" class="col-md-offset-6 btn btn-primary" ng-click="aportante.guardar()">{{ 'BTN.GUARDAR' | translate }}</button>
+         <button type="submit" class="col-md-offset-6 btn btn-primary">{{ 'BTN.GUARDAR' | translate }}</button>
        </form>
     </div>
 

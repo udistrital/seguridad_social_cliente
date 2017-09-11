@@ -36,18 +36,24 @@ angular.module('ssClienteApp')
     self.guardar = function() {
       if (infoActual != null) {
         infoActual.Activo = false;
-        console.log(infoActual);
         seguridadSocialCrudService.put('aportante', infoActual.Id, infoActual).then(function(response) {
-          console.log('Actualizada info actual');
+          swal(
+            'Registro Exitoso',
+            'Información Actualizada',
+            'success'
+          )
         });
       }
 
       if (nuevaInfo != null) {
         nuevaInfo.Activo = false;
-        console.log(nuevaInfo);
         seguridadSocialCrudService.put('aportante', nuevaInfo.Id, nuevaInfo).then(function(response) {
           infoActual = null;
-          console.log('Actualizada nuevaInfo');
+          swal(
+            'Registro Exitoso',
+            'Información Guardada',
+            'success'
+          )
         });
       }
 
@@ -57,6 +63,11 @@ angular.module('ssClienteApp')
         if (typeof response.data === 'object') {
           nuevaInfo = response.data;
           infoActual = null;
+          swal(
+            'Registro Exitoso',
+            'Información Guardada',
+            'success'
+          )
         } else {
           nuevaInfo = null;
         };

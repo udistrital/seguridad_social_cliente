@@ -22,6 +22,13 @@ var text_es = {
     CERRAR: "Cerrar",
     EDITAR: "Editar"
   },
+  VALIDACION: {
+    NOMBRE: "El nombre es requerido.",
+    IDENTIFICACION: "El número de identificación es requerido.",
+    COD_ARL: "El código de ARL es requerido.",
+    COD_DEPARTAMENTO: "El código del departamento es requerido",
+    COD_MUNICIPIO: "El código del municipio es requerido"
+  },
   APORTANTE: {
     INFORMACION_APORTANTE: "Información del Aportate",
     NOMBRE: "Nombre",
