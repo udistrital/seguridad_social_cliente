@@ -5,103 +5,74 @@
       <h4> {{ 'INCAPACIDADES.TITULO' | translate }} </h4>
     </div>
     <div class="panel-body">
-      <form class="" action="incapacidades.html" method="post">
+      <form method="post" name="myForm" ng-submit="incapacidades.registrarIncapacidad()">
         <div class="row">
-          <div class="col-md-4 col-md-offset-2">
+          <div class="col-md-3 col-md-offset-2">
             <label> {{ 'INCAPACIDADES.NOMBRE' | translate }} </label>
           </div>
-          <div class="col-xs-4">
-            <md-content class="form-control">
-              <md-autocomplete ng-disabled="incapacidades.isDisabled"
-              md-no-cache="incapcidades.noCache"
-              md-selected-item="incapacidades.selectedItem"
-              md-search-text-change="ctincapacidadesrl.searchTextChange(incapacidades.searchText)"
-              md-search-text="incapacidades.searchText"
-              md-selected-item-change="incapacidades.selectedItemChange(item)"
-              md-items="item in incapacidades.querySearch(incapacidades.searchText)"
-              md-item-text="item.display"
-              md-min-length="0"
-              placeholder="Ingrese el nombre de la persona">
-              <md-item-template>
-                <span md-highlight-text="incapcidades.searchText" md-highlight-flags="^i">{{item.display}}</span>
-              </md-item-template>
-              <md-not-found>
-                {{ 'INCAPACIDADES.SIN_RESULTADOS' | translate }} "{{incapcidades.searchText}}".
-              </md-not-found>
-            </md-autocomplete>
-            <br>
-          </md-content>
+          <div class="col-md-4">
+            <md-autocomplete flex required
+            md-input-name="autocompleteField"
+            md-input-minlength="2"
+            md-input-maxlength="18"
+            md-menu-container-class="my-cool-class"
+            md-no-cache="incapcidades.noCache"
+            md-selected-item="incapacidades.selectedItem"
+            md-search-text="incapacidades.searchText"
+            md-selected-item-change="incapacidades.selectedItemChange(item)"
+            md-items="item in incapacidades.querySearch(incapacidades.searchText)"
+            md-item-text="item.display"
+            md-floating-label="Ingresa el nombre de la persona">
+            <md-item-template>
+              <span md-highlight-text="incapcidades.searchText" md-highlight-flags="^i">{{item.display}}</span>
+            </md-item-template>
+            <md-not-found>
+              {{ 'INCAPACIDADES.SIN_RESULTADOS' | translate }} "{{incapcidades.searchText}}".
+            </md-not-found>
+          </md-autocomplete>
         </div>
       </div>
       <br>
-
       <div class="row">
-        <div class="col-md-4 col-md-offset-2">
+        <div class="col-md-3 col-md-offset-2">
           <label> {{ 'INCAPACIDADES.TIPO' | translate }} </label>
         </div>
         <div class="col-md-4">
-          <select ng-model="incapacidades.tipoIncapacidad" class="form-control">
-            <option value="0" disabled> {{ 'INCAPACIDADES.SELECCIONE_OPCION' | translate }} </option>
-            <option ng-repeat="i in incapacidades.incapacidades" value="{{i.Id}}">{{i.AliasConcepto}}</option>
-          </select>
-        </div>
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <div class="col-md-12" ng-if="!incapacidades.tipoIncapacidad">{{ 'INCAPACIDADES.SELECCIONE_OPCION' | translate }} <span class="caret"></span></div>
+          <div class="col-md-12" ng-if="incapacidades.tipoIncapacidad">{{incapacidades.tipoIncapacidad.AliasConcepto}}<span class="caret"></span></div>
+        </button>
+        <ul class="dropdown-menu">
+          <li ng-repeat="i in incapacidades.incapacidades" ng-click="incapacidades.setTipoIncapacidad(i)" value="{{i.Id}}"><a href="">{{i.AliasConcepto}}</a></li>
+        </ul>
       </div>
-      <br>
+    </div>
+    <br>
 
-      <div class="form-group row">
-        <label class="col-md-4 col-md-offset-2 control-label" for="txtFechaDesde"> {{ 'INCAPACIDADES.FECHA_INCIO' | translate }} </label>
-        <div class="col-md-4">
-          <md-datepicker id="txtFechaDesde" name="txtFechaDesde" ng-model="incapacidades.fechaDesde" md-placeholder="Fecha de inicio"></md-datepicker>
-        </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-md-offset-2 control-label" for="txtFechaDesde">{{ 'INCAPACIDADES.FECHA_INCIO' | translate }}</label>
+      <div class="col-md-4">
+        <md-datepicker id="txtFechaDesde" name="txtFechaDesde" ng-model="incapacidades.fechaDesde" md-placeholder="Fecha de inicio" required></md-datepicker>
       </div>
+    </div>
 
-      <div class="form-group row">
-        <label class="col-md-4 col-md-offset-2 control-label" for="txtFechaDesde"> {{ 'INCAPACIDADES.FECHA_FIN' | translate }} </label>
-        <div class="col-md-4">
-          <md-datepicker id="txtFechaDesde" name="txtFechaDesde" ng-model="incapacidades.fechaHasta" md-placeholder="Fecha de inicio"></md-datepicker>
-        </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-md-offset-2 control-label" for="txtFechaDesde">{{ 'INCAPACIDADES.FECHA_FIN' | translate }}</label>
+      <div class="col-md-4">
+        <md-datepicker id="txtFechaDesde" name="txtFechaDesde" ng-model="incapacidades.fechaHasta" md-mindate="incapacidades.minDate()" md-placeholder="Fecha de inicio" required></md-datepicker>
       </div>
-
-      <div class="row">
-        <div class="col-md-4">
-          <button type="button" name="button" ng-click="incapacidades.registrarIncapacidad()" class="btn btn-success"> {{ 'BTN.GUARDAR' | translate }} </button>
-        </div>
-      </div>
-    </form>
+    </div>
+    <div class="alert alert-warning" ng-if="incapacidades.alerta">
+      {{incapacidades.alerta}}
+    </div>
   </div>
 
   <div class="panel-footer">
-    Panel Footer
-  </div>
-</div>
-
-<!--
-
-//Modal
-<div class="form-group row">
-<label for="Persona" class="col-sm-4 col-form-label">Persona</label>
-<div class="col-md-4">
-<input type="text" class="form-control" name="input_persona" ng-model="incapacidades.nomProveedor" placeholder="Persona" disabled/>
-<button type="button" data-toggle="modal" data-target="#modalPersonas"><i class="glyphicon glyphicon-search"></i></button>
+    <div class="col-md-offset-5">
+      <button type="submit" name="button" class="btn btn-success btn-output"> {{ 'BTN.GUARDAR' | translate }} </button>
+    </div>
+  </form>
 </div>
 </div>
-
-<div class="modal fade" id="modalPersonas" role="dialog">
-<div class="modal-dialog modal-lg">
-<div class="modal-content">
-<div class="modal-header">
-<h4> Seleccione una Persona</h4>
-</div>
-<div class="modal-body">
-<div ui-grid="incapacidades.gridOptions" ui-grid-selection class="grid"></div>
-</div>
-<div class="modal-footer">
-<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-</div>
-</div>
-</div>
-//Modal
-
--->
-
 </div>

@@ -45,7 +45,7 @@
           <div class="col-md-12" ng-if="planillas.mesPeriodo">{{planillas.mesPeriodo.key}}<span class="caret"></span></div>
         </button>
         <ul class="dropdown-menu">
-          <li ng-repeat="(key, value) in planillas.meses"  ng-click="planillas.setSeleccionado({key,value},2)" value="{{value}}"><a href="">{{key}}</a></li>
+          <li ng-repeat="(key, value) in planillas.meses"  ng-click="planillas.setSeleccionado({key,value},2)" value="{{value}}" required><a href="">{{key}}</a></li>
         </ul>
       </div>
     </div>

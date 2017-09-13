@@ -24,7 +24,6 @@ angular.module('ssClienteApp')
           id: response.data[i].Id
         });
       }
-      console.log('proveedores : ' , proveedores);
     });
 
     self.states        = proveedores;
@@ -51,12 +50,10 @@ angular.module('ssClienteApp')
     function selectedItemChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       idProveedor = item.id;
-      console.log(idProveedor);
     }
 
     function createFilterFor(query) {
       var lowercaseQuery = angular.lowercase(query);
-
       return function filterFn(state) {
         return (state.value.indexOf(lowercaseQuery) === 0);
       };
@@ -71,31 +68,68 @@ angular.module('ssClienteApp')
       }
     );
 
+    self.setTipoIncapacidad = function(item) {
+      if (item !== undefined) {
+        self.tipoIncapacidad = item;
+      }
+    }
+
+    self.minDate = function() {
+        var minDate = self.fechaDesde;
+        return new Date(
+          minDate.getFullYear(),
+          minDate.getMonth(),
+          minDate.getDate + 3
+        );
+    }
+
+    function validarCampos() {
+      var validacion = {validado: false, mensaje: '', alerta: true};
+      if (idProveedor <= 0) {
+        validacion.mensaje = 'Persona no valida';
+      } else if (self.tipoIncapacidad === undefined) {
+        validacion.mensaje = 'Selecciona un tipo de incapacidad';
+      } else if (self.fechaDesde === undefined) {
+        validacion.mensaje = 'Selecciona una fecha de inicio';
+      } else if (self.fechaHasta === undefined) {
+        validacion.mensaje = 'Selecciona una fecha de finalización';
+      } else {
+        validacion.validado = true;
+        validacion.alerta = false;
+      }
+      return validacion;
+    }
 
     self.registrarIncapacidad = function() {
-      var persona = { Id: idProveedor }
-      var concepto = { Id: parseInt(self.tipoIncapacidad) }
-      var nomina = { Id: 5 }
+      var validar = validarCampos();
+      if (validar.validado) {
+        var persona = { Id: idProveedor }
+        var concepto = { Id: parseInt(self.tipoIncapacidad.Id) }
+        var nomina = { Id: 5 }
 
-      var incapacidad = {
-        ValorNovedad: 0,
-        EstadoNovedad: 'Activo',
-        FechaDesde: self.fechaDesde,
-        FechaHasta: self.fechaHasta,
-        NumCuotas: 999,
-        Persona: persona,
-        Concepto: concepto,
-        Nomina: nomina,
-        Tipo: 'fijo'
-      };
+        var incapacidad = {
+          ValorNovedad: 0,
+          EstadoNovedad: 'Activo',
+          FechaDesde: self.fechaDesde,
+          FechaHasta: self.fechaHasta,
+          NumCuotas: 999,
+          Persona: persona,
+          Concepto: concepto,
+          Nomina: nomina,
+          Tipo: 'fijo'
+        };
 
-      titanCrudService.post('concepto_por_persona',incapacidad).then(function(response) {
-        if(response.statusText === 'Created') {
-          swal('Incapacidad Registrada');
-          console.log(response.statusText);
-        } else {
-          swal('No se ha logrado registrar la incapacidad');
-        }
-      });
+        titanCrudService.post('concepto_por_persona',incapacidad).then(function(response) {
+          if(response.statusText === 'Created') {
+            swal('Incapacidad Registrada');
+          } else {
+            swal('No se ha logrado registrar la incapacidad');
+          }
+        });
+      } else {
+        self.alerta = validar.alerta;
+        self.alerta = validar.mensaje;
+      }
+
     }
   });

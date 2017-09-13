@@ -30,7 +30,8 @@ var text_es = {
     COD_MUNICIPIO: "El código del municipio es requerido",
     CAMPO_REQUERIDO: "El campo es requerido",
     ALERTA: "Alerta",
-    ERROR: "Error"
+    ERROR: "Error",
+    PERSONA: "Información del tercero no valida"
   },
   APORTANTE: {
     INFORMACION_APORTANTE: "Información del Aportate",
