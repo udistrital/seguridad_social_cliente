@@ -5,29 +5,32 @@
   </div>
   <br>
 
-  <div class="form-group row">
-    <div class="col-md-1">
-      <label class="col-md-7 col-form-label"> {{ 'ACTIVOS.ANIO' | translate }} </label>
-    </div>
-    <div class="col-md-3">
-      <select ng-model="activos.anioPeriodo" ng-init="activos.anioPeriodo" class="form-control">
-        <option ng-repeat="a in activos.anios" value="{{a.anio}}">{{a.anio}}</option>
-      </select>
-    </div>
+  <form name="myForm" ng-submit="activos.buscarNomina()">
+    <div class="form-group row">
+      <div class="col-md-1">
+        <label class="col-md-7 col-form-label">{{ 'ACTIVOS.ANIO' | translate }}</label>
+      </div>
+      <div class="col-md-3">
+        <select ng-model="activos.anioPeriodo" ng-init="activos.anioPeriodo" class="form-control" required>
+          <option value="" disabled>{{ 'ACTIVOS.SELECCION_ANIO' | translate }}</option>
+          <option ng-repeat="a in activos.anios" value="{{a.anio}}" required>{{a.anio}}</option>
+        </select>
+      </div>
 
-    <div class="col-md-1">
-      <label class="col-md-7 col-form-label"> {{ 'ACTIVOS.MES' | translate }} </label>
+      <div class="col-md-1">
+        <label class="col-md-7 col-form-label">{{ 'ACTIVOS.MES' | translate }}</label>
+      </div>
+      <div class="col-md-3">
+        <select ng-model="activos.mesPeriodo" ng-init="activos.mesPeriodo" class="form-control" required>
+          <option value="" disabled>{{ 'ACTIVOS.SELECCION_MES' | translate }}</option>
+          <option ng-repeat="(key, value) in activos.meses" value="{{key}}">{{value}}</option>
+        </select>
+      </div>
     </div>
-    <div class="col-md-3">
-      <select ng-model="activos.mesPeriodo" ng-init="activos.mesPeriodo" class="form-control">
-        <option ng-repeat="(key, value) in activos.meses" value="{{key}}">{{value}}</option>
-      </select>
+    <div class="col-md-offset-10 row">
+      <button type="submit" class="btn btn-primary btn-outline">{{ 'BTN.BUSCAR' | translate }}</button>
     </div>
-  </div>
-
-  <div class="col-md-offset-10 row">
-    <button type="button" class="btn btn-primary btn-outline" name="button" ng-click="activos.buscarNomina()"> {{ 'BTN.BUSCAR' | translate }} </button>
-  </div>
+  </form>
 
   <div class="form-group row" ng-if="activos.divNominas">
     <div class="col-md-1">

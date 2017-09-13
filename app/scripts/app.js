@@ -65,7 +65,7 @@ angular.module('ssClienteApp', [
   .when('/calculos', {
     templateUrl: 'views/calculos.html',
     controller: 'CalculosCtrl',
-    controllerAs: 'calculos'
+    controllerAs: 'calculo'
   })
   .when('/ibc', {
     templateUrl: 'views/ibc.html',

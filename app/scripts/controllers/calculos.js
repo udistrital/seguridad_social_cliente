@@ -9,9 +9,13 @@
  */
 angular.module('ssClienteApp')
   .controller('CalculosCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+    var self = this;
+
+    self.guardar = function() {
+      swal(
+        'Registro',
+        'Información Guardada',
+        'success'
+      )
+    }
   });

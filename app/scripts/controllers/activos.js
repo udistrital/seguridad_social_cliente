@@ -36,13 +36,14 @@ angular.module('ssClienteApp')
 
   //Trae las nóminas liquidadas de acuerdo al mes y año seleccionado
   self.buscarNomina = function() {
+    // Devuelve el número de días que tiene el mes
     function daysInMonth(humanMonth, year) {
       return new Date(year || new Date().getFullYear(), humanMonth, 0).getDate();
     }
     var maxDias = daysInMonth(self.mesPeriodo, self.anioPeriodo).toString();
     titanCrudService.get('preliquidacion', 'query=EstadoPreliquidacion.Nombre:Cerrada,Mes:'+self.mesPeriodo+',Ano:'+self.anioPeriodo)
     .then(function(response) {
-      if (response.data != null) {
+      if (response.data !== null) {
         self.nominas = response.data;
         self.divNominas = true;
         self.divError = false;
@@ -58,7 +59,6 @@ angular.module('ssClienteApp')
   self.nominaSeleccionada = function() {
     var pagosNombre = [];
     nominaObj = JSON.parse(self.nomina);  // Conviente el string de self.nomina a un objetso json
-    console.log(nominaObj.Id);
     seguridadSocialService.getServicio("pago/CalcularSegSocial",nominaObj.Id).then(function(response) {
       if (response.data != null) {
         var pagos = response.data;

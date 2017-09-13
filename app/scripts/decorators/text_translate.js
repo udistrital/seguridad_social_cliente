@@ -23,11 +23,14 @@ var text_es = {
     EDITAR: "Editar"
   },
   VALIDACION: {
-    NOMBRE: "El nombre es requerido.",
-    IDENTIFICACION: "El número de identificación es requerido.",
-    COD_ARL: "El código de ARL es requerido.",
+    NOMBRE: "El nombre es requerido",
+    IDENTIFICACION: "El número de identificación es requerido",
+    COD_ARL: "El código de ARL es requerido",
     COD_DEPARTAMENTO: "El código del departamento es requerido",
-    COD_MUNICIPIO: "El código del municipio es requerido"
+    COD_MUNICIPIO: "El código del municipio es requerido",
+    CAMPO_REQUERIDO: "El campo es requerido",
+    ALERTA: "Alerta",
+    ERROR: "Error"
   },
   APORTANTE: {
     INFORMACION_APORTANTE: "Información del Aportate",
@@ -66,7 +69,9 @@ var text_es = {
     PENSION: "Pensión",
     SALUD: "Salud",
     ARL: "ARL",
-    NOVEDADES: "Novedades"
+    NOVEDADES: "Novedades",
+    SELECCION_MES: "Selecciona un mes",
+    SELECCION_ANIO: "Selecciona un año"
   },
   UPC_ADICIONAL: {
     TITULO_REGISTRO: "Registrar Nueva UPC",
@@ -106,7 +111,9 @@ var text_es = {
   PLANILLAS: {
     TITULO: "Planillas",
     ANIO: "Año",
-    MES: "Mes"
+    MES: "Mes",
+    TIPO_NOMINA: "Tipo de Nómina",
+    VIGENCIA: "Vigencia"
   },
   IBC: {
     TITULO: "Ingreso Base de Cotización",
@@ -128,6 +135,16 @@ var text_en = {
     GENERAR_PLANILLA: "Generate Form",
     CERRAR: "Clonse",
     EDITAR: "Edit"
+  },
+  VALIDACION: {
+    NOMBRE: "Name is required",
+    IDENTIFICACION: "Identification number is required",
+    COD_ARL: "ARL code is required",
+    COD_DEPARTAMENTO: "Departament code is required",
+    COD_MUNICIPIO: "Municipality code is required",
+    CAMPO_REQUERIDO: "Value required",
+    ALERTA: "Warning",
+    ERROR: "Error"
   },
   APORTANTE: {
     INFORMACION_APORTANTE: "Contributor information",
@@ -159,12 +176,16 @@ var text_en = {
     SELECCIONE_OPCION: "Select one"
   },
   ACTIVOS: {
+    TITULO: "Title",
     ANIO: "Year",
     MES: "Month",
+    SELECCION_NOMINA: "Choose a pyroll",
     PENSION: "Pensión",
     SALUD: "Health",
     ARL: "ARL",
-    NOVEDADES: "News"
+    NOVEDADES: "News",
+    SELECCION_MES: "Choose a month",
+    SELECCION_ANIO: "Choose a year"
   },
   UPC_ADICIONAL: {
     TITULO_REGISTRO: "New UPC Register",
@@ -204,7 +225,11 @@ var text_en = {
   PLANILLAS: {
     TITULO: "Forms",
     ANIO: "Year",
-    MES: "Month"
+    MES: "Month",
+    TIPO_NOMINA: "Pyroll type",
+    VIGENCIA: "Validity",
+    ALERTA: "Alert!",
+    ERROR: "Error!"
   },
   IBC: {
     TITULO: "IBC",
