@@ -11,18 +11,20 @@
     "angular-route": "^1.4.0",
     "angular-sanitize": "^1.4.0",
     "angular-touch": "^1.4.0",
-    "angular-ui-grid":"*",
+    "angular-ui-grid": "*",
     "AngularJS-OAuth2": "angularjs-oauth2#^1.2.1",
-    "angular-material":"*",
-    "angular-tree-control":"*",
-    "pdfmake":"*",
+    "angular-material": "*",
+    "angular-tree-control": "*",
+    "pdfmake": "*",
     "ngstorage": "^0.3.11",
     "kjur-jsrsasign": "jsrsasign#^7.0.0",
     "angular-websocket": "^2.0.0",
     "angular-input-masks": "^2.5.0",
     "angular-moment": "^1.0.1",
     "angular-translate": "^2.15.1",
-    "sweetalert2": "^6.4.4"
+    "sweetalert2": "^6.4.4",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.47",
+    "bootstrap-datetimepicker": "^0.0.11"
   },
   "resolutions": {
     "angular": "1.6.4"

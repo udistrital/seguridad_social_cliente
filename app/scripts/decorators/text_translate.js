@@ -31,7 +31,10 @@ var text_es = {
     CAMPO_REQUERIDO: "El campo es requerido",
     ALERTA: "Alerta",
     ERROR: "Error",
-    PERSONA: "Información del tercero no valida"
+    PERSONA: "Información del tercero no valida",
+    PRIMER_NOMBRE: "El primer nombre es requerido",
+    PRIMER_APELLIDO: "El primer apellido es requerido",
+    FECHA_NACIMIENTO: "La fecha de nacimiento es requerida"
   },
   APORTANTE: {
     INFORMACION_APORTANTE: "Información del Aportate",
@@ -145,7 +148,11 @@ var text_en = {
     COD_MUNICIPIO: "Municipality code is required",
     CAMPO_REQUERIDO: "Value required",
     ALERTA: "Warning",
-    ERROR: "Error"
+    ERROR: "Error",
+    PERSONA: "Invalid information",
+    PRIMER_NOMBRE: "Firts name is required",
+    PRIMER_APELLIDO: "Firts lastname is reequired",
+    FECHA_NACIMIENTO: "Date birth is required"
   },
   APORTANTE: {
     INFORMACION_APORTANTE: "Contributor information",

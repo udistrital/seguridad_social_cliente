@@ -144,4 +144,11 @@ angular.module('ssClienteApp')
 
       console.log(upcAdicional);
     };
+
+    $(function () {
+      $('#datetimepicker1').datetimepicker({
+        format: 'DD/MM/YYYY',
+        locale: 'es'
+      });
+    });
 });
