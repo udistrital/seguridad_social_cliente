@@ -8,7 +8,7 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-.controller('IncapacidadesCtrl', function (agoraService, titanCrudService, $scope, $timeout, $q, $log) {
+.controller('IncapacidadesCtrl', function (agoraService, titanCrudService, $scope, $timeout, $q, $log, $translate) {
   var self = this;
   var idProveedor = 0;
 
@@ -86,13 +86,13 @@ angular.module('ssClienteApp')
     function validarCampos() {
       var validacion = {validado: false, mensaje: '', alerta: true};
       if (idProveedor <= 0) {
-        validacion.mensaje = 'Persona no valida';
+        validacion.mensaje = $translate.instant('VALIDACION.PERSONA_INVALIDA');
       } else if (self.tipoIncapacidad === undefined) {
-        validacion.mensaje = 'Selecciona un tipo de incapacidad';
+        validacion.mensaje = $translate.instant('VALIDACION.TIPO_IDENTIFICACION');
       } else if (self.fechaDesde === undefined) {
-        validacion.mensaje = 'Selecciona una fecha de inicio';
+        validacion.mensaje = $translate.instant('VALIDACION.FECHA_INCIO');
       } else if (self.fechaHasta === undefined) {
-        validacion.mensaje = 'Selecciona una fecha de finalización';
+        validacion.mensaje = $translate.instant('VALIDACION.FECHA_FIN');
       } else {
         validacion.validado = true;
         validacion.alerta = false;
@@ -121,9 +121,9 @@ angular.module('ssClienteApp')
 
         titanCrudService.post('concepto_por_persona',incapacidad).then(function(response) {
           if(response.statusText === 'Created') {
-            swal('Incapacidad Registrada');
+            swal($translate.instant('INCAPACIDADES.REGISTRADA'));
           } else {
-            swal('No se ha logrado registrar la incapacidad');
+            swal($translate.instant('INCAPACIDADES.ERROR_REGISTRO'));
           }
         });
       } else {

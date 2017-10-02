@@ -34,7 +34,11 @@ var text_es = {
     PERSONA: "Información del tercero no valida",
     PRIMER_NOMBRE: "El primer nombre es requerido",
     PRIMER_APELLIDO: "El primer apellido es requerido",
-    FECHA_NACIMIENTO: "La fecha de nacimiento es requerida"
+    FECHA_NACIMIENTO: "La fecha de nacimiento es requerida",
+    PERSONA_INVALIDA: "Persona no valida",
+    TIPO_IDENTIFICACION: "Selecciona un tipo de identificación",
+    FECHA_INCIO: "Selecciona una fecha de inicio",
+    FECHA_FIN: "Selecciona una fecha de finaización"
   },
   APORTANTE: {
     INFORMACION_APORTANTE: "Información del Aportate",
@@ -63,7 +67,9 @@ var text_es = {
     FECHA_INCIO: "Fecha de Inicio",
     FECHA_FIN: "Fecha de Finalización",
     SIN_RESULTADOS: "No se encontraron resultados de ",
-    SELECCIONE_OPCION: "Seleccione una opción"
+    SELECCIONE_OPCION: "Seleccione una opción",
+    REGISTRADA: "Incapacidad registrada",
+    ERROR_REGISTRO: "No se ha logrado registrar la incapacidad"
   },
   ACTIVOS: {
     TITULO: "Activos",
@@ -152,7 +158,11 @@ var text_en = {
     PERSONA: "Invalid information",
     PRIMER_NOMBRE: "Firts name is required",
     PRIMER_APELLIDO: "Firts lastname is reequired",
-    FECHA_NACIMIENTO: "Date birth is required"
+    FECHA_NACIMIENTO: "Date birth is required",
+    PERSONA_INVALIDA: "Invalid person",
+    TIPO_IDENTIFICACION: "Select an id type",
+    FECHA_INCIO: "Select an start date",
+    FECHA_FIN: "Select an end date"
   },
   APORTANTE: {
     INFORMACION_APORTANTE: "Contributor information",
@@ -181,7 +191,9 @@ var text_en = {
     FECHA_INCIO: "Start date",
     FECHA_FIN: "Finish date",
     SIN_RESULTADOS: "No result found ",
-    SELECCIONE_OPCION: "Select one"
+    SELECCIONE_OPCION: "Select one",
+    REGISTRADA: "Registered disability",
+    ERROR_REGISTRO: "Unregistered disability"
   },
   ACTIVOS: {
     TITULO: "Title",
