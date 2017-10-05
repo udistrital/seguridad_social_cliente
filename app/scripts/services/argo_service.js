@@ -2,20 +2,24 @@
 
 /**
  * @ngdoc service
- * @name ssClienteApp.titanCrudService
+ * @name ssClienteApp.argoService
  * @description
- * # titanCrudService
+ * # argoService
  * Service in the ssClienteApp.
  */
 angular.module('ssClienteApp')
-  .service('titanCrudService', function ($http) {
+  .service('argoService', function ($http) {
 
-    //var path = 'http://localhost:8082/v1/';
-    var path = 'http://10.20.0.254/titan_api_crud/v1/'
+    //IP Pruebas
+    var path = 'http://10.20.0.254/administrativa_api/v1/';
 
+    // Public API here
     return {
-      get: function (tabla,params) {
-        return $http.get(path+tabla+"/?"+params);
+      getOne: function(tabla, params) {
+        return $http.get(path+tabla+'/'+params)
+      },
+       get: function (tabla,params) {
+        return $http.get(path+tabla+"?"+params);
       },
       post: function (tabla,elemento) {
         return $http.post(path+tabla,elemento);

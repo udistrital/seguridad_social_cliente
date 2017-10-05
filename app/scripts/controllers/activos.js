@@ -8,10 +8,13 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-.controller('ActivosCtrl', function (seguridadSocialService, titanCrudService, seguridadSocialCrudService, agoraService, $scope, $translate) {
+.controller('ActivosCtrl', function (seguridadSocialService, titanCrudService, seguridadSocialCrudService, agoraService, argoService, $scope, $translate) {
   var self = this;
   var dataDescuentos = [];
   var nominaObj;   // Objeto json con la nómina seleccionada
+
+  var contratistas = []; // Guarda la información del servicio de contrato_general
+  var personasNaturales = []; // Guarda la información del servicio de informacion_persona_natural
 
   self.novedadesDiv = false;
   self.activosDiv = false;
@@ -41,7 +44,7 @@ angular.module('ssClienteApp')
       return new Date(year || new Date().getFullYear(), humanMonth, 0).getDate();
     }
     var maxDias = daysInMonth(self.mesPeriodo, self.anioPeriodo).toString();
-    titanCrudService.get('preliquidacion', 'query=EstadoPreliquidacion.Nombre:Cerrada,Mes:'+self.mesPeriodo+',Ano:'+self.anioPeriodo)
+    titanCrudService.get('preliquidacion', 'query=EstadoPreliquidacion.Activo:true,Mes:'+self.mesPeriodo+',Ano:'+self.anioPeriodo)
     .then(function(response) {
       if (response.data !== null) {
         self.nominas = response.data;
@@ -56,6 +59,14 @@ angular.module('ssClienteApp')
     });
   }
 
+  argoService.get('contrato_general','limit=-1').then(function(response) {
+    self.contratistas = response.data;
+  });
+
+  agoraService.get('informacion_persona_natural','limit=-1').then(function(response) {
+    self.personasNaturales = response.data;
+  });
+
   self.nominaSeleccionada = function() {
     var pagosNombre = [];
     nominaObj = JSON.parse(self.nomina);  // Conviente el string de self.nomina a un objetso json
@@ -64,24 +75,25 @@ angular.module('ssClienteApp')
         var pagos = response.data;
         //Aquí se va llenando el ui-grid con la información que viene en el arreglo pagos
         angular.forEach(pagos,function(data){
-          titanCrudService.get('informacion_proveedor', 'limit=-1&fields=Id,NomProveedor&query=Id:' + data.Persona).then(function(response) {
-            self.nombre = response.data[0].NomProveedor;
-            pagosNombre.push({
-              Persona: data.Persona,
-              Nombre: self.nombre,
-              PensionUd: data.PensionUd,
-              SaludUd: data.SaludUd,
-              SaludTotal: data.SaludTotal,
-              PensionTotal: data.PensionTotal,
-              Arl: data.Arl,
-              Caja: data.Caja,
-              Icbf: data.Icbf });
-              self.gridOptions.data = pagosNombre;
-              dataDescuentos.push(data)
+          argoService.getOne('contrato_general', data.NumeroContrato).then(function (response) {
+            agoraService.getServicio('informacion_persona_natural', response.data.Contratista).then(function (response) {
+              pagosNombre.push({
+                Persona: data.NumeroContrato,
+                Nombre: response.data.PrimerNombre + " " + response.data.SegundoNombre + " " + response.data.PrimerApellido + " " + response.data.SegundoApellido,
+                PensionUd: data.PensionUd,
+                SaludUd: data.SaludUd,
+                SaludTotal: data.SaludTotal,
+                PensionTotal: data.PensionTotal,
+                Arl: data.Arl,
+                Caja: data.Caja,
+                Icbf: data.Icbf });
+                self.gridOptions.data = pagosNombre;
+                dataDescuentos.push(data);
+              });
             });
           });
         } else {
-          self.gridOptions.data = pagosNombre;
+          self.gridOptions.data = null;
         }
       });
       self.activosDiv = true;
