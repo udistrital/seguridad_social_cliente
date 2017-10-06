@@ -12,7 +12,7 @@ angular.module('ssClienteApp')
     restrict: 'E',
     scope:{
       persona:'=',
-      liquidacion: '='
+      preliquidacion: '='
     },
     templateUrl: 'views/directives/ingresos-de-cotizacion.html',
     controller:function(uigridservice, titanCrudService, $scope){
@@ -43,7 +43,7 @@ angular.module('ssClienteApp')
         ]};
 
         $scope.$watch("persona", function(){
-          titanCrudService.get('detalle_liquidacion','limit=0&query=Persona:'+$scope.persona.Persona+',Concepto.Naturaleza:seguridad_social,Liquidacion.Id:'+$scope.liquidacion+'&fields=Concepto,ValorCalculado,DiasLiquidados')
+          titanCrudService.get('detalle_preliquidacion','limit=0&query=NumeroContrato:'+$scope.persona.Persona+',Concepto.TipoConcepto.Nombre:seguridad_social,Preliquidacion.Id:'+JSON.parse($scope.preliquidacion).Id+'&fields=Concepto,ValorCalculado,DiasLiquidados')
           .then(function(response) {
             var detalle_liquidacion = response.data;
             detalle_liquidacion.push(

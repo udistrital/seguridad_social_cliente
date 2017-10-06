@@ -40,7 +40,6 @@ angular.module('ssClienteApp')
               self.gridOptions.data = response.data;
             }
           )
-            console.log($scope.persona);
         });
 
       },

@@ -116,7 +116,8 @@ var text_es = {
     ZONAS_ALEJADAS: "Zonas Alejadas",
     TITULO_REGISTRAR_TIPO: "Registrar Valores",
     TITULO_TIPO_UPC: "Valor UPC Adicional",
-    REGISTRAR_VALORES: "Registrar Nuevos Valores"
+    REGISTRAR_VALORES: "Registrar Nuevos Valores",
+    SIN_UPC: "No existen UPC asociadas a esta persona"
   },
   PLANILLAS: {
     TITULO: "Planillas",
@@ -240,7 +241,8 @@ var text_en = {
     ZONAS_ALEJADAS: "Far Away Zones",
     TITULO_REGISTRAR_TIPO: "Values Register",
     TITULO_TIPO_UPC: "UPC Cost",
-    REGISTRAR_VALORES: "Register New Values"
+    REGISTRAR_VALORES: "Register New Values",
+    SIN_UPC: "There is not UPC associated to this person"
   },
   PLANILLAS: {
     TITULO: "Forms",
