@@ -30,7 +30,7 @@ angular.module('ssClienteApp')
             cellTooltip: function(row, col) {
               return row.entity.AliasConcepto;
             },},
-          { field: 'ValorCalculado', vislble: false, displayName: 'Valor', cellTemplate: '<div align="right">{{row.entity.ValorCalculado | currency}}</div>', cellFilter: 'currency' },
+          { field: 'ValorNovedad', vislble: false, displayName: 'Valor', cellTemplate: '<div align="right">{{row.entity.ValorNovedad | currency}}</div>', cellFilter: 'currency' },
           { field: 'FechaDesde', visible: true, displayName: 'Fecha Inicio',
           cellTemplate: '<div align="right"><span>{{row.entity.FechaDesde | date:"yyyy-MM-dd":"+0900"}}</span></div>' },
           { field: 'FechaHasta', visible: true, displayName: 'Fecha Finalización',
@@ -43,13 +43,17 @@ angular.module('ssClienteApp')
           var novedades = [];
           self.noData = true;
 
-          titanCrudService.get('concepto/get_conceptos_ss/'+ $scope.persona.Persona, '')
-          .then(function(response) {
-            if (response.statusText === "OK") {
-              novedades.push(response.data);
-              self.gridOptions.data = novedades;
-              self.noData = false;
-            }
+          titanCrudService.get('detalle_preliquidacion','fields=Concepto&query=Concepto.NaturalezaConcepto.Nombre:seguridad_social').then(function(response) {
+            self.conceptos = response.data;
+            angular.forEach(response.data,function(data) {
+              if (data.Concepto.NombreConcepto !== 'ibc_liquidado' && data.Concepto.NombreConcepto !== 'ibc_novedad') {
+                titanCrudService.get('concepto_nomina_por_persona','?query=Concepto.Id:'+data.Id).then(function(response) {
+                  self.gridOptions.push(response.data);
+                });
+              } else {
+                self.gridOptions.data = null;
+              }
+            });
           });
         });
       },
