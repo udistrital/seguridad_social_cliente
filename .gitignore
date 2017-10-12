@@ -7,4 +7,6 @@
 /app/scripts/services/seguridadsocialservice.js
 /app/scripts/services/titancrudservice.js
 /app/scripts/services/seguridad_social_crud_service.js
+/app/scripts/services/agoraservice.js
+/app/scripts/services/argo_service.js
 .DS_Store
