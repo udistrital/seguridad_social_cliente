@@ -1,15 +1,3 @@
-/* Mis estilos */
-.watermark {
-    position: absolute;
-    top: 50%;                    <---- Center vertically in the parent element,
-    transform: translateY(-50%); <---- it works for any parent height
-    opacity: 0.25;
-    font-size: 3em;
-    width: 100%;
-    text-align: center;
-    z-index: 1000;
-}
-
 /* NOTIFICATION*/
 
 /* UI-GRID*/
