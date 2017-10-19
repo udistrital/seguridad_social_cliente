@@ -130,6 +130,11 @@ var text_es = {
     TITULO: "Ingreso Base de Cotización",
     SELECCION_CONCEPTOS: "Seleccione los conceptos para establecer el Ingreso Base de Cotiazción",
     CONCEPTOS_SELECCIONADOS: "Conceptos Seleccionados"
+  },
+  CONCEPTO_PERSONA: {
+    VALOR_NOVEDAD: "Valor",
+    FECHA_DESDE: "Fecha inicio",
+    FECHA_HASTA: "Fecha finalización"
   }
 };
 

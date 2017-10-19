@@ -14,7 +14,7 @@ angular.module('ssClienteApp')
       persona:'='
     },
     templateUrl: 'views/directives/concepto-por-persona.html',
-    controller:function(titanCrudService, $scope){
+    controller:function(titanCrudService, $scope, $translate){
       var self = this;
 
       self.gridOptions = {
@@ -30,10 +30,11 @@ angular.module('ssClienteApp')
             cellTooltip: function(row, col) {
               return row.entity.AliasConcepto;
             },},
-          { field: 'ValorNovedad', vislble: false, displayName: 'Valor', cellTemplate: '<div align="right">{{row.entity.ValorNovedad | currency}}</div>', cellFilter: 'currency' },
-          { field: 'FechaDesde', visible: true, displayName: 'Fecha Inicio',
+          { field: 'ValorNovedad', vislble: false, displayName: $translate.instant('CONCEPTO_PERSONA.VALOR_NOVEDAD'),
+          cellTemplate: '<div align="right">{{row.entity.ValorNovedad | currency}}</div>', cellFilter: 'currency' },
+          { field: 'FechaDesde', visible: true, displayName: $translate.instant('CONCEPTO_PERSONA.FECHA_DESDE'),
           cellTemplate: '<div align="right"><span>{{row.entity.FechaDesde | date:"yyyy-MM-dd":"+0900"}}</span></div>' },
-          { field: 'FechaHasta', visible: true, displayName: 'Fecha Finalización',
+          { field: 'FechaHasta', visible: true, displayName: $translate.instant('CONCEPTO_PERSONA.FECHA_HASTA'),
           cellTemplate: '<div align="right"><span>{{row.entity.FechaHasta | date:"yyyy-MM-dd":"+0900"}}</span></div>' }
         ]};
 
@@ -42,13 +43,12 @@ angular.module('ssClienteApp')
         $scope.$watch("persona", function(){
           var novedades = [];
           self.noData = true;
-
-          titanCrudService.get('detalle_preliquidacion','fields=Concepto&query=Concepto.NaturalezaConcepto.Nombre:seguridad_social').then(function(response) {
-            self.conceptos = response.data;
+          titanCrudService.get('detalle_preliquidacion','fields=Concepto&query=Concepto.NaturalezaConcepto.Nombre:seguridad_social&query=NumeroContrato:'+$scope.persona.Persona).then(function(response) {
             angular.forEach(response.data,function(data) {
-              if (data.Concepto.NombreConcepto !== 'ibc_liquidado' && data.Concepto.NombreConcepto !== 'ibc_novedad') {
-                titanCrudService.get('concepto_nomina_por_persona','?query=Concepto.Id:'+data.Id).then(function(response) {
-                  self.gridOptions.push(response.data);
+              if (data.Concepto.NombreConcepto !== 'ibc_liquidado') {
+                titanCrudService.get('concepto_nomina_por_persona','?query=Concepto.TipoConcepto.Nombre:seguridad_social').then(function(response) {
+                  self.gridOptions.data = response.data;
+                  self.noData = false;
                 });
               } else {
                 self.gridOptions.data = null;
