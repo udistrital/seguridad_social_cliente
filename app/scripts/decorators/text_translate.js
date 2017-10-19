@@ -262,6 +262,11 @@ var text_en = {
     TITULO: "IBC",
     SELECCION_CONCEPTOS: "Select the IBC Concepts",
     CONCEPTOS_SELECCIONADOS: "Selectd Concepts"
+  },
+  CONCEPTO_PERSONA: {
+    VALOR_NOVEDAD: "Value",
+    FECHA_DESDE: "Start",
+    FECHA_HASTA: "Finish date"
   }
 };
 
