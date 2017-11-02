@@ -54,7 +54,7 @@ angular.module('ssClienteApp')
         self.divNominas = false;
         self.nominas = null;
         self.divError = true;
-        self.errorMensaje = "No se encontrarón nóminas liquidadas para " + self.meses[self.mesPeriodo] + " de " + self.anioPeriodo
+        self.errorMensaje = "No se encontrarón nóminas liquidadas para " + self.meses[self.mesPeriodo] + " de " + self.anioPeriodo;
       }
     });
   }
@@ -66,6 +66,8 @@ angular.module('ssClienteApp')
   agoraService.get('informacion_persona_natural','limit=-1').then(function(response) {
     self.personasNaturales = response.data;
   });
+
+  self.idPreliquidacion = 0;
 
   self.nominaSeleccionada = function() {
     var pagosNombre = [];
@@ -88,6 +90,7 @@ angular.module('ssClienteApp')
                 Caja: data.Caja,
                 Icbf: data.Icbf });
                 self.gridOptions.data = pagosNombre;
+                self.idPreliquidacion = data.IdPreliquidacion;
                 dataDescuentos.push(data);
               });
             });
@@ -101,28 +104,33 @@ angular.module('ssClienteApp')
 
     //Función para registrar un nuevo periodo de pago
     self.guardar = function() {
-
       var periodo_pago =
       {
         Mes: parseInt(self.mesPeriodo),
         Anio: parseInt(self.anioPeriodo),
-        TipoLiquidacion: nominaObj.Nomina.Nombre
+        Liquidacion: self.idPreliquidacion,
+        TipoLiquidacion: ''
       };
+
+      console.log(periodo_pago);
       seguridadSocialCrudService.post('periodo_pago', periodo_pago).then(function(response) {
+        console.log(response.data);
         var periodo_pago = { Id: parseInt(response.data.Id) };
         for (var i = 0; i < dataDescuentos.length; i++) {
+          console.log(dataDescuentos[i]);
           guardarValores(dataDescuentos[i], periodo_pago);
         }
+
       });
 
     }
 
     //Función para guardar los valores de cada uno de los pagos
     function guardarValores(data, periodo_pago) {
-
+      console.log(data.IdDetalleLiquidacion);
       var pago =
       {
-        DetalleLiquidacion: data.IdDetalleLiquidacion,
+        DetalleLiquidacion: data.IdDetallePreliquidacion,
         Valor: 0,
         TipoPago: -1,
         EntidadPago: 0,
@@ -130,7 +138,7 @@ angular.module('ssClienteApp')
       };
 
       //Guarda salud UD
-      titanCrudService.get('concepto','limit=1&query=Naturaleza:seguridad_social,NombreConcepto:saludUd').then(function (response) {
+      titanCrudService.get('concepto_nomina','limit=1&query=NaturalezaConcepto.Nombre:seguridad_social,NombreConcepto:salud_ud').then(function (response) {
         pago["Valor"] = data.SaludUd;
         pago["TipoPago"] = parseInt(response.data[0].Id);
         seguridadSocialCrudService.post('pago',pago).then(function(response) {
@@ -143,6 +151,7 @@ angular.module('ssClienteApp')
         });
       });
 
+      /*
       //Guarda salud Total
       titanCrudService.get('concepto','limit=1&query=Naturaleza:seguridad_social,NombreConcepto:saludTotal').then(function (response) {
         pago["Valor"] = data.SaludTotal;
@@ -155,10 +164,10 @@ angular.module('ssClienteApp')
             console.log('Error al registrar salud total ' + response.data);
           }
         });
-      });
+      });*/
 
       //Guarda Pensión UD
-      titanCrudService.get('concepto','limit=1&query=Naturaleza:seguridad_social,NombreConcepto:pensionUd').then(function (response) {
+      titanCrudService.get('concepto_nomina','limit=1&query=NaturalezaConcepto.Nombre:seguridad_social,NombreConcepto:pension_ud').then(function (response) {
         pago["Valor"] = data.PensionUd;
         pago["TipoPago"] = parseInt(response.data[0].Id);
         seguridadSocialCrudService.post('pago',pago).then(function(response) {
@@ -170,6 +179,7 @@ angular.module('ssClienteApp')
         });
       });
 
+      /*
       //Guarda Pensión Total
       titanCrudService.get('concepto','limit=1&query=Naturaleza:seguridad_social,NombreConcepto:pensionTotal').then(function (response) {
         pago["Valor"] = data.PensionTotal;
@@ -182,9 +192,10 @@ angular.module('ssClienteApp')
           }
         });
       });
+      */
 
       //Guarda ARL
-      titanCrudService.get('concepto','limit=1&query=Naturaleza:seguridad_social,NombreConcepto:arl').then(function (response) {
+      titanCrudService.get('concepto_nomina','limit=1&query=NaturalezaConcepto.Nombre:seguridad_social,NombreConcepto:arl').then(function (response) {
         pago["Valor"] = data.Arl;
         pago["TipoPago"] = parseInt(response.data[0].Id);
         seguridadSocialCrudService.post('pago',pago).then(function(response) {
@@ -197,7 +208,7 @@ angular.module('ssClienteApp')
       });
 
       //Guarda Caja
-      titanCrudService.get('concepto','limit=1&query=Naturaleza:seguridad_social,NombreConcepto:caja').then(function (response) {
+      titanCrudService.get('concepto_nomina','limit=1&query=NaturalezaConcepto.Nombre:seguridad_social,NombreConcepto:caja_compensacion').then(function (response) {
         pago["Valor"] = data.Caja;
         pago["TipoPago"] = parseInt(response.data[0].Id);
         seguridadSocialCrudService.post('pago',pago).then(function(response) {
@@ -210,7 +221,7 @@ angular.module('ssClienteApp')
       });
 
       //Guarda ICBF
-      titanCrudService.get('concepto','limit=1&query=Naturaleza:seguridad_social,NombreConcepto:icbf').then(function (response) {
+      titanCrudService.get('concepto_nomina','limit=1&query=NaturalezaConcepto.Nombre:seguridad_social,NombreConcepto:icbf').then(function (response) {
         pago["Valor"] = data.Icbf;
         pago["TipoPago"] = parseInt(response.data[0].Id);
         seguridadSocialCrudService.post('pago',pago).then(function(response) {
