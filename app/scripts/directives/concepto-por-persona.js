@@ -43,7 +43,8 @@ angular.module('ssClienteApp')
         $scope.$watch("persona", function(){
           var novedades = [];
           self.noData = true;
-          titanCrudService.get('detalle_preliquidacion','fields=Concepto&query=Concepto.NaturalezaConcepto.Nombre:seguridad_social&query=NumeroContrato:'+$scope.persona.Persona).then(function(response) {
+          console.log('detalle_preliquidacion?field=Concepto&query=Concepto.NaturalezaConcepto.Nombre:seguridad_social&query=NumeroContrato:'+$scope.persona.Persona);
+          titanCrudService.get('detalle_preliquidacion','field=Concepto&query=Concepto.NaturalezaConcepto.Nombre:seguridad_social&query=NumeroContrato:'+$scope.persona.Persona).then(function(response) {
             angular.forEach(response.data,function(data) {
               if (data.Concepto.NombreConcepto !== 'ibc_liquidado') {
                 titanCrudService.get('concepto_nomina_por_persona','?query=Concepto.TipoConcepto.Nombre:seguridad_social').then(function(response) {

@@ -81,7 +81,8 @@ var text_es = {
     ARL: "ARL",
     NOVEDADES: "Novedades",
     SELECCION_MES: "Selecciona un mes",
-    SELECCION_ANIO: "Selecciona un año"
+    SELECCION_ANIO: "Selecciona un año",
+    REGISTRO: "Registrada seguridad social del mes de"
   },
   UPC_ADICIONAL: {
     TITULO_REGISTRO: "Registrar Nueva UPC",
@@ -135,6 +136,12 @@ var text_es = {
     VALOR_NOVEDAD: "Valor",
     FECHA_DESDE: "Fecha inicio",
     FECHA_HASTA: "Fecha finalización"
+  },
+  ALERTAS: {
+    CONTINUAR: "Continuar",
+    REGISTRADO: "Registrado",
+    GUARDAR: "Guardar",
+    CANCELAR: "Cancelar"
   }
 };
 
@@ -211,7 +218,8 @@ var text_en = {
     ARL: "ARL",
     NOVEDADES: "News",
     SELECCION_MES: "Choose a month",
-    SELECCION_ANIO: "Choose a year"
+    SELECCION_ANIO: "Choose a year",
+    REGISTRO: "Registered social security of the month of"
   },
   UPC_ADICIONAL: {
     TITULO_REGISTRO: "New UPC Register",
@@ -267,6 +275,12 @@ var text_en = {
     VALOR_NOVEDAD: "Value",
     FECHA_DESDE: "Start",
     FECHA_HASTA: "Finish date"
+  },
+  ALERTAS: {
+    CONTINUAR: "Continue",
+    REGISTRADO: "Registered",
+    GUARDAR: "Save",
+    CANCELAR: "Cancel"
   }
 };
 

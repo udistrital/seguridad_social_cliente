@@ -22,8 +22,8 @@ angular.module('ssClienteApp')
   self.anioPeriodo = new Date().getFullYear();
   self.mesPeriodo = new Date().getMonth();
 
-  self.anios = [];
-
+  self.anios = []; // Tiene todos los años desde 1900
+  self.concpSegSoc = []; // Tiene la información de los conceptos correspondientes a pagos
 
   var fechaActual = new Date().getFullYear() + '-' + new Date().getMonth() + '-' + new Date().getDate()
   self.meses = { 1: "Enero", 2: "Febrero", 3: "Marzo", 4: "Abril", 5: "Mayo", 6: "Junio",
@@ -31,11 +31,19 @@ angular.module('ssClienteApp')
 
   //Crea un arreglo de objetos para tener los años desde el 1900 hasta el año actual con el metodo getFullYear()
   function calcularAnios() {
-    for (var i = new Date().getFullYear(); i >= 1900 ; i--) {
+    for (var i = new Date().getFullYear(); i >= 2000 ; i--) {
       self.anios.push({ anio: i });
     }
   }
   calcularAnios();
+
+  titanCrudService.get('concepto_nomina','limit=0&query=NaturalezaConcepto.Nombre:seguridad_social').then(function (response) {
+    for (let data of response.data) {
+      if (data.AliasConcepto.includes("Pago") || data.AliasConcepto.includes("pago")) {
+        self.concpSegSoc.push(data);
+      }
+    }
+  });
 
   //Trae las nóminas liquidadas de acuerdo al mes y año seleccionado
   self.buscarNomina = function() {
@@ -44,7 +52,7 @@ angular.module('ssClienteApp')
       return new Date(year || new Date().getFullYear(), humanMonth, 0).getDate();
     }
     var maxDias = daysInMonth(self.mesPeriodo, self.anioPeriodo).toString();
-    titanCrudService.get('preliquidacion', 'query=EstadoPreliquidacion.Activo:true,Mes:'+self.mesPeriodo+',Ano:'+self.anioPeriodo)
+    titanCrudService.get('preliquidacion', 'query=EstadoPreliquidacion.Activo:true,EstadoPreliquidacion.Nombre:EnOrdenPago,Mes:'+self.mesPeriodo+',Ano:'+self.anioPeriodo)
     .then(function(response) {
       if (response.data !== null) {
         self.nominas = response.data;
@@ -102,136 +110,88 @@ angular.module('ssClienteApp')
       self.activosDiv = true;
     };
 
+
     //Función para registrar un nuevo periodo de pago
     self.guardar = function() {
-      var periodo_pago =
-      {
-        Mes: parseInt(self.mesPeriodo),
-        Anio: parseInt(self.anioPeriodo),
-        Liquidacion: self.idPreliquidacion,
-        TipoLiquidacion: ''
-      };
+      swal({
+        title: $translate.instant('ALERTAS.CONTINUAR'),
+        text: '',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: $translate.instant('ALERTAS.GUARDAR'),
+        cancelButtonText: $translate.instant('ALERTAS.CANCELAR')
+      }).then((result) => {
+        if (result.value) {
+          var periodo_pago =
+          {
+            Mes: parseInt(self.mesPeriodo),
+            Anio: parseInt(self.anioPeriodo),
+            Liquidacion: self.idPreliquidacion,
+            TipoLiquidacion: ''
+          };
 
-      console.log(periodo_pago);
-      seguridadSocialCrudService.post('periodo_pago', periodo_pago).then(function(response) {
-        console.log(response.data);
-        var periodo_pago = { Id: parseInt(response.data.Id) };
-        for (var i = 0; i < dataDescuentos.length; i++) {
-          console.log(dataDescuentos[i]);
-          guardarValores(dataDescuentos[i], periodo_pago);
+          var pagos = [];
+
+          for (let descuentos of dataDescuentos) {
+            for (let concepto of self.concpSegSoc) {
+              var pago =
+              {
+                DetalleLiquidacion: descuentos.IdDetallePreliquidacion,
+                Valor: 0,
+                TipoPago: 0,
+                EntidadPago: 0,
+                PeridodoPago: periodo_pago
+              };
+              var tipoPago = 0, valor = 0;
+              switch(concepto.NombreConcepto) {
+                case "arl":
+                var tipoPago = concepto.Id;
+                var valor = descuentos.Arl;
+                break;
+                case "pension_ud":
+                var tipoPago = concepto.Id;
+                var valor = descuentos.PensionUd;
+                break;
+                case "salud_ud":
+                var tipoPago = concepto.Id;
+                var valor = descuentos.SaludUd;
+                break;
+                case "icbf":
+                var tipoPago = concepto.Id;
+                var valor = descuentos.Icbf;
+                break;
+                //caja_compensacion
+                default:
+                var tipoPago = concepto.Id;
+                var valor = descuentos.Caja;
+                break;
+              }
+              pago["Valor"] = valor;
+              pago["TipoPago"] = tipoPago;
+              pagos.push(pago);
+            }
+          }
+
+          var transaccion =
+          {
+            PeriodoPago: periodo_pago,
+            Pagos: pagos
+          };
+
+          seguridadSocialCrudService.post('tr_periodo_pago', transaccion).then(function(response) {
+            if (response.data[0] = "Ok") {
+              swal(
+                $translate.instant('ALERTAS.REGISTRADO'),
+                $translate.instant('ACTIVOS.REGISTRO')+' <b>'+self.meses[""+self.mesPeriodo+""]+'</b>',
+                'success'
+              )
+            }
+          });
         }
-
       });
 
-    }
-
-    //Función para guardar los valores de cada uno de los pagos
-    function guardarValores(data, periodo_pago) {
-      console.log(data.IdDetalleLiquidacion);
-      var pago =
-      {
-        DetalleLiquidacion: data.IdDetallePreliquidacion,
-        Valor: 0,
-        TipoPago: -1,
-        EntidadPago: 0,
-        PeriodoPago: periodo_pago
-      };
-
-      //Guarda salud UD
-      titanCrudService.get('concepto_nomina','limit=1&query=NaturalezaConcepto.Nombre:seguridad_social,NombreConcepto:salud_ud').then(function (response) {
-        pago["Valor"] = data.SaludUd;
-        pago["TipoPago"] = parseInt(response.data[0].Id);
-        seguridadSocialCrudService.post('pago',pago).then(function(response) {
-          if(typeof response.data === 'object') {
-            console.log('Salud UD Registrada');
-            return
-          } else {
-            console.log('Error al registrar salud ud ' + response.data);
-          }
-        });
-      });
-
-      /*
-      //Guarda salud Total
-      titanCrudService.get('concepto','limit=1&query=Naturaleza:seguridad_social,NombreConcepto:saludTotal').then(function (response) {
-        pago["Valor"] = data.SaludTotal;
-        pago["TipoPago"] = parseInt(response.data[0].Id);
-        seguridadSocialCrudService.post('pago',pago).then(function(response) {
-          if(typeof response.data === 'object') {
-            console.log('Salud Total Registrada');
-            return
-          } else {
-            console.log('Error al registrar salud total ' + response.data);
-          }
-        });
-      });*/
-
-      //Guarda Pensión UD
-      titanCrudService.get('concepto_nomina','limit=1&query=NaturalezaConcepto.Nombre:seguridad_social,NombreConcepto:pension_ud').then(function (response) {
-        pago["Valor"] = data.PensionUd;
-        pago["TipoPago"] = parseInt(response.data[0].Id);
-        seguridadSocialCrudService.post('pago',pago).then(function(response) {
-          if(typeof response.data === 'object') {
-            console.log('Pensión Ud registrada');
-          } else {
-            console.log('Error al registrar pension ud ' + response.data);
-          }
-        });
-      });
-
-      /*
-      //Guarda Pensión Total
-      titanCrudService.get('concepto','limit=1&query=Naturaleza:seguridad_social,NombreConcepto:pensionTotal').then(function (response) {
-        pago["Valor"] = data.PensionTotal;
-        pago["TipoPago"] = parseInt(response.data[0].Id);
-        seguridadSocialCrudService.post('pago',pago).then(function(response) {
-          if(typeof response.data === 'object') {
-            console.log('Pensión Total registrada');
-          } else {
-            console.log('Error al registrar pension total ' + response.data);
-          }
-        });
-      });
-      */
-
-      //Guarda ARL
-      titanCrudService.get('concepto_nomina','limit=1&query=NaturalezaConcepto.Nombre:seguridad_social,NombreConcepto:arl').then(function (response) {
-        pago["Valor"] = data.Arl;
-        pago["TipoPago"] = parseInt(response.data[0].Id);
-        seguridadSocialCrudService.post('pago',pago).then(function(response) {
-          if(typeof response.data === 'object') {
-            console.log('ARL Registrada');
-          } else {
-            console.log('Error al registrar arl ' + response.data);
-          }
-        });
-      });
-
-      //Guarda Caja
-      titanCrudService.get('concepto_nomina','limit=1&query=NaturalezaConcepto.Nombre:seguridad_social,NombreConcepto:caja_compensacion').then(function (response) {
-        pago["Valor"] = data.Caja;
-        pago["TipoPago"] = parseInt(response.data[0].Id);
-        seguridadSocialCrudService.post('pago',pago).then(function(response) {
-          if(typeof response.data === 'object') {
-            console.log('Caja Registrada');
-          } else {
-            console.log('Error al registrar caja ' + response.data);
-          }
-        });
-      });
-
-      //Guarda ICBF
-      titanCrudService.get('concepto_nomina','limit=1&query=NaturalezaConcepto.Nombre:seguridad_social,NombreConcepto:icbf').then(function (response) {
-        pago["Valor"] = data.Icbf;
-        pago["TipoPago"] = parseInt(response.data[0].Id);
-        seguridadSocialCrudService.post('pago',pago).then(function(response) {
-          if(typeof response.data === 'object') {
-            console.log('Icbf Registrada');
-          } else {
-            console.log('Error al registrar ICBF ' + response.data);
-          }
-        });
-      });
     }
 
     self.gridOptions = {
@@ -247,19 +207,19 @@ angular.module('ssClienteApp')
         {field: 'Persona', visible : false},
         {field: 'Nombre', visible: true, width: '30%', headerCellTemplate: '<div align="center">Nombre</div>'},
         {
-          field: 'SaludTotal', visible: true, displayName : 'Salud' ,
+          field: 'SaludTotal', visible: true, displayName : $translate.instant('ACTIVOS.SALUD'),
           headerCellTemplate: '<div"><center> {{ \'ACTIVOS.SALUD\' | translate }} <center></div>',
           cellFilter : 'currency',
           cellTemplate: '<div align="right">{{row.entity.SaludTotal | currency}}</div>'
         },
         {
-          field: 'PensionTotal', visible: true, displayName : $translate.instant('PENSION'),
+          field: 'PensionTotal', visible: true, displayName : $translate.instant('ACTIVOS.PENSION'),
           headerCellTemplate: '<div align="center"> {{ \'ACTIVOS.PENSION\' | translate }} </div>',
           cellFilter : 'currency',
           cellTemplate: '<div align="right">{{row.entity.PensionTotal | currency}}</div>'
         },
         {
-          field: 'Arl', visible: true, displayName : 'ARL',
+          field: 'Arl', visible: true, displayName : $translate.instant('ACTIVOS.ARL'),
           headerCellTemplate: '<div align="center"> {{ \'ACTIVOS.ARL\' | translate }} </div>',
           cellFilter : 'currency',
           cellTemplate: '<div align="right">{{row.entity.Arl | currency}}</div>'

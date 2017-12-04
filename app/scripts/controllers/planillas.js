@@ -43,10 +43,10 @@ angular.module('ssClienteApp')
 
       // Función para generar el archivo, llamada desde el ng-click de la vista
       self.genearArchivo = function() {
+        //console.log('GenerarPlanillaActivos/'+descuento.Id);
         if (comprobarPeriodo() && comprobarPagos()) {
           csvContent = "data:text/csv;charset=utf-8,"; //Se inicializa para que no se concatene la información en case de generar varios archivos seguidos
           seguridadSocialService.getServicio('planillas','GenerarPlanillaActivos/'+descuento.Id).then(function(response) {
-            console.log('FP');
             crearCabecera(self.mesPeriodo.value, self.anioPeriodo)
             csvContent += "\n"
             csvContent += response.data;
@@ -62,13 +62,16 @@ angular.module('ssClienteApp')
       // Busca en todo el arreglo descuentos y busca un objeto que tenga como Mes y Anio los mismos enviados desde el formulario
       function comprobarPagos() {
         console.log(self.tipoLiquidacion);
-        if (descuentos == null) {
+        console.log(descuentos);
+        console.log(parseInt(self.mesPeriodo.value));
+        console.log(parseInt(self.anioPeriodo));
+        if (descuentos === null) {
           self.divError = true;
           self.errorMensaje = 'No se encontraron registros de descuentos';
           return false
         } else {
           for (var i = 0; i < descuentos.length; i++) {
-            if (descuentos[i].Mes === parseInt(self.mesPeriodo) && descuentos[i].Anio === parseInt(self.anioPeriodo) && descuentos[i].TipoLiquidacion === self.tipoLiquidacion) {
+            if (descuentos[i].Mes === parseInt(self.mesPeriodo.value) && descuentos[i].Anio === parseInt(self.anioPeriodo) && descuentos[i].TipoLiquidacion === self.tipoLiquidacion) {
               self.divError = false;
               descuento = descuentos[i];
               console.log(self.tipoLiquidacion);
@@ -77,6 +80,7 @@ angular.module('ssClienteApp')
             }
           }
           self.divError = true;
+          console.log('Error aquí');
           self.errorMensaje = 'El periodo ingresado no tiene información.';
           return false
         }

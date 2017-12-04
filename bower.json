@@ -22,7 +22,7 @@
     "angular-input-masks": "^2.5.0",
     "angular-moment": "^1.0.1",
     "angular-translate": "^2.15.1",
-    "sweetalert2": "^6.4.4",
+    "sweetalert2": "^7.0.6",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "bootstrap-datetimepicker": "^0.0.11"
   },
