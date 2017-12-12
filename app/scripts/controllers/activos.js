@@ -79,6 +79,7 @@ angular.module('ssClienteApp')
 
   self.nominaSeleccionada = function() {
     var pagosNombre = [];
+    dataDescuentos = [];
     nominaObj = JSON.parse(self.nomina);  // Conviente el string de self.nomina a un objetso json
     seguridadSocialService.getServicio("pago/CalcularSegSocial",nominaObj.Id).then(function(response) {
       if (response.data != null) {
@@ -129,7 +130,8 @@ angular.module('ssClienteApp')
             Mes: parseInt(self.mesPeriodo),
             Anio: parseInt(self.anioPeriodo),
             Liquidacion: self.idPreliquidacion,
-            TipoLiquidacion: ''
+            TipoLiquidacion: '',
+            EstadoSeguridadSocial: { Id: 1 }
           };
 
           var pagos = [];
@@ -189,6 +191,16 @@ angular.module('ssClienteApp')
               )
             }
           });
+/*
+          seguridadSocialService.post('pago/RegistrarPagos', transaccion).then(function(response) {
+            if (response.data[0] = "Ok") {
+              swal(
+                $translate.instant('ALERTAS.REGISTRADO'),
+                $translate.instant('ACTIVOS.REGISTRO')+' <b>'+self.meses[""+self.mesPeriodo+""]+'</b>',
+                'success'
+              )
+            }
+          });*/
         }
       });
 
