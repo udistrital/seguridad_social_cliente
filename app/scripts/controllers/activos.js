@@ -25,7 +25,7 @@ angular.module('ssClienteApp')
   self.anios = []; // Tiene todos los años desde 1900
   self.concpSegSoc = []; // Tiene la información de los conceptos correspondientes a pagos
 
-  var fechaActual = new Date().getFullYear() + '-' + new Date().getMonth() + '-' + new Date().getDate()
+  var fechaActual = new Date().getFullYear() + '-' + new Date().getMonth() + '-' + new Date().getDate();
   self.meses = { 1: "Enero", 2: "Febrero", 3: "Marzo", 4: "Abril", 5: "Mayo", 6: "Junio",
   7: "Julio", 8: "Agosto", 9: "Septiembre", 10: "Octubre", 11: "Noviembre", 12: "Diciembre" };
 
@@ -38,11 +38,16 @@ angular.module('ssClienteApp')
   calcularAnios();
 
   titanCrudService.get('concepto_nomina','limit=0&query=NaturalezaConcepto.Nombre:seguridad_social').then(function (response) {
-    for (let data of response.data) {
+    for (var i = 0; i < response.data.length; i++) {
+      if (response.data[i].AliasConcepto.includes("Pago") || response.data[i].AliasConcepto.includes("pago")) {
+        self.concpSegSoc.push(response.data[i]);
+      }
+    }
+    /*for (let data of response.data) {
       if (data.AliasConcepto.includes("Pago") || data.AliasConcepto.includes("pago")) {
         self.concpSegSoc.push(data);
       }
-    }
+    }*/
   });
 
   //Trae las nóminas liquidadas de acuerdo al mes y año seleccionado
@@ -65,7 +70,7 @@ angular.module('ssClienteApp')
         self.errorMensaje = "No se encontrarón nóminas liquidadas para " + self.meses[self.mesPeriodo] + " de " + self.anioPeriodo;
       }
     });
-  }
+  };
 
   argoService.get('contrato_general','limit=-1').then(function(response) {
     self.contratistas = response.data;
@@ -82,7 +87,9 @@ angular.module('ssClienteApp')
     dataDescuentos = [];
     nominaObj = JSON.parse(self.nomina);  // Conviente el string de self.nomina a un objetso json
     seguridadSocialService.getServicio("pago/CalcularSegSocial",nominaObj.Id).then(function(response) {
-      if (response.data != null) {
+      console.log("Informacion de la persona");
+      console.log(response.data);
+      if (response.data !== null) {
         var pagos = response.data;
         //Aquí se va llenando el ui-grid con la información que viene en el arreglo pagos
         angular.forEach(pagos,function(data){
@@ -123,7 +130,7 @@ angular.module('ssClienteApp')
         cancelButtonColor: '#d33',
         confirmButtonText: $translate.instant('ALERTAS.GUARDAR'),
         cancelButtonText: $translate.instant('ALERTAS.CANCELAR')
-      }).then((result) => {
+      }).then(function(result) {
         if (result.value) {
           var periodo_pago =
           {
@@ -136,38 +143,38 @@ angular.module('ssClienteApp')
 
           var pagos = [];
 
-          for (let descuentos of dataDescuentos) {
-            for (let concepto of self.concpSegSoc) {
+          for (var i in dataDescuentos) {
+            for (var j in self.concpSegSoc) {
               var pago =
               {
-                DetalleLiquidacion: descuentos.IdDetallePreliquidacion,
+                DetalleLiquidacion: dataDescuentos[i].IdDetallePreliquidacion,
                 Valor: 0,
                 TipoPago: 0,
                 EntidadPago: 0,
                 PeridodoPago: periodo_pago
               };
               var tipoPago = 0, valor = 0;
-              switch(concepto.NombreConcepto) {
+              switch(dataDescuentos[i].NombreConcepto) {
                 case "arl":
-                var tipoPago = concepto.Id;
-                var valor = descuentos.Arl;
+                var tipoPago = self.concpSegSoc[j].Id;
+                var valor = dataDescuentos[i].Arl;
                 break;
                 case "pension_ud":
-                var tipoPago = concepto.Id;
-                var valor = descuentos.PensionUd;
+                var tipoPago = self.concpSegSoc[j].Id;
+                var valor = dataDescuentos[i].PensionUd;
                 break;
                 case "salud_ud":
-                var tipoPago = concepto.Id;
-                var valor = descuentos.SaludUd;
+                var tipoPago = self.concpSegSoc[j].Id;
+                var valor = dataDescuentos[i].SaludUd;
                 break;
                 case "icbf":
-                var tipoPago = concepto.Id;
-                var valor = descuentos.Icbf;
+                var tipoPago = self.concpSegSoc[j].Id;
+                var valor = dataDescuentos[i].Icbf;
                 break;
                 //caja_compensacion
                 default:
-                var tipoPago = concepto.Id;
-                var valor = descuentos.Caja;
+                var tipoPago = self.concpSegSoc[j].Id;
+                var valor = dataDescuentos[i].Caja;
                 break;
               }
               pago["Valor"] = valor;
@@ -191,7 +198,8 @@ angular.module('ssClienteApp')
               )
             }
           });
-/*
+
+          /*
           seguridadSocialService.post('pago/RegistrarPagos', transaccion).then(function(response) {
             if (response.data[0] = "Ok") {
               swal(
@@ -200,11 +208,12 @@ angular.module('ssClienteApp')
                 'success'
               )
             }
-          });*/
-        }
-      });
+          });
+        }*/
 
-    }
+      }
+    });
+  };
 
     self.gridOptions = {
       enableFiltering : true,
