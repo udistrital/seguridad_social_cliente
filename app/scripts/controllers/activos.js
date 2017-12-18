@@ -8,11 +8,11 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-.controller('ActivosCtrl', function (seguridadSocialService, titanCrudService, seguridadSocialCrudService, agoraService, argoService, $scope, $translate) {
+.controller('ActivosCtrl', function (seguridadSocialService, titanCrudService, seguridadSocialCrudService, agoraService, argoService, $scope, $translate, $http) {
   var self = this;
   var dataDescuentos = [];
   var nominaObj;   // Objeto json con la nómina seleccionada
-
+  var contratos = [];
   var contratistas = []; // Guarda la información del servicio de contrato_general
   var personasNaturales = []; // Guarda la información del servicio de informacion_persona_natural
 
@@ -43,11 +43,6 @@ angular.module('ssClienteApp')
         self.concpSegSoc.push(response.data[i]);
       }
     }
-    /*for (let data of response.data) {
-      if (data.AliasConcepto.includes("Pago") || data.AliasConcepto.includes("pago")) {
-        self.concpSegSoc.push(data);
-      }
-    }*/
   });
 
   //Trae las nóminas liquidadas de acuerdo al mes y año seleccionado
@@ -86,11 +81,14 @@ angular.module('ssClienteApp')
     var pagosNombre = [];
     dataDescuentos = [];
     nominaObj = JSON.parse(self.nomina);  // Conviente el string de self.nomina a un objetso json
-    seguridadSocialService.getServicio("pago/CalcularSegSocial",nominaObj.Id).then(function(response) {
-      console.log("Informacion de la persona");
-      console.log(response.data);
+    seguridadSocialService.getServicio('pago/CalcularSegSocial',nominaObj.Id).then(function(response) {
       if (response.data !== null) {
-        var pagos = response.data;
+        for (var i in response.data) {
+          dataDescuentos.push(response.data[i])
+          contratos.push(response.data[i].NumeroContrato)
+        }
+        self.gridOptions.data = dataDescuentos;
+        /*
         //Aquí se va llenando el ui-grid con la información que viene en el arreglo pagos
         angular.forEach(pagos,function(data){
           argoService.getOne('contrato_general', data.NumeroContrato).then(function (response) {
@@ -110,7 +108,7 @@ angular.module('ssClienteApp')
                 dataDescuentos.push(data);
               });
             });
-          });
+          });*/
         } else {
           self.gridOptions.data = null;
         }
@@ -141,7 +139,12 @@ angular.module('ssClienteApp')
             EstadoSeguridadSocial: { Id: 1 }
           };
 
-          var pagos = [];
+          var transaccion =
+          {
+            Contratos: contratos,
+            PeriodoPago: periodo_pago,
+            Pagos: []
+          };
 
           for (var i in dataDescuentos) {
             for (var j in self.concpSegSoc) {
@@ -154,7 +157,7 @@ angular.module('ssClienteApp')
                 PeridodoPago: periodo_pago
               };
               var tipoPago = 0, valor = 0;
-              switch(dataDescuentos[i].NombreConcepto) {
+              switch(self.concpSegSoc[j].NombreConcepto) {
                 case "arl":
                 var tipoPago = self.concpSegSoc[j].Id;
                 var valor = dataDescuentos[i].Arl;
@@ -179,18 +182,26 @@ angular.module('ssClienteApp')
               }
               pago["Valor"] = valor;
               pago["TipoPago"] = tipoPago;
-              pagos.push(pago);
+              transaccion.Pagos.push(pago);
             }
           }
 
-          var transaccion =
-          {
-            PeriodoPago: periodo_pago,
-            Pagos: pagos
-          };
+          console.log(transaccion);
+          self.t = transaccion
 
-          seguridadSocialCrudService.post('tr_periodo_pago', transaccion).then(function(response) {
-            if (response.data[0] = "Ok") {
+/*
+          var PeriodoPago = {Mes: 11, Anio: 2018, Liquidacion: 31, TipoLiquidacion: '', EstadoSeguridadSocial: { Id: 1 }}
+          seguridadSocialCrudService.post('periodo_pago', PeriodoPago).then(function (response) {
+            console.log('como entrenar a mi dragon 2');
+          }); */
+
+
+
+/*$http.post('http://localhost:8085/v1/pago', transaccion).then(function(response) {
+  console.log('más diciente por si las moscas.');
+});*/
+          seguridadSocialService.post('pago/RegistrarPagos', transaccion).then(function(response) {
+            if (response.data = "Ok") {
               swal(
                 $translate.instant('ALERTAS.REGISTRADO'),
                 $translate.instant('ACTIVOS.REGISTRO')+' <b>'+self.meses[""+self.mesPeriodo+""]+'</b>',
@@ -226,7 +237,7 @@ angular.module('ssClienteApp')
 
       columnDefs : [
         {field: 'Persona', visible : false},
-        {field: 'Nombre', visible: true, width: '30%', headerCellTemplate: '<div align="center">Nombre</div>'},
+        {field: 'NombrePersona', visible: true, width: '25%', headerCellTemplate: '<div align="center">Nombre</div>'},
         {
           field: 'SaludTotal', visible: true, displayName : $translate.instant('ACTIVOS.SALUD'),
           headerCellTemplate: '<div"><center> {{ \'ACTIVOS.SALUD\' | translate }} <center></div>',
@@ -244,6 +255,18 @@ angular.module('ssClienteApp')
           headerCellTemplate: '<div align="center"> {{ \'ACTIVOS.ARL\' | translate }} </div>',
           cellFilter : 'currency',
           cellTemplate: '<div align="right">{{row.entity.Arl | currency}}</div>'
+        },
+        {
+          field: 'Caja', visible: true, displayName : $translate.instant('ACTIVOS.CAJA'),
+          headerCellTemplate: '<div align="center"> {{ \'ACTIVOS.CAJA\' | translate }} </div>',
+          cellFilter : 'currency',
+          cellTemplate: '<div align="right">{{row.entity.Caja | currency}}</div>'
+        },
+        {
+          field: 'Icbf', visible: true, displayName : $translate.instant('ACTIVOS.ICBF'),
+          headerCellTemplate: '<div align="center"> {{ \'ACTIVOS.ICBF\' | translate }} </div>',
+          cellFilter : 'currency',
+          cellTemplate: '<div align="right">{{row.entity.Icbf | currency}}</div>'
         },
         {
           field: 'Novedades',
