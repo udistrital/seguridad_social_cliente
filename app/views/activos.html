@@ -4,8 +4,6 @@
         <h4>{{'ACTIVOS.TITULO' | translate}}</h4>
     </div>
     <br>
-    <loadingcircle load="load"></loadingcircle>
-    <div ng-if="load">sociooooooo</div>
     <form name="myForm" ng-submit="activos.buscarNomina()">
         <div class="form-group row">
             <div class="col-md-1">
@@ -49,7 +47,9 @@
         <strong> {{ 'ERROR' | translate }} </strong><br> {{activos.errorMensaje}}
     </div>
 
-    <div class="panel-body" ng-if="activos.activosDiv">
+    <loadingcircle load="load"></loadingcircle>
+    <!--<div class="panel-body" ng-if="activos.activosDiv">-->
+    <div class="panel-body" ng-if="!load && activos.activosDiv">
         <hr size="50">
         <table style="width:100%;">
             <td>

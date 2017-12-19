@@ -88,27 +88,6 @@ angular.module('ssClienteApp')
           contratos.push(response.data[i].NumeroContrato)
         }
         self.gridOptions.data = dataDescuentos;
-        /*
-        //Aquí se va llenando el ui-grid con la información que viene en el arreglo pagos
-        angular.forEach(pagos,function(data){
-          argoService.getOne('contrato_general', data.NumeroContrato).then(function (response) {
-            agoraService.getServicio('informacion_persona_natural', response.data.Contratista).then(function (response) {
-              pagosNombre.push({
-                Persona: data.NumeroContrato,
-                Nombre: response.data.PrimerNombre + " " + response.data.SegundoNombre + " " + response.data.PrimerApellido + " " + response.data.SegundoApellido,
-                PensionUd: data.PensionUd,
-                SaludUd: data.SaludUd,
-                SaludTotal: data.SaludTotal,
-                PensionTotal: data.PensionTotal,
-                Arl: data.Arl,
-                Caja: data.Caja,
-                Icbf: data.Icbf });
-                self.gridOptions.data = pagosNombre;
-                self.idPreliquidacion = data.IdPreliquidacion;
-                dataDescuentos.push(data);
-              });
-            });
-          });*/
         } else {
           self.gridOptions.data = null;
         }

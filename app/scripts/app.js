@@ -37,6 +37,7 @@ angular.module('ssClienteApp', [
         'pascalprecht.translate',
         'ngAnimate',
         'ui.select',
+        'ui.knob'
     ])
     .run(function(amMoment) {
         amMoment.changeLocale('es');

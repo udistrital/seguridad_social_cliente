@@ -27,7 +27,7 @@ angular.module('ssClienteApp')
                     trackWidth: 30,
                     barWidth: 10,
                     trackColor: '#656D7F',
-                    barColor: '#eea236'
+                    barColor: '#003e65'
                 };
                 $interval(function() {
                     $scope.loading = parseInt(cfpLoadingBar.status() * 100);
