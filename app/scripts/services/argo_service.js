@@ -11,7 +11,7 @@ angular.module('ssClienteApp')
   .service('argoService', function ($http) {
 
     //IP Pruebas
-    var path = 'http://10.20.0.254/administrativa_api/v1/';
+    var path = 'http://10.20.0.254/administrativa_amazon_api/v1/';
 
     // Public API here
     return {
