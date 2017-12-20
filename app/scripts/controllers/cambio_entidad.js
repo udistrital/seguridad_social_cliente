@@ -8,14 +8,14 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-.controller('CambioEntidadCtrl', function (agoraService) {
+.controller('CambioEntidadCtrl', function (agoraService, $q, $timeout, $log) {
   var self = this;
 
-  var proveedores = [];
-
-  agoraService.get('informacion_proveedor','fields=NomProveedor,Id,NumDocumento').then(function(response) {
-    response.data.forEach(function(proveedor) {
-      agoraService.get('informacion_persona_natural','limit?=1&query=Id:'+proveedor.NumDocumento).then(function (response) {
+  agoraService.get('informacion_proveedor','limit=0').then(function(response) {
+    var temp = [], promises = [];
+    var inforPersonaNatural = function(proveedor,proveedores){
+      var deferred = $q.defer();
+      agoraService.get('informacion_persona_natural','limit=1&query=Id:'+proveedor.NumDocumento).then(function (response) {
         proveedores.push({
           display: proveedor.NomProveedor,
           value: proveedor.NomProveedor.toLowerCase(),
@@ -23,18 +23,26 @@ angular.module('ssClienteApp')
           idArl: response.data[0].IdArl,
           idEps: response.data[0].IdEps,
           idFondoPension: response.data[0].IdFondoPension,
-          idCajaCompensacion: response.data[0]. IdCajaCompensacion
+          idCajaCompensacion: response.data[0].IdCajaCompensacion
         });
+        deferred.resolve(proveedor);
+      }).catch(function(){
+        deferred.resolve();
       });
+      return deferred.promise;
+    };
+    response.data.forEach(function(proveedor) {
+      promises.push(inforPersonaNatural(proveedor,temp));
+    });
+    $q.all(promises).then(function(){
+
+      self.states  = temp;
     });
   });
 
-  self.states        = proveedores;
-  self.querySearch   = querySearch;
-  self.selectedItemChange = selectedItemChange;
-  self.searchTextChange   = searchTextChange;
+  agoraService.get('')
 
-  function querySearch (query) {
+  function querySearch(query) {
     var results = query ? self.states.filter( createFilterFor(query) ) : self.states,
     deferred;
     if (self.simulateQuery) {
@@ -51,9 +59,7 @@ angular.module('ssClienteApp')
   }
 
   function selectedItemChange(item) {
-    //$log.info('Item changed to ' + JSON.stringify(item));
-    //idProveedor = item.id;
-    console.log(item);
+    self.proveedor = item;
   }
 
   function createFilterFor(query) {
@@ -62,5 +68,9 @@ angular.module('ssClienteApp')
       return (state.value.indexOf(lowercaseQuery) === 0);
     };
   }
+
+  self.querySearch   = querySearch;
+  self.selectedItemChange = selectedItemChange;
+  self.searchTextChange   = searchTextChange;
 
 });

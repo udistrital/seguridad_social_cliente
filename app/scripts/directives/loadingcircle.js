@@ -11,7 +11,8 @@ angular.module('ssClienteApp')
         return {
             restrict: 'E',
             scope: {
-                load: '=?',
+                load: '=',
+                mensaje: '=?'
             },
             templateUrl: 'views/directives/loading.html',
             controller: function($scope, $interval, cfpLoadingBar, $translate) {
@@ -31,7 +32,7 @@ angular.module('ssClienteApp')
                 };
                 $interval(function() {
                     $scope.loading = parseInt(cfpLoadingBar.status() * 100);
-                    if ($scope.loading === 0 || $scope.loading === 100) {
+                    if ($scope.loading === 100 || $scope.loading === 0) {
                         $scope.load = false;
                     } else {
                         $scope.load = true;

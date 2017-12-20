@@ -5,7 +5,7 @@
       <h4> {{ 'INCAPACIDADES.TITULO' | translate }} </h4>
     </div>
     <div class="panel-body">
-      <form method="post" name="myForm" ng-submit="incapacidades.registrarIncapacidad()">
+      <form method="post" name="myForm" ng-submit="incapacidades.test()">
         <div class="row">
           <div class="col-md-3 col-md-offset-2">
             <label> {{ 'INCAPACIDADES.NOMBRE' | translate }} </label>
@@ -16,7 +16,7 @@
             md-input-minlength="2"
             md-input-maxlength="18"
             md-menu-container-class="my-cool-class"
-            md-no-cache="incapcidades.noCache"
+            md-no-cache="incapacidades.noCache"
             md-selected-item="incapacidades.selectedItem"
             md-search-text="incapacidades.searchText"
             md-selected-item-change="incapacidades.selectedItemChange(item)"
@@ -24,10 +24,10 @@
             md-item-text="item.display"
             md-floating-label="Ingresa el nombre de la persona">
             <md-item-template>
-              <span md-highlight-text="incapcidades.searchText" md-highlight-flags="^i">{{item.display}}</span>
+              <span md-highlight-text="incapacidades.searchText" md-highlight-flags="^i">{{item.display}}</span>
             </md-item-template>
             <md-not-found>
-              {{ 'INCAPACIDADES.SIN_RESULTADOS' | translate }} "{{incapcidades.searchText}}".
+              {{ 'INCAPACIDADES.SIN_RESULTADOS' | translate }} "{{incapacidades.searchText}}".
             </md-not-found>
           </md-autocomplete>
         </div>
@@ -44,7 +44,7 @@
           <div class="col-md-12" ng-if="incapacidades.tipoIncapacidad">{{incapacidades.tipoIncapacidad.AliasConcepto}}<span class="caret"></span></div>
         </button>
         <ul class="dropdown-menu">
-          <li ng-repeat="i in incapacidades.incapacidades" ng-click="incapacidades.setTipoIncapacidad(i)" value="{{i.Id}}"><a href="">{{i.AliasConcepto}}</a></li>
+          <li ng-repeat="i in incapacidades.listaIncapacidades" ng-click="incapacidades.setTipoIncapacidad(i)" value="{{i.Id}}"><a href="">{{i.AliasConcepto}}</a></li>
         </ul>
       </div>
     </div>
@@ -70,7 +70,7 @@
 
   <div class="panel-footer">
     <div class="col-md-offset-5">
-      <button type="submit" name="button" class="btn btn-success btn-output"> {{ 'BTN.GUARDAR' | translate }} </button>
+      <button type="submit" name="button" ng-click="incapacidades.registrarIncapacidad()" class="btn btn-success btn-output"> {{ 'BTN.GUARDAR' | translate }} </button>
     </div>
   </form>
 </div>

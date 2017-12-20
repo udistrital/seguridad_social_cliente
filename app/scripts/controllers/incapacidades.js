@@ -64,7 +64,7 @@ angular.module('ssClienteApp')
     titanCrudService.get('concepto_nomina','query=TipoConcepto.Nombre:seguridad_social,NombreConcepto__startswith:incapacidad')
     .then(
       function(response) {
-        self.incapacidades = response.data;
+        self.listaIncapacidades = response.data;
       }
     );
 
@@ -100,7 +100,12 @@ angular.module('ssClienteApp')
       return validacion;
     }
 
+    self.test = function() {
+      console.log('test');
+    }
+
     self.registrarIncapacidad = function() {
+      console.log('registrari incapacidad');
       var validar = validarCampos();
       if (validar.validado) {
         var persona = { Id: idProveedor }
@@ -109,17 +114,18 @@ angular.module('ssClienteApp')
 
         var incapacidad = {
           ValorNovedad: 0,
-          EstadoNovedad: 'Activo',
+          NumCuotas: 999,
+          Activo: true,
           FechaDesde: self.fechaDesde,
           FechaHasta: self.fechaHasta,
-          NumCuotas: 999,
+          FechaRegistro: new Date(),
           Persona: persona,
           Concepto: concepto,
           Nomina: nomina,
           Tipo: 'fijo'
         };
 
-        titanCrudService.post('concepto_por_persona',incapacidad).then(function(response) {
+        titanCrudService.post('concepto_nomina_por_persona',incapacidad).then(function(response) {
           if(response.statusText === 'Created') {
             swal($translate.instant('INCAPACIDADES.REGISTRADA'));
           } else {

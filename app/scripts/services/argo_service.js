@@ -10,13 +10,12 @@
 angular.module('ssClienteApp')
   .service('argoService', function ($http) {
 
-    //IP Pruebas
     var path = 'http://10.20.0.254/administrativa_amazon_api/v1/';
 
     // Public API here
     return {
       getOne: function(tabla, params) {
-        return $http.get(path+tabla+'/'+params)
+        return $http.get(path+tabla+'/'+params);
       },
        get: function (tabla,params) {
         return $http.get(path+tabla+"?"+params);

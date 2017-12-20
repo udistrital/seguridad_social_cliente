@@ -47,8 +47,7 @@
         <strong> {{ 'ERROR' | translate }} </strong><br> {{activos.errorMensaje}}
     </div>
 
-    <loadingcircle load="load"></loadingcircle>
-    <!--<div class="panel-body" ng-if="activos.activosDiv">-->
+    <loadingcircle load="load" ng-if="activos.activosDiv"></loadingcircle>
     <div class="panel-body" ng-if="!load && activos.activosDiv">
         <hr size="50">
         <table style="width:100%;">

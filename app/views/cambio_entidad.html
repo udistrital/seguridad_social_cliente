@@ -3,8 +3,9 @@
     <div class="panel-heading">
         Cambio de EPS
     </div>
-    <div class="panel-body">
 
+    <loadingcircle load="load" mensaje="'Se está cargando la información'"></loadingcircle>
+    <div class="panel-body" ng-if="!load">
       <div class="form-group row">
         <label > Selecciona </label>
       </div>
@@ -34,6 +35,6 @@
 
     </div>
     <div class="panel-footer">
-
+      <pre> {{cambioEntidad.proveedor | json}} </pre>
     </div>
 </div>
