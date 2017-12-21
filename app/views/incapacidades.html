@@ -5,7 +5,7 @@
       <h4> {{ 'INCAPACIDADES.TITULO' | translate }} </h4>
     </div>
     <div class="panel-body">
-      <form method="post" name="myForm" ng-submit="incapacidades.test()">
+      <form method="post" ng-init="incapacidades.getProveedores()" name="myForm" ng-submit="incapacidades.test()">
         <div class="row">
           <div class="col-md-3 col-md-offset-2">
             <label> {{ 'INCAPACIDADES.NOMBRE' | translate }} </label>
@@ -30,6 +30,10 @@
               {{ 'INCAPACIDADES.SIN_RESULTADOS' | translate }} "{{incapacidades.searchText}}".
             </md-not-found>
           </md-autocomplete>
+        </div>
+        <br>
+        <div class="alert alert-danger" ng-if="incapacidades.noContrato">
+          {{incapacidades.noContrato}}
         </div>
       </div>
       <br>

@@ -8,14 +8,18 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-.controller('IncapacidadesCtrl', function (agoraService, titanCrudService, $scope, $timeout, $q, $log, $translate) {
+.controller('IncapacidadesCtrl', function (agoraService, titanCrudService, administrativaAmazonService, $scope, $timeout, $q, $log, $translate) {
   var self = this;
   var idProveedor = 0;
-
   var proveedores = [];
-  agoraService.get('informacion_proveedor','fields=NomProveedor,Id').then(function(response) {
-    self.personas = response.data;
+  var contratos = [];
+  var nominas = [];
 
+  titanCrudService.get('nomina', '').then(function(response) {
+    nominas = response.data;
+  });
+
+  agoraService.get('informacion_proveedor','limit=-1&query=Tipopersona:NATURAL').then(function(response) {
     for (var i = 0; i < response.data.length; i++) {
       proveedores.push(
         {
@@ -25,11 +29,6 @@ angular.module('ssClienteApp')
         });
       }
     });
-
-    self.states        = proveedores;
-    self.querySearch   = querySearch;
-    self.selectedItemChange = selectedItemChange;
-    self.searchTextChange   = searchTextChange;
 
     function querySearch (query) {
       var results = query ? self.states.filter( createFilterFor(query) ) : self.states,
@@ -48,8 +47,17 @@ angular.module('ssClienteApp')
     }
 
     function selectedItemChange(item) {
-      $log.info('Item changed to ' + JSON.stringify(item));
-      idProveedor = item.id;
+      if (item !== undefined) {
+        idProveedor = item.id;
+        administrativaAmazonService.get('contrato_general','limit=0&query=Estado:true,Contratista:'+idProveedor).then(function(response) {
+          contratos = response.data;
+          if (contratos === null) {
+            self.noContrato = 'Está persona no tiene contratos vigentes';
+          } else {
+            self.noContrato = '';
+          }
+        });
+      }
     }
 
     function createFilterFor(query) {
@@ -57,12 +65,16 @@ angular.module('ssClienteApp')
       return function filterFn(state) {
         return (state.value.indexOf(lowercaseQuery) === 0);
       };
-
     }
     //autocomplete
 
-    titanCrudService.get('concepto_nomina','query=TipoConcepto.Nombre:seguridad_social,NombreConcepto__startswith:incapacidad')
-    .then(
+    self.states        = proveedores;
+    self.querySearch   = querySearch;
+    self.selectedItemChange = selectedItemChange;
+    self.searchTextChange   = searchTextChange;
+
+
+    titanCrudService.get('concepto_nomina','query=TipoConcepto.Nombre:seguridad_social,NombreConcepto__startswith:incapacidad').then(
       function(response) {
         self.listaIncapacidades = response.data;
       }
@@ -75,12 +87,12 @@ angular.module('ssClienteApp')
     }
 
     self.minDate = function() {
-        var minDate = self.fechaDesde;
-        return new Date(
-          minDate.getFullYear(),
-          minDate.getMonth(),
-          minDate.getDate + 3
-        );
+      var minDate = self.fechaDesde;
+      return new Date(
+        minDate.getFullYear(),
+        minDate.getMonth(),
+        minDate.getDate + 3
+      );
     }
 
     function validarCampos() {
@@ -100,42 +112,58 @@ angular.module('ssClienteApp')
       return validacion;
     }
 
-    self.test = function() {
-      console.log('test');
-    }
-
     self.registrarIncapacidad = function() {
-      console.log('registrari incapacidad');
       var validar = validarCampos();
+      var errorRegistro = false;
       if (validar.validado) {
-        var persona = { Id: idProveedor }
         var concepto = { Id: parseInt(self.tipoIncapacidad.Id) }
-        var nomina = { Id: 5 }
+        var nomina = { Id: 0 };
 
-        var incapacidad = {
-          ValorNovedad: 0,
-          NumCuotas: 999,
-          Activo: true,
-          FechaDesde: self.fechaDesde,
-          FechaHasta: self.fechaHasta,
-          FechaRegistro: new Date(),
-          Persona: persona,
-          Concepto: concepto,
-          Nomina: nomina,
-          Tipo: 'fijo'
-        };
-
-        titanCrudService.post('concepto_nomina_por_persona',incapacidad).then(function(response) {
-          if(response.statusText === 'Created') {
-            swal($translate.instant('INCAPACIDADES.REGISTRADA'));
-          } else {
-            swal($translate.instant('INCAPACIDADES.ERROR_REGISTRO'));
+        for (var i in contratos) {
+          switch (contratos[i].TipoContrato.Id) {
+            case 2: // HC Salarios
+            nomina.Id = 5;
+            break;
+            case 3: // HC Honorarios
+            nomina.Id = 4;
+            break;
+            case 6: // Contratista
+            nomina.Id = 3;
+            break;
           }
-        });
+
+          var incapacidad = {
+            ValorNovedad: 0,
+            NumCuotas: 999,
+            Activo: true,
+            FechaDesde: self.fechaDesde,
+            FechaHasta: self.fechaHasta,
+            FechaRegistro: new Date(),
+            Persona: idProveedor,
+            Concepto: concepto,
+            Nomina: nomina,
+            Tipo: 'fijo'
+          };
+
+          titanCrudService.post('concepto_nomina_por_persona',incapacidad).then(function(response) {
+            console.log(response);
+            if(response.statusText === 'Created') {
+              swal($translate.instant('INCAPACIDADES.REGISTRADA'));
+            } else {
+              errorRegistro = true;
+            }
+          }).catch(function() {
+            errorRegistro = true;
+          });
+        }
+
+        if (errorRegistro) {
+          swal($translate.instant('INCAPACIDADES.ERROR_REGISTRO'));
+        }
+
       } else {
         self.alerta = validar.alerta;
         self.alerta = validar.mensaje;
       }
-
-    }
+    };
   });
