@@ -8,7 +8,7 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-.controller('IncapacidadesCtrl', function (agoraService, titanCrudService, administrativaAmazonService, $scope, $timeout, $q, $log, $translate) {
+.controller('IncapacidadesCtrl', function (agoraService, titanCrudService, seguridadSocialService, administrativaAmazonService, $scope, $timeout, $q, $log, $translate) {
   var self = this;
   var idProveedor = 0;
   var proveedores = [];
@@ -19,16 +19,38 @@ angular.module('ssClienteApp')
     nominas = response.data;
   });
 
-  agoraService.get('informacion_proveedor','limit=-1&query=Tipopersona:NATURAL').then(function(response) {
-    for (var i = 0; i < response.data.length; i++) {
-      proveedores.push(
-        {
-          display: response.data[i].NomProveedor,
-          value: response.data[i].NomProveedor.toLowerCase(),
-          id: response.data[i].Id
-        });
+  seguridadSocialService.get('incapacidades', '').then(function(response) {
+    var proveedoresNomina = response.data;
+    for (var i in proveedoresNomina) {
+      if (proveedoresNomina[i] !== null) {
+        for (var j in proveedoresNomina[i]) {
+          if (!buscarRepetidos(proveedoresNomina[i][j], i)) {
+            proveedores.push(
+              {
+                display: proveedoresNomina[i][j].NombreProveedor,
+                value: proveedoresNomina[i][j].NombreProveedor.toLowerCase(),
+                id: proveedoresNomina[i][j].Id,
+                nominas: [i]
+              });
+          }
+        }
       }
-    });
+    }
+  });
+
+  // Buscar si el proveedor ya existe en el arreglo proveedores
+  // return true si existe el proveedor y agrega la nomina correspondiente al arreglo nomina que tiene cada proveedor
+  // return false si no existe el proveedor
+  function buscarRepetidos(proveedor, nomina) {
+    var nominas = [];
+    for (var i in proveedores) {
+      if(proveedor.Id === proveedores[i].id) {
+        proveedores[i].nominas.push(nomina);
+        return true;
+      }
+    }
+    return false;
+  }
 
     function querySearch (query) {
       var results = query ? self.states.filter( createFilterFor(query) ) : self.states,
@@ -47,6 +69,7 @@ angular.module('ssClienteApp')
     }
 
     function selectedItemChange(item) {
+      console.log('seleccinado', item);
       if (item !== undefined) {
         idProveedor = item.id;
         administrativaAmazonService.get('contrato_general','limit=0&query=Estado:true,Contratista:'+idProveedor).then(function(response) {
@@ -84,7 +107,7 @@ angular.module('ssClienteApp')
       if (item !== undefined) {
         self.tipoIncapacidad = item;
       }
-    }
+    };
 
     self.minDate = function() {
       var minDate = self.fechaDesde;
@@ -93,7 +116,7 @@ angular.module('ssClienteApp')
         minDate.getMonth(),
         minDate.getDate + 3
       );
-    }
+    };
 
     function validarCampos() {
       var validacion = {validado: false, mensaje: '', alerta: true};
@@ -116,7 +139,7 @@ angular.module('ssClienteApp')
       var validar = validarCampos();
       var errorRegistro = false;
       if (validar.validado) {
-        var concepto = { Id: parseInt(self.tipoIncapacidad.Id) }
+        var concepto = { Id: parseInt(self.tipoIncapacidad.Id) };
         var nomina = { Id: 0 };
 
         for (var i in contratos) {
@@ -152,8 +175,6 @@ angular.module('ssClienteApp')
             } else {
               errorRegistro = true;
             }
-          }).catch(function() {
-            errorRegistro = true;
           });
         }
 
