@@ -1,0 +1,13 @@
+<br>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4> {{ 'UPC_ADICIONAL.TITULO_REGISTRAR_TIPO' | translate }} </h4>
+    </div>
+    <div class="panel-body">
+        <div ui-grid="registrarTipoUpc.gridOptions" ui-grid-selection ui-grid-edit class="grid"></div>
+    </div>
+
+    <div class="panel-footer">
+      <button type="button" class="btn btn-outline btn-success col-md-offset-6" ng-click="registrarTipoUpc.guardar()" name="button"> {{ 'BTN.GUARDAR' | translate }} </button>
+    </div>
+</div>

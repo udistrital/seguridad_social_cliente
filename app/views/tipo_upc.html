@@ -1,0 +1,21 @@
+<br>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4> {{ 'UPC_ADICIONAL.TITULO_TIPO_UPC' | translate }} </h4>
+  </div>
+  <div class="panel-body">
+
+    <fieldset class="form-group" >
+      <legend class="text-primary"> {{ 'UPC_ADICIONAL.VALORES_ACTUALES' | translate }} </legend class="text-primary">
+        <div>
+          <div ui-grid="tipoUpc.gridOptions" ui-grid-selection ui-grid-expandable class="grid"></div>
+        </div>
+      </fieldset>
+      <a ng-href="#/registrar_tipo_upc"><button type="button" class="btn btn-outline btn-primary btn-lg btn-block" > {{ 'UPC_ADICIONAL.REGISTRAR_VALORES' | translate }} </button></a>
+
+      <script type="text/ng-template"  id="expandableRowUpc.html">
+        <div ui-grid="row.entity.subGridOptions" class="grid" style="height:250px;"></div>
+      </script>
+
+    </div>
+  </div>

@@ -1,0 +1,14 @@
+<br>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong>Novedades</strong>
+    </div>
+    <div class="panel-body">
+      <div ng-if="d_novedadPersona.noData">
+          <h2> NO HAY NOVEDADES REGISTRADAS</h2>
+      </div>
+      <div ng-if="!d_novedadPersona.noData">
+        <div ui-grid="d_novedadPersona.gridOptions" class="grid"></div>
+      </div>
+    </div>
+</div>
