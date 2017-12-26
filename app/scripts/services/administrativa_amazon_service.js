@@ -9,6 +9,7 @@
  */
 angular.module('ssClienteApp')
   .service('administrativaAmazonService', function ($http) {
+    
     var path = 'http://10.20.0.254/administrativa_amazon_api/v1/';
 
     return {

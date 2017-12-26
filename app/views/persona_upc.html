@@ -27,8 +27,6 @@
       </div>
     </div>
 
-    <h3> {{ 'UPC_ADICIONAL.INFO_UPC' | translate }} </h3>
-    <hr>
     <div class="form-group row">
       <div ng-class="{ 'has-error' : myForm.input_nombre.$invalid && !myForm.input_nombre.$pristine }">
         <label for="input_nombre" class="col-sm-2 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.PRIMER_NOMBRE' | translate}} </label>
@@ -59,13 +57,8 @@
 
     <div class="form-group row" ng-class="{ 'has-error' : myForm.input_fechaNacimiento.$invalid && !myForm.input_fechaNacimiento.$pristine }">
       <label for="input_fechaNacimiento" class="col-sm-2 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.FECHA_NACIMIENTO' | translate}} </label>
-      <div class="col-xs-4">
-        <div class="input-group date" id="datetimepicker1">
-          <input type="text" class="form-control" ng-model="personaUpc.variablesForm.fechaNacimiento" name="input_fechaNacimiento"/>
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
-        </div>
+      <div class="col-xs-6">
+        <md-datepicker id="txtFechaDesde" name="input_fechaNacimiento" ng-model="personaUpc.variablesForm.fechaNacimiento" md-placeholder="AAAA-MM-DD" required></md-datepicker>
       </div>
       <p ng-show="myForm.input_fechaNacimiento.$invalid && !myForm.input_fechaNacimiento.$pristine" class="help-block">{{'VALIDACION.FECHA_NACIMIENTO' | translate}}</p>
     </div>
@@ -121,20 +114,6 @@
         </md-autocomplete>
     </div>
   </div>
-
-<!-- Parantesco
-  <div class="form-group row">
-    <label for="input_parentesco" class="col-sm-4 col-form-label col-md-offset-1"> Parentesco </label>
-    <div class="col-xs-2">
-      <select ng-model="personaUpc.parentesco" class="form-control"
-        name="input_parentesco" ng-init="parentesco = personaUpc.tiposParentesco[0]"
-        ng-model="parentesco">
-        <option value="0"disabled> Seleccione una opción </option>
-        <option ng-repeat="p in personaUpc.tiposParentesco" value="{{p.Id}}"> {{p.NombreTipoBeneficiario}} </option>
-      </select>
-    </div>
-  </div>
--->
 
 </div>
 
