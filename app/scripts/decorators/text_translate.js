@@ -20,7 +20,8 @@ var text_es = {
     VER_REGISTROS: "Ver Registros",
     GENERAR_PLANILLA: "Generar Planilla",
     CERRAR: "Cerrar",
-    EDITAR: "Editar"
+    EDITAR: "Editar",
+    REGISTRAR: "Registrar"
   },
   VALIDACION: {
     NOMBRE: "El nombre es requerido",
@@ -159,7 +160,8 @@ var text_en = {
     VER_REGISTROS: "Register View",
     GENERAR_PLANILLA: "Generate Form",
     CERRAR: "Clonse",
-    EDITAR: "Edit"
+    EDITAR: "Edit",
+    REGISTRAR: "Register"
   },
   VALIDACION: {
     NOMBRE: "Name is required",
