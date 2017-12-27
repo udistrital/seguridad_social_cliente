@@ -25,20 +25,19 @@ angular.module('ssClienteApp')
             columnDefs: [
               { name: 'Id', visible: false},
               { name: 'Valor', cellTemplate: '<div align="center">{{row.entity.Valor | currency:"$":0}}</div>', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.VALOR\' | translate }} </h5></div>'},
-              { name: 'RangoEdadUpc.EdadMin', cellTemplate: '<div align="center">{{row.entity.IdEdadUpc.EdadMin}}</div>', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.EDAD_MINIMA\' | translate }} </h5></div>'},
-              { name: 'RangoEdadUpc.EdadMax', cellTemplate: '<div align="center">{{row.entity.IdEdadUpc.EdadMax}}</div>', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.EDAD_MAXIMA\' | translate }} </h5></div>'},
-              { name: 'RangoEdadUpc.AplicaGenero', cellTemplate: '<div align="center">{{row.entity.IdEdadUpc.AplicaGenero}}</div>', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.APLICA_GENERO\' | translate }} </h5></div>'}
+              { name: 'RangoEdadUpc.EdadMin', cellTemplate: '<div align="center">{{row.entity.RangoEdadUpc.EdadMin}}</div>', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.EDAD_MINIMA\' | translate }} </h5></div>'},
+              { name: 'RangoEdadUpc.EdadMax', cellTemplate: '<div align="center">{{row.entity.RangoEdadUpc.EdadMax}}</div>', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.EDAD_MAXIMA\' | translate }} </h5></div>'},
+              { name: 'RangoEdadUpc.AplicaGenero', cellTemplate: '<div align="center" ng-if="row.entity.RangoEdadUpc.AplicaGenero.length === 0">No</div><div align="center" ng-if="row.entity.RangoEdadUpc.AplicaGenero.length !== 0">{{row.entity.RangoEdadUpc.AplicaGenero}}</div>', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.APLICA_GENERO\' | translate }} </h5></div>'}
             ]};
 
             seguridadSocialCrudService.get('tipo_upc','?limit=-1&query=ZonaUpc:' + row.entity.Id)
               .then(function(response) {
-                console.log(response.data);
                 row.entity.subGridOptions.data = response.data;
             });
           }
         });
       }
-    }
+    };
 
     self.gridOptions.columnDefs = [
       {field: 'Id', visible : false},
