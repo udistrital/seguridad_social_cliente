@@ -11,7 +11,7 @@
         <hr>
         <label class="radio-inline" ng-repeat="t in planillas.tiposLiquidacion">
           <input type="radio" name="tiposLiquidacion" ng-model="planillas.tipoLiquidacion"
-          value="{{t.Acronimo}}" required>{{t.Nombre}}
+          value="{{t.Nombre}}" required>{{t.Descripcion}}
         </label>
       </div>
       <!-- VIGENCIA -->
@@ -62,7 +62,7 @@
 </div>
 <div class="panel-footer">
   <div class="col-md-offset-5">
-    <button class="btn btn-primary btn-outline" ng-click="planillas.genearArchivo()">{{ 'BTN.GENERAR_PLANILLA' | translate }}</button>
+    <button class="btn btn-primary btn-outline" ng-click="planillas.buscarPagos()">{{ 'BTN.GENERAR_PLANILLA' | translate }}</button>
   </div>
 
 </div>
