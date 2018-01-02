@@ -47,8 +47,8 @@
         <strong> {{ 'ERROR' | translate }} </strong><br> {{activos.errorMensaje}}
     </div>
 
-    <loadingcircle load="load" ng-if="activos.activosDiv"></loadingcircle>
-    <div class="panel-body" ng-if="!load && activos.activosDiv">
+    <loadingcircle load="load"></loadingcircle>
+    <div class="panel-body" ng-if="!load && activos.gridOptions.data">
         <hr size="50">
         <table style="width:100%;">
             <td>
@@ -73,7 +73,5 @@
         <div class="col-md-offset-10 row">
             <button type="button" class="btn btn-primary btn-outline" name="button" ng-click="activos.guardar()"> {{ 'BTN.GUARDAR' | translate }} </button>
         </div>
-
-        <pre>{{activos.t}}</pre>
     </div>
 </div>
