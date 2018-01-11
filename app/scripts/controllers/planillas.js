@@ -11,7 +11,6 @@ angular.module('ssClienteApp')
 .controller('PlanillasCtrl', function (seguridadSocialCrudService, seguridadSocialService, titanCrudService) {
   var self = this;
   var csvContent = '';     // variable para generar el archivo plano
-  var descuento = {};      // Corresponde a un periodo_pago
   var periodoPago = {};
 
   self.anios = [];
@@ -46,8 +45,9 @@ angular.module('ssClienteApp')
     return estado;
   }
 
-  // se encarga de generar el archivo 
+  // se encarga de generar el archivo
   self.buscarPagos = function() {
+    csvContent = '';
     self.divError = false;
     if (comprobarDatosIngresados()) {
       seguridadSocialCrudService.get('periodo_pago','query=Mes:'+parseInt(self.mesPeriodo.value)+',Anio:'+parseInt(self.anioPeriodo)+',tipo_liquidacion:'+self.tipoLiquidacion+'&liimit=1').then(function(response) {
@@ -56,15 +56,24 @@ angular.module('ssClienteApp')
           self.divError = true;
           self.errorMensaje = 'El periodo ingresado no tiene información.';
         } else {
-          seguridadSocialService.getServicio('planillas','GenerarPlanillaActivos/'+periodoPago.Id).then(function(response) {
+          seguridadSocialService.post('planillas/GenerarPlanillaActivos',periodoPago).then(function(response) {
+            //console.log(response.data);
             crearCabecera(self.mesPeriodo.value, self.anioPeriodo);
-            csvContent += "\n";
+            csvContent += '\n';
             csvContent += response.data;
-            var encodedUri = encodeURI(csvContent);
-            var link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "PlanillaTipoE.csv");
-            link.click();
+            var blob = new Blob([csvContent], {type: 'text/csv'});
+            var filename =  'PlanillaTipoE';
+            if(window.navigator.msSaveOrOpenBlob) {
+                window.navigator.msSaveBlob(blob, filename);
+            }
+            else{
+                var elem = window.document.createElement('a');
+                elem.href = window.URL.createObjectURL(blob);
+                elem.download = filename;
+                document.body.appendChild(elem);
+                elem.click();
+                document.body.removeChild(elem);
+            }
           });
         }
       });
@@ -95,7 +104,7 @@ angular.module('ssClienteApp')
       escribirArchivo("S01",51);
       escribirArchivo("14-23",6);
 
-      seguridadSocialCrudService.get('periodo_pago','limit=1&query=Mes:'+self.mesPeriodo.value+',Anio:'+self.anioPeriodo).then(function(response) {
+      seguridadSocialCrudService.get('periodo_pago','limit=1&query=Mes:'+mes+',Anio:'+anio).then(function(response) {
         if (response.data !== null) {
           self.divError = false;
           var anio = self.anioPeriodo;
@@ -142,21 +151,4 @@ angular.module('ssClienteApp')
         break;
       }
     };
-
-    /*  Función para completar la secuencia de los registros
-    *   Completa la secuencia del registro, que debe tener una longitud de 5
-    *   y debe guardarse de forma en que se complete el tamaño con 0 a la derecha
-    *   ej: 9 -> 00009, 123 -> 00123
-    *   @Param numero: el número que debe completar
-    *   @return secuencia: la secuencia en que debe estar el registro
-    */
-    function completarSecuencia(numero) {
-      var secuencia = '';
-      var tamanioNum = numero.toString().length;
-      for (var i = 0; i < 5 - tamanioNum; i++) {
-        secuencia += '0';
-      }
-      secuencia += numero.toString();
-      return secuencia;
-    }
   });
