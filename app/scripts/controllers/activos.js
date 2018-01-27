@@ -62,6 +62,15 @@ angular.module('ssClienteApp')
     dataDescuentos = [];
     contratos = [];
     nominaObj = JSON.parse(self.nomina);  // Conviente el string de self.nomina a un objetso json
+
+    seguridadSocialCrudService.get('periodo_pago','query=Mes:'+self.mesPeriodo+',Anio:'+self.anioPeriodo+',TipoLiquidacion:'+nominaObj.Nomina.TipoNomina.Nombre).then(function(response) {
+      console.log(response.data);
+      if (response.data !== null) {
+        self.divError = true
+      }
+      self.errorMensaje = 'Parece que ya existen registros de seguridad social para el periodo: ' + self.mesPeriodo + ' de ' + self.anioPeriodo
+    });
+
     seguridadSocialService.getServicio('pago/CalcularSegSocial',nominaObj.Id).then(function(response) {
       if (response.data !== null) {
         for (var i in response.data) {
