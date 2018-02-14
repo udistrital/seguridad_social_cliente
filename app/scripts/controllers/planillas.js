@@ -51,7 +51,14 @@ angular.module('ssClienteApp')
     self.divError = false;
     if (comprobarDatosIngresados()) {
       seguridadSocialCrudService.get('periodo_pago','query=Mes:'+parseInt(self.mesPeriodo.value)+',Anio:'+parseInt(self.anioPeriodo)+',tipo_liquidacion:'+self.tipoLiquidacion+'&liimit=1').then(function(response) {
-        periodoPago = response.data[0];
+        periodoPago = null
+        if (response.data == null) {
+          self.divError = true;
+          self.errorMensaje = 'El periodo ingresado no tiene información.';
+        } else {
+          periodoPago = response.data[0];
+        }
+
         if (periodoPago === null) {
           self.divError = true;
           self.errorMensaje = 'El periodo ingresado no tiene información.';
@@ -105,7 +112,7 @@ angular.module('ssClienteApp')
       escribirArchivo("14-23",6);
 
       seguridadSocialCrudService.get('periodo_pago','limit=1&query=Mes:'+mes+',Anio:'+anio).then(function(response) {
-        if (response.data !== null) {
+        if (response.data !== null && response.data.length !== 0) {
           self.divError = false;
           var anio = self.anioPeriodo;
           var mes = self.mesPeriodo.value;
