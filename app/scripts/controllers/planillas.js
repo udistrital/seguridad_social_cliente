@@ -68,7 +68,7 @@ angular.module('ssClienteApp')
             crearCabecera(self.mesPeriodo.value, self.anioPeriodo);
             csvContent += '\n';
             csvContent += response.data;
-            var blob = new Blob([csvContent], {type: 'text/csv'});
+            var blob = new Blob([csvContent], {type: 'text'});
             var filename =  'PlanillaTipoE.txt';
             if(window.navigator.msSaveOrOpenBlob) {
                 window.navigator.msSaveBlob(blob, filename);
