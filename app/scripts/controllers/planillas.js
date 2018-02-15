@@ -69,7 +69,7 @@ angular.module('ssClienteApp')
             csvContent += '\n';
             csvContent += response.data;
             var blob = new Blob([csvContent], {type: 'text/csv'});
-            var filename =  'PlanillaTipoE';
+            var filename =  'PlanillaTipoE.txt';
             if(window.navigator.msSaveOrOpenBlob) {
                 window.navigator.msSaveBlob(blob, filename);
             }
