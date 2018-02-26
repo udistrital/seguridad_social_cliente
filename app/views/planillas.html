@@ -9,7 +9,7 @@
       <div class="container">
         <h4>{{ 'PLANILLAS.TIPO_NOMINA' | translate }}</h4>
         <hr>
-        <label class="radio-inline" ng-repeat="t in planillas.tiposLiquidacion">
+        <label class="radio" ng-repeat="t in planillas.tiposLiquidacion">
           <input type="radio" name="tiposLiquidacion" ng-model="planillas.tipoLiquidacion"
           value="{{t.Nombre}}" required>{{t.Descripcion}}
         </label>
