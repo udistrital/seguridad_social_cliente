@@ -69,8 +69,11 @@ angular.module('ssClienteApp')
       }
       self.errorMensaje = 'Parece que ya existen registros de seguridad social para el periodo: ' + self.mesPeriodo + ' de ' + self.anioPeriodo;
     });
-
+    
     seguridadSocialService.getServicio('pago/CalcularSegSocial',nominaObj.Id).then(function(response) {
+      console.log('pago/CalcularSegSocial',nominaObj.Id);
+      console.log("response: ", response.data);
+      
       if (response.data !== null) {
         for (var i in response.data) {
           dataDescuentos.push(response.data[i]);

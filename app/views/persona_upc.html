@@ -55,13 +55,39 @@
       </div>
     </div>
 
-    <div class="form-group row" ng-class="{ 'has-error' : myForm.input_fechaNacimiento.$invalid && !myForm.input_fechaNacimiento.$pristine }">
+    <div class="form-group row">
+        <label for="input_genero" class="col-sm-2 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.GENERO' | translate}} </label>
+        <div class="col-xs-2">
+          <select class="form-control" name="input_genero"
+            ng-model="personaUpc.generoUpc" ng-change="personaUpc.calcularEdad()">
+            <option value="0"disabled> {{ 'UPC_ADICIONAL.SELECCIONE_OPCION' | translate }} </option>
+            <option ng-repeat="(key, value) in personaUpc.generos" value="{{key}}"> {{key}} </option>
+          </select>
+        </div>
+        </div>
+
+    <br>
+
+    <div  ng-if="personaUpc.generoUpc" class="form-group row" ng-class="{ 'has-error' : myForm.input_fechaNacimiento.$invalid && !myForm.input_fechaNacimiento.$pristine }">
       <label for="input_fechaNacimiento" class="col-sm-2 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.FECHA_NACIMIENTO' | translate}} </label>
       <div class="col-xs-6">
-        <md-datepicker id="txtFechaDesde" name="input_fechaNacimiento" ng-model="personaUpc.variablesForm.fechaNacimiento" md-placeholder="AAAA-MM-DD" required></md-datepicker>
+        <md-datepicker id="txtFechaDesde" name="input_fechaNacimiento"  ng-change="personaUpc.calcularEdad()" ng-model="personaUpc.variablesForm.fechaNacimiento" md-placeholder="AAAA-MM-DD" required></md-datepicker>
       </div>
       <p ng-show="myForm.input_fechaNacimiento.$invalid && !myForm.input_fechaNacimiento.$pristine" class="help-block">{{'VALIDACION.FECHA_NACIMIENTO' | translate}}</p>
     </div>
+
+    <div class="form-group row" ng-if="personaUpc.generoUpc">
+        <label for="input_edad" class="col-sm-2 col-form-label col-md-offset-1"> Rango de Edad</label>
+        <div class="col-xs-2">
+          <label ng-if="personaUpc.edadUpc > -1">{{personaUpc.edadUpc}}  años</label>
+          <!-- <select class="form-control" name="input_edad"
+            ng-init="personaUpc.edad = personaUpc.rangosEdad[0]"
+            ng-model="personaUpc.edad" ng-change="personaUpc.cambiarEdad()">
+            <option value="0" disabled> Seleccione una opción </option>
+            <option ng-repeat="e in personaUpc.rangosEdad" value="{{e.Id}}"> De {{e.EdadMin}} a {{e.EdadMax}} Años {{e.AplicaGenero}} </option>
+          </select> -->
+        </div>
+      </div>
 
     <div class="form-group row">
       <label for="input_zona" class="col-sm-2 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.TIPO_ZONA' | translate}} </label>
@@ -74,19 +100,8 @@
         </select>
       </div>
 
-      <label for="input_edad" class="col-sm-2 col-form-label"> Rango de Edad</label>
-      <div class="col-xs-2">
-        <select class="form-control" name="input_edad"
-          ng-init="personaUpc.edad = personaUpc.rangosEdad[0]"
-          ng-model="personaUpc.edad" ng-change="personaUpc.cambiarEdad()">
-          <option value="0" disabled> Seleccione una opción </option>
-          <option ng-repeat="e in personaUpc.rangosEdad" value="{{e.Id}}"> De {{e.EdadMin}} a {{e.EdadMax}} Años {{e.AplicaGenero}} </option>
-        </select>
-      </div>
-    </div>
-
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label col-md-offset-1"> {{ 'UPC_ADICIONAL.RANGO_EDAD' | translate }} </label>
+      <label class="col-sm-2 col-form-label col-md-offset-1"> {{ 'UPC_ADICIONAL.VALOR_UPC' | translate }} </label>
       <div class="col-xs-2">
         <p> {{personaUpc.variablesForm.valorUpc.Valor | currency}} </p>
       </div>

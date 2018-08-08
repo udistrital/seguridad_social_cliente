@@ -74,11 +74,13 @@ angular.module('ssClienteApp')
           self.divError = true;
           self.errorMensaje = 'El periodo ingresado no tiene información.';
         } else {
+          console.log(periodoPago)
           seguridadSocialService.post('planillas/GenerarPlanillaActivos',periodoPago).then(function(response) {
-            //console.log(response.data);
+            console.log("response: ", response);
             crearCabecera(self.mesPeriodo.value, self.anioPeriodo);
             csvContent += '\n';
             console.log(self.tipoLiquidacion);
+            // console.log(response)
             if (self.tipoLiquidacion === "CT") {
               csvContent += contratistas;
             } else {

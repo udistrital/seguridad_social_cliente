@@ -72,6 +72,19 @@ angular.module('ssClienteApp')
     self.tipoZona = response.data;
   });
 
+  seguridadSocialCrudService.get('rango_edad_upc', 'query=AplicaGenero__icontains:M').then(function(response) {
+    var response = response.data;
+    self.generos = {};
+    for (let i = 0; i < response.length; i++) {
+      const element = response[i];
+      if(self.generos.length == 0) {
+        self.generos[element.AplicaGenero] = true;
+      } else if (!self.generos[element.AplicaGenero]) {
+        self.generos[element.AplicaGenero] = true;
+      }
+    }
+  })
+
   seguridadSocialCrudService.get('rango_edad_upc', 'limit=-1&sortby=EdadMin&order=asc').then(
     function(response) {
       self.rangosEdad = response.data;
@@ -87,7 +100,7 @@ angular.module('ssClienteApp')
 
     self.cambiarZona = function() {
       if (self.edad !== null) {
-        traerValorUpc(self.zona, self.edad);
+        traerValorUpc(self.zona, self.edad.Id);
       }
     };
 
@@ -96,6 +109,34 @@ angular.module('ssClienteApp')
           traerValorUpc(self.zona, self.edad);
       }
     };
+
+    self.calcularEdad = function() {
+      var today = new Date();
+      var birthday = self.variablesForm.fechaNacimiento;
+      var age = today.getFullYear() - birthday.getFullYear();
+      var m = today.getMonth() - birthday.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthday.getDate())) {
+        age--;
+      }
+      self.edadUpc = age;
+      console.log(self.rangosEdad);
+      for (let i = 0; i < self.rangosEdad.length; i++) {
+        var element = self.rangosEdad[i];
+        if (age >= element.EdadMin  && age <= element.EdadMax) {
+          self.edad = element;
+          if (element.AplicaGenero !== "") {
+            console.log(element.AplicaGenero, " ", self.generoUpc)
+            if (element.AplicaGenero === self.generoUpc) {
+              console.log('aqui?')
+              self.edad = element;
+              break;
+            }
+          }
+        } 
+      }
+      console.log("element: ", self.edad);
+      traerValorUpc(self.zona, self.edad.Id);
+    }
 
     function traerValorUpc(idZona, idRangoEdad) {
       seguridadSocialCrudService.get('tipo_upc','limit=1&query=ZonaUpc:'+ idZona +',RangoEdadUpc:' + idRangoEdad).then(function(response) {

@@ -10,8 +10,9 @@
 angular.module('ssClienteApp')
   .service('seguridadSocialCrudService', function ($http) {
 
-    // var path = 'http://localhost:8086/v1/';
-    var path = 'http://10.20.0.254/ss_crud_api/v1/';
+    var path = 'http://localhost:8086/v1/';
+    // var path = 'http://10.20.0.254/ss_crud_api/v1/';
+    // var path = 'http://10.20.2.126:8086/v1/';
 
     return {
       get: function (tabla,params) {
