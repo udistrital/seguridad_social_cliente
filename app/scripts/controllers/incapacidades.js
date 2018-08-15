@@ -11,75 +11,53 @@ angular.module('ssClienteApp')
 .controller('IncapacidadesCtrl', function (titanCrudService, seguridadSocialService, $scope, $timeout, $q, $log, $translate) {
 var self = this;
 var proveedor = 0;
-var proveedores = [];
+self.documento = "";
 
-seguridadSocialService.get('incapacidades', '').then(function(response) {
-var proveedoresNomina = response.data;
-for (var i in proveedoresNomina) {
-  if (proveedoresNomina[i] !== null) {
-    for (var j in proveedoresNomina[i]) {
-      if (!buscarRepetidos(proveedoresNomina[i][j], i)) {
-        proveedores.push(
-          {
-            display: proveedoresNomina[i][j].NombreProveedor,
-            value: proveedoresNomina[i][j].NombreProveedor.toLowerCase(),
-            id: proveedoresNomina[i][j].Id,
-            nominas: [i]
-          });
-        }
-      }
-    }
-  }
-});
-
-// Buscar si el proveedor ya existe en el arreglo proveedores
-// return true si existe el proveedor y agrega la nomina correspondiente al arreglo nomina que tiene cada proveedor
-// return false si no existe el proveedor
-function buscarRepetidos(proveedor, nomina) {
-  for (var i in proveedores) {
-    if(proveedor.Id === proveedores[i].id) {
-      proveedores[i].nominas.push(nomina);
-      return true;
-    }
-  }
-  return false;
+function getPersonas() {
+  seguridadSocialService.get('incapacidades', 'documento='+self.searchText).then(function(response) {
+    self.states = response.data;
+  });
 }
 
+//autocomplete
+self.querySearch   = querySearch;
+self.selectedItemChange = selectedItemChange;
+self.searchTextChange   = searchTextChange;
+
 function querySearch (query) {
-  var results = query ? self.states.filter( createFilterFor(query) ) : self.states,
-  deferred;
-  if (self.simulateQuery) {
-    deferred = $q.defer();
-    $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-    return deferred.promise;
-  } else {
-    return results;
+  if (self.states !== undefined) {
+    var results = query ? self.states.filter( createFilterFor(query) ) : self.states, deferred;
+    if (self.simulateQuery) {
+      deferred = $q.defer();
+      $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+      return deferred.promise;
+    } else {
+      return results;
+    }
   }
 }
 
 function searchTextChange(text) {
   $log.info('Text changed to ' + text);
-}
-
-function selectedItemChange(item) {
-  if (item !== undefined) {
-    proveedor = item;
+  if (text.length > 3) {
+    getPersonas();  
   }
 }
 
+function selectedItemChange(item) {
+  $log.info('Item changed to ' + JSON.stringify(item));
+  self.selected = true;
+  self.tipoDocumento = item.tipoDocumento;
+  self.numeroDocumento = item.documento;
+}
+
 function createFilterFor(query) {
+  angular.lowercase = text => text.toLowerCase();
   var lowercaseQuery = angular.lowercase(query);
   return function filterFn(state) {
     return (state.value.indexOf(lowercaseQuery) === 0);
   };
 }
-//autocomplete
-
-self.states        = proveedores;
-self.querySearch   = querySearch;
-self.selectedItemChange = selectedItemChange;
-self.searchTextChange   = searchTextChange;
-
 
 titanCrudService.get('concepto_nomina','query=TipoConcepto.Nombre:seguridad_social,NombreConcepto__startswith:incapacidad').then(
   function(response) {

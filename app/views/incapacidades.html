@@ -15,17 +15,26 @@
             md-input-name="autocompleteField"
             md-input-minlength="2"
             md-input-maxlength="18"
-            md-menu-container-class="my-cool-class"
+            md-menu-class="autocomplete-custom-template"
+            md-menu-container-class="custom-container"
             md-no-cache="incapacidades.noCache"
             md-selected-item="incapacidades.selectedItem"
             md-search-text="incapacidades.searchText"
+            md-search-text-change="incapacidades.searchTextChange(incapacidades.searchText)"
             md-selected-item-change="incapacidades.selectedItemChange(item)"
             md-items="item in incapacidades.querySearch(incapacidades.searchText)"
             md-item-text="item.display"
-            md-floating-label="Ingresa el nombre de la persona">
+            md-floating-label="Ingrese el número de documento">
             <md-item-template>
-              <span md-highlight-text="incapacidades.searchText" md-highlight-flags="^i">{{item.display}}</span>
-            </md-item-template>
+                <span class="item-title">
+                  <span> {{item.display}} </span>
+                </span>
+                <span class="item-metadata">
+                  <span>
+                    Documento: <strong>{{item.tipoDocumento}} {{item.value}}</strong>
+                  </span>
+                </span>
+              </md-item-template>
             <md-not-found>
               {{ 'INCAPACIDADES.SIN_RESULTADOS' | translate }} "{{incapacidades.searchText}}".
             </md-not-found>
@@ -37,6 +46,25 @@
         </div>
       </div>
       <br>
+
+      <div class="form-group row">
+          <div>
+              <div class="col-md-2 col-md-offset-2">
+                <label> {{ 'INCAPACIDADES.TIPO_DOCUMENTO' | translate }} </label>
+              </div>
+              <div class="col-md-2">
+                    {{incapacidades.tipoDocumento}}
+                </div>
+
+              <div class="col-md-2">
+                  <label> {{ 'INCAPACIDADES.NUM_DOCUMENTO' | translate }} </label>
+              </div>
+              <div class="col-md-2">
+                  {{incapacidades.numeroDocumento}}
+              </div>
+          </div>
+      </div>
+
       <div class="row">
         <div class="col-md-3 col-md-offset-2">
           <label> {{ 'INCAPACIDADES.TIPO' | translate }} </label>

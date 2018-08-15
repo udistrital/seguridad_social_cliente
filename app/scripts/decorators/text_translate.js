@@ -70,7 +70,9 @@ var text_es = {
     SIN_RESULTADOS: "No se encontraron resultados de ",
     SELECCIONE_OPCION: "Seleccione una opción",
     REGISTRADA: "Incapacidad registrada",
-    ERROR_REGISTRO: "No se ha logrado registrar la incapacidad"
+    ERROR_REGISTRO: "No se ha logrado registrar la incapacidad",
+    TIPO_DOCUMENTO: "Tipo Documento",
+    NUM_DOCUMENTO: "Número"
   },
   ACTIVOS: {
     TITULO: "Activos",
@@ -211,7 +213,9 @@ var text_en = {
     SIN_RESULTADOS: "No result found ",
     SELECCIONE_OPCION: "Select one",
     REGISTRADA: "Registered disability",
-    ERROR_REGISTRO: "Unregistered disability"
+    ERROR_REGISTRO: "Unregistered disability",
+    TIPO_DOCUMENTO: "Type of Document",
+    NUM_DOCUMENTO: "Number"
   },
   ACTIVOS: {
     TITULO: "Title",
