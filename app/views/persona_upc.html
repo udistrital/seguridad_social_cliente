@@ -5,136 +5,121 @@
   </div>
 
   <form name="myForm" ng-submit="personaUpc.guardarUpcAdicional()">
-  <div class="panel-body">
+    <div class="panel-body">
       <div class="form-group row" ng-class="{ 'has-error' : myForm.tipo_identificacion.$invalid && !myForm.tipo_identificacion.$pristine }">
-        <label for="tipo_identificacion"  class="col-sm-4 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.TIPO_DOCUMENTO' | translate}} </label>
+        <label for="tipo_identificacion" class="col-sm-4 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.TIPO_DOCUMENTO' | translate}} </label>
         <div class="col-xs-4">
-          <select ng-model="personaUpc.tipoIdentificacion" class="form-control"
-            name="tipo_identificacion" ng-init="personaUpc.documento = personaUpc.tipoDocumento[0]"
+          <select ng-model="personaUpc.tipoIdentificacion" class="form-control" name="tipo_identificacion" ng-init="personaUpc.documento = personaUpc.tipoDocumento[0]"
             ng-model="personaUpc.documento">
-            <option value="0"disabled> {{ 'UPC_ADICIONAL.SELECCIONE_OPCION' | translate }} </option>
+            <option value="0" disabled> {{ 'UPC_ADICIONAL.SELECCIONE_OPCION' | translate }} </option>
             <option ng-repeat="d in personaUpc.tipoDocumento" value="{{d.Id}}" required> {{d.ValorParametro}} </option>
           </select>
           <p ng-show="myForm.tipo_identificacion.$invalid && !myForm.tipo_identificacion.$pristine" class="help-block">{{'VALIDACION.NOMBRE' | translate}}</p>
         </div>
       </div>
 
-    <div class="form-group row" ng-class="{ 'has-error' : myForm.num_documento.$invalid && !myForm.num_documento.$pristine }">
-      <label for="num_documento" class="col-sm-4 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.NUM_DOCUMENTO' | translate}} </label>
-      <div class="col-xs-4">
-        <input ng-model="personaUpc.variablesForm.numDocumento" type="text" class="form-control" name="num_documento" placeholder="Número de Documento" required>
-        <p ng-show="myForm.num_documento.$invalid && !myForm.num_documento.$pristine" class="help-block">{{'VALIDACION.IDENTIFICACION' | translate}}</p>
+      <div class="form-group row" ng-class="{ 'has-error' : myForm.num_documento.$invalid && !myForm.num_documento.$pristine }">
+        <label for="num_documento" class="col-sm-4 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.NUM_DOCUMENTO' | translate}} </label>
+        <div class="col-xs-4">
+          <input ng-model="personaUpc.variablesForm.numDocumento" type="text" class="form-control" name="num_documento" placeholder="Número de Documento"
+            required>
+          <p ng-show="myForm.num_documento.$invalid && !myForm.num_documento.$pristine" class="help-block">{{'VALIDACION.IDENTIFICACION' | translate}}</p>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group row">
-      <div ng-class="{ 'has-error' : myForm.input_nombre.$invalid && !myForm.input_nombre.$pristine }">
-        <label for="input_nombre" class="col-sm-2 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.PRIMER_NOMBRE' | translate}} </label>
+      <div class="form-group row">
+        <div ng-class="{ 'has-error' : myForm.input_nombre.$invalid && !myForm.input_nombre.$pristine }">
+          <label for="input_nombre" class="col-sm-2 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.PRIMER_NOMBRE' | translate}} </label>
+          <div class="col-xs-2">
+            <input ng-model="personaUpc.variablesForm.nombre" type="text" class="form-control" name="input_nombre" placeholder="Primer nombre"
+              required>
+            <p ng-show="myForm.input_nombre.$invalid && !myForm.input_nombre.$pristine" class="help-block">{{'VALIDACION.PRIMER_NOMBRE' | translate}}</p>
+          </div>
+        </div>
+        <label for="input_nombre2" class="col-sm-2 col-form-label"> {{'UPC_ADICIONAL.SEGUNDO_NOMBRE' | translate}} </label>
         <div class="col-xs-2">
-          <input ng-model="personaUpc.variablesForm.nombre" type="text" class="form-control" name="input_nombre" placeholder="Primer nombre" required>
-          <p ng-show="myForm.input_nombre.$invalid && !myForm.input_nombre.$pristine" class="help-block">{{'VALIDACION.PRIMER_NOMBRE' | translate}}</p>
+          <input ng-model="personaUpc.variablesForm.segundoNombre" type="text" class="form-control" name="input_nombre2" placeholder="Segundo Nombre">
         </div>
       </div>
-      <label for="input_nombre2" class="col-sm-2 col-form-label"> {{'UPC_ADICIONAL.SEGUNDO_NOMBRE' | translate}} </label>
-      <div class="col-xs-2">
-        <input ng-model="personaUpc.variablesForm.segundoNombre" type="text" class="form-control" name="input_nombre2" placeholder="Segundo Nombre">
-      </div>
-    </div>
 
-    <div class="form-group row">
-      <div ng-class="{ 'has-error' : myForm.input_apellido.$invalid && !myForm.input_apellido.$pristine }">
-        <label for="input_apellido" class="col-sm-2 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.PRIMER_APELLIDO' | translate}} </label>
+      <div class="form-group row">
+        <div ng-class="{ 'has-error' : myForm.input_apellido.$invalid && !myForm.input_apellido.$pristine }">
+          <label for="input_apellido" class="col-sm-2 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.PRIMER_APELLIDO' | translate}} </label>
+          <div class="col-xs-2">
+            <input ng-model="personaUpc.variablesForm.apellido" type="text" class="form-control" name="input_apellido" placeholder="Primer Apellido"
+              required>
+            <p ng-show="myForm.input_apellido.$invalid && !myForm.input_apellido.$pristine" class="help-block">{{'VALIDACION.PRIMER_APELLIDO' | translate}}</p>
+          </div>
+        </div>
+        <label for="input_apellido2" class="col-sm-2 col-form-label"> {{'UPC_ADICIONAL.SEGUNDO_APELLIDO' | translate}} </label>
         <div class="col-xs-2">
-          <input ng-model="personaUpc.variablesForm.apellido" type="text" class="form-control" name="input_apellido" placeholder="Primer Apellido" required>
-          <p ng-show="myForm.input_apellido.$invalid && !myForm.input_apellido.$pristine" class="help-block">{{'VALIDACION.PRIMER_APELLIDO' | translate}}</p>
-        </div>
-      </div>
-      <label for="input_apellido2" class="col-sm-2 col-form-label"> {{'UPC_ADICIONAL.SEGUNDO_APELLIDO' | translate}} </label>
-      <div class="col-xs-2">
-        <input ng-model="personaUpc.variablesForm.segundoApellido" type="text" class="form-control" name="input_apellido2" placeholder="Segundo Apellido">
-      </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="input_genero" class="col-sm-2 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.GENERO' | translate}} </label>
-        <div class="col-xs-2">
-          <select class="form-control" name="input_genero"
-            ng-model="personaUpc.generoUpc" ng-change="personaUpc.calcularEdad()">
-            <option value="0"disabled> {{ 'UPC_ADICIONAL.SELECCIONE_OPCION' | translate }} </option>
-            <option ng-repeat="(key, value) in personaUpc.generos" value="{{key}}"> {{key}} </option>
-          </select>
-        </div>
-        </div>
-
-    <br>
-
-    <div  ng-if="personaUpc.generoUpc" class="form-group row" ng-class="{ 'has-error' : myForm.input_fechaNacimiento.$invalid && !myForm.input_fechaNacimiento.$pristine }">
-      <label for="input_fechaNacimiento" class="col-sm-2 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.FECHA_NACIMIENTO' | translate}} </label>
-      <div class="col-xs-6">
-        <md-datepicker id="txtFechaDesde" name="input_fechaNacimiento"  ng-change="personaUpc.calcularEdad()" ng-model="personaUpc.variablesForm.fechaNacimiento" md-placeholder="AAAA-MM-DD" required></md-datepicker>
-      </div>
-      <p ng-show="myForm.input_fechaNacimiento.$invalid && !myForm.input_fechaNacimiento.$pristine" class="help-block">{{'VALIDACION.FECHA_NACIMIENTO' | translate}}</p>
-    </div>
-
-    <div class="form-group row" ng-if="personaUpc.generoUpc">
-        <label for="input_edad" class="col-sm-2 col-form-label col-md-offset-1"> Rango de Edad</label>
-        <div class="col-xs-2">
-          <label ng-if="personaUpc.edadUpc > -1">{{personaUpc.edadUpc}}  años</label>
-          <!-- <select class="form-control" name="input_edad"
-            ng-init="personaUpc.edad = personaUpc.rangosEdad[0]"
-            ng-model="personaUpc.edad" ng-change="personaUpc.cambiarEdad()">
-            <option value="0" disabled> Seleccione una opción </option>
-            <option ng-repeat="e in personaUpc.rangosEdad" value="{{e.Id}}"> De {{e.EdadMin}} a {{e.EdadMax}} Años {{e.AplicaGenero}} </option>
-          </select> -->
+          <input ng-model="personaUpc.variablesForm.segundoApellido" type="text" class="form-control" name="input_apellido2" placeholder="Segundo Apellido">
         </div>
       </div>
 
-    <div class="form-group row">
-      <label for="input_zona" class="col-sm-2 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.TIPO_ZONA' | translate}} </label>
-      <div class="col-xs-2">
-        <select class="form-control" name="input_zona"
-          ng-init="personaUpc.zona = personaUpc.tipoZona[0]"
-          ng-model="personaUpc.zona" ng-change="personaUpc.cambiarZona()">
-          <option value="0"disabled> {{ 'UPC_ADICIONAL.SELECCIONE_OPCION' | translate }} </option>
-          <option ng-repeat="z in personaUpc.tipoZona" value="{{z.Id}}"> {{z.Nombre}} </option>
-        </select>
+      <div class="form-check row col-md-offset-2">
+        <input type="checkbox" class="form-check-input" ng-model="personaUpc.beneficiario">
+        <label class="form-check-label" for="exampleCheck1">{{'UPC_ADICIONAL.BENEFICIARIO' | translate}}</label>
+      </div>
+      <br>
+
+      <div class="form-group row" ng-class="{ 'has-error' : myForm.input_fechaNacimiento.$invalid && !myForm.input_fechaNacimiento.$pristine }">
+        <label for="input_fechaNacimiento" class="col-sm-2 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.FECHA_NACIMIENTO' | translate}} </label>
+        <div class="col-xs-6">
+          <md-datepicker id="txtFechaDesde" name="input_fechaNacimiento" ng-change="personaUpc.calcularEdad()" ng-model="personaUpc.variablesForm.fechaNacimiento"
+            md-placeholder="AAAA-MM-DD" required></md-datepicker>
+        </div>
+        <p ng-show="myForm.input_fechaNacimiento.$invalid && !myForm.input_fechaNacimiento.$pristine" class="help-block">{{'VALIDACION.FECHA_NACIMIENTO' | translate}}</p>
       </div>
 
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label col-md-offset-1"> {{ 'UPC_ADICIONAL.VALOR_UPC' | translate }} </label>
-      <div class="col-xs-2">
-        <p> {{personaUpc.variablesForm.valorUpc.Valor | currency}} </p>
+      <div ng-if="!personaUpc.beneficiario">
+
+        <div class="form-group row">
+          <label for="input_genero" class="col-sm-2 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.GENERO' | translate}} </label>
+          <div class="col-xs-2">
+            <select class="form-control" name="input_genero" ng-model="personaUpc.generoUpc" ng-change="personaUpc.calcularEdad()">
+              <option value="0" disabled> {{ 'UPC_ADICIONAL.SELECCIONE_OPCION' | translate }} </option>
+              <option ng-repeat="(key, value) in personaUpc.generos" value="{{key}}"> {{key}} </option>
+            </select>
+          </div>
+        </div>
+        <br>
+
+        <div class="form-group row" ng-if="personaUpc.generoUpc">
+          <label for="input_edad" class="col-sm-2 col-form-label col-md-offset-1"> Rango de Edad</label>
+          <div class="col-xs-2">
+            <label ng-if="personaUpc.edadUpc > -1">{{personaUpc.edadUpc}} años</label>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="input_zona" class="col-sm-2 col-form-label col-md-offset-1"> {{'UPC_ADICIONAL.TIPO_ZONA' | translate}} </label>
+          <div class="col-xs-2">
+            <select class="form-control" name="input_zona" ng-init="personaUpc.zona = personaUpc.tipoZona[0]" ng-model="personaUpc.zona"
+              ng-change="personaUpc.cambiarZona()">
+              <option value="0" disabled> {{ 'UPC_ADICIONAL.SELECCIONE_OPCION' | translate }} </option>
+              <option ng-repeat="z in personaUpc.tipoZona" value="{{z.Id}}"> {{z.Nombre}} </option>
+            </select>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label col-md-offset-1"> {{ 'UPC_ADICIONAL.VALOR_UPC' | translate }} </label>
+            <div class="col-xs-2">
+              <p> {{personaUpc.variablesForm.valorUpc.Valor | currency}} </p>
+            </div>
+          </div>
+        </div>
+
       </div>
+
+      <h4 class="col-md-offset-5">{{ 'UPC_ADICIONAL.RESPONSABLE' | translate }}</h4>
+      <hr>
+      <buscar-proveedor proveedor="personaUpc.proveedor"></buscar-proveedor>
     </div>
 
-    <div class="form-group row">
-      <label for="input_persona" class="col-sm-2 col-form-label col-md-offset-1"> {{ 'UPC_ADICIONAL.RESPONSABLE' | translate }} </label>
-      <div class="col-xs-4">
-          <md-autocomplete ng-disabled="personaUpc.isDisabled"
-          md-no-cache="personaUpc.noCache"
-          md-selected-item="personaUpc.selectedItem"
-          md-search-text-change="personaUpc.searchTextChange(personaUpc.searchText)"
-          md-search-text="personaUpc.searchText"
-          md-selected-item-change="personaUpc.selectedItemChange(item)"
-          md-items="item in personaUpc.querySearch(personaUpc.searchText)"
-          md-item-text="item.display"
-          md-min-length="0"
-          placeholder="Responsable">
-          <md-item-template>
-            <span md-highlight-text="personaUpc.searchText" md-highlight-flags="^i">{{item.display}}</span>
-          </md-item-template>
-          <md-not-found>
-            {{ 'UPC_ADICIONAL.SIN_RESULTADOS' | translate }}  "{{incappersonaUpccidades.searchText}}".
-          </md-not-found>
-        </md-autocomplete>
+    <div class="panel-footer">
+      <button type="reset" ng-click="personaUpc.reset()" class="btn btn-primary btn-outline col-md-offset-5"> Limpiar </button>
+      <button type="submit" class="btn btn-success" name="button"> Guardar </button>
     </div>
-  </div>
-
-</div>
-
-<div class="panel-footer">
-  <button type="reset" ng-click="personaUpc.reset()" class="btn btn-primary btn-outline col-md-offset-5"> Limpiar </button>
-  <button type="submit" class="btn btn-success" name="button"> Guardar </button>
-</div>
-</form>
+  </form>
 </div>

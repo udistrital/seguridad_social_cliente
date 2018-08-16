@@ -124,7 +124,8 @@ var text_es = {
     TITULO_TIPO_UPC: "Valor UPC Adicional",
     REGISTRAR_VALORES: "Registrar Nuevos Valores",
     SIN_UPC: "No existen UPC asociadas a esta persona",
-    GENERO: "Género"
+    GENERO: "Género",
+    BENEFICIARIO: "Beneficiario"
   },
   PLANILLAS: {
     TITULO: "Planillas",
@@ -267,7 +268,8 @@ var text_en = {
     TITULO_TIPO_UPC: "UPC Cost",
     REGISTRAR_VALORES: "Register New Values",
     SIN_UPC: "There is not UPC associated to this person",
-    GENERO : "Gender"
+    GENERO : "Gender",
+    BENEFICIARIO: "Beneficiary"
   },
   PLANILLAS: {
     TITULO: "Forms",
