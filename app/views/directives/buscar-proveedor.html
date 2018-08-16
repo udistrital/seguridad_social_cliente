@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-md-3 col-md-offset-2">
+      <label> {{ 'INCAPACIDADES.NOMBRE' | translate }} </label>
+    </div>
+    <div class="col-md-4">
+      <md-autocomplete flex required
+      md-input-name="autocompleteField"
+      md-input-minlength="2"
+      md-input-maxlength="18"
+      md-menu-class="autocomplete-custom-template"
+      md-menu-container-class="custom-container"
+      md-no-cache="d_buscarProveedor.noCache"
+      md-selected-item="d_buscarProveedor.selectedItem"
+      md-search-text="d_buscarProveedor.searchText"
+      md-search-text-change="d_buscarProveedor.searchTextChange(d_buscarProveedor.searchText)"
+      md-selected-item-change="d_buscarProveedor.selectedItemChange(item)"
+      md-items="item in d_buscarProveedor.querySearch(d_buscarProveedor.searchText)"
+      md-item-text="item.display"
+      md-floating-label="Ingrese el número de documento">
+      <md-item-template>
+          <span class="item-title">
+            <span> {{item.display}} </span>
+          </span>
+          <span class="item-metadata">
+            <span>
+              Documento: <strong>{{item.tipoDocumento}} {{item.value}}</strong>
+            </span>
+          </span>
+        </md-item-template>
+      <md-not-found>
+        {{ 'INCAPACIDADES.SIN_RESULTADOS' | translate }} "{{d_buscarProveedor.searchText}}".
+      </md-not-found>
+    </md-autocomplete>
+  </div>
+  <br>
+  <div class="alert alert-danger" ng-if="d_buscarProveedor.noContrato">
+    {{d_buscarProveedor.noContrato}}
+  </div>
+</div>
+<br>
+<div class="form-group row">
+  <div>
+      <div class="col-md-2 col-md-offset-2">
+        <label> {{ 'INCAPACIDADES.TIPO_DOCUMENTO' | translate }} </label>
+      </div>
+      <div class="col-md-2">
+            {{d_buscarProveedor.tipoDocumento}}
+        </div>
+
+      <div class="col-md-2">
+          <label> {{ 'INCAPACIDADES.NUM_DOCUMENTO' | translate }} </label>
+      </div>
+      <div class="col-md-2">
+          {{d_buscarProveedor.numeroDocumento}}
+      </div>
+  </div>
+</div>
