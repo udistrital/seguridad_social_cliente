@@ -1,13 +1,36 @@
 <br>
 <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" style="max-height: 400;">
         <h4> {{ 'UPC_ADICIONAL.TITULO_REGISTRAR_TIPO' | translate }} </h4>
     </div>
+
     <div class="panel-body">
+        <br>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-md-1 col-md-offset-1" for="resolucion">{{ 'UPC_ADICIONAL.RESOLUCION' | translate }}</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="resolucion" ng-model="registrarTipoUpc.resolucion" required>
+                </div>
+
+                <label class="col-md-1">{{'UPC_ADICIONAL.VIGENCIA' | translate}}</label>
+                <div class="col-md-3">
+                    <select ng-model="registrarTipoUpc.vigencia" class="form-control" required>
+                        <option value="" disabled>{{ 'ACTIVOS.SELECCION_ANIO' | translate }}</option>
+                        <option ng-repeat="a in registrarTipoUpc.anios" value="{{a.anio}}" required>{{a.anio}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+
+
         <div ui-grid="registrarTipoUpc.gridOptions" ui-grid-selection ui-grid-edit class="grid"></div>
     </div>
 
     <div class="panel-footer">
-      <button type="button" class="btn btn-outline btn-success col-md-offset-6" ng-click="registrarTipoUpc.guardar()" name="button"> {{ 'BTN.GUARDAR' | translate }} </button>
+        <button type="button" class="btn btn-outline btn-success col-md-offset-6" ng-click="registrarTipoUpc.guardar()" name="button">
+            {{ 'BTN.GUARDAR' | translate }} </button>
     </div>
 </div>

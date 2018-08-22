@@ -11,7 +11,7 @@ angular.module('ssClienteApp')
 .controller('RegistrarTipoUpcCtrl', function (seguridadSocialCrudService, $scope) {
 
   var self = this;
-  var nombreZona;
+  self.anios = [];
 
   self.gridOptions = {
     enableRowHeaderSelection: false,
@@ -26,7 +26,7 @@ angular.module('ssClienteApp')
     cellTemplate: '<div align="center">De {{row.entity.EdadMin}} a {{row.entity.EdadMax}} años {{row.entity.AplicaGenero}}</div>' },
 
     { name: 'ZonaNormal', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.ZONA_NORMAL\' | translate }} </h5></div>', enableCellEdit: true ,
-    cellTemplate: '<div align="center" ng-init="row.entity.ZonaNormal=0">{{row.entity.ZonaNormal | currency:undefined:0}}</div>' },
+    cellTemplate: '<div align="center" style="padding:10px"; ng-init="row.entity.ZonaNormal=0">{{row.entity.ZonaNormal | currency:undefined:0}}</div>' },
 
     { name: 'ZonaEspecial', headerCellTemplate: '<div align="center"><h5> {{ \'UPC_ADICIONAL.ZONA_ESPECIAL\' | translate }} </h5></div>', enableCellEdit: true,
     cellTemplate: '<div align="center" ng-init="row.entity.ZonaEspecial=0">{{row.entity.ZonaEspecial | currency:undefined:0}}</div>' },
@@ -61,6 +61,14 @@ angular.module('ssClienteApp')
     }
   }
 
+   //Crea un arreglo de objetos para tener los años desde el 1900 hasta el año actual con el metodo getFullYear()
+   function calcularAnios() {
+    for (var i = new Date().getFullYear(); i >= 2000 ; i--) {
+      self.anios.push({ anio: i });
+    }
+  }
+  calcularAnios();
+
   function guardarValores(zona, edad, valor) {
     seguridadSocialCrudService.get('zona_upc','limit=1&fields=Id&query=Nombre:' + zona).then(function(response) {
       var idZona = response.data[0];
@@ -70,10 +78,10 @@ angular.module('ssClienteApp')
 
       var tipoUpc = {
         Valor: parseInt(valor),
-        Vigencia: 2017,
+        Vigencia: parseInt(self.vigencia),
         ZonaUpc: IdTipoZonaUpc,
         RangoEdadUpc: IdEdadUpc,
-        Resolucon: ''
+        Resolucion: self.resolucion
       };
 
       seguridadSocialCrudService.post('tipo_upc',tipoUpc).then(function(response) {

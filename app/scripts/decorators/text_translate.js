@@ -125,7 +125,9 @@ var text_es = {
     REGISTRAR_VALORES: "Registrar Nuevos Valores",
     SIN_UPC: "No existen UPC asociadas a esta persona",
     GENERO: "Género",
-    BENEFICIARIO: "Beneficiario"
+    BENEFICIARIO: "Beneficiario",
+    RESOLUCION: "Resolución",
+    VIGENCIA: "Vigencia"
   },
   PLANILLAS: {
     TITULO: "Planillas",
@@ -269,7 +271,9 @@ var text_en = {
     REGISTRAR_VALORES: "Register New Values",
     SIN_UPC: "There is not UPC associated to this person",
     GENERO : "Gender",
-    BENEFICIARIO: "Beneficiary"
+    BENEFICIARIO: "Beneficiary",
+    RESOLUCION: "Resolución",
+    VIGENCIA: "Validity"
   },
   PLANILLAS: {
     TITULO: "Forms",

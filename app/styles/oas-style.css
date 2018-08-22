@@ -527,3 +527,8 @@ md-autocomplete#custom-template {
 .custom-container {
   min-width: 300px !important;
 }
+
+.grid {
+  height: 600px;
+}
+
