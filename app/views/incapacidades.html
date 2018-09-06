@@ -11,21 +11,12 @@
             <label> {{ 'INCAPACIDADES.NOMBRE' | translate }} </label>
           </div>
           <div class="col-md-4">
-            <md-autocomplete flex required
-            md-input-name="autocompleteField"
-            md-input-minlength="2"
-            md-input-maxlength="18"
-            md-menu-class="autocomplete-custom-template"
-            md-menu-container-class="custom-container"
-            md-no-cache="incapacidades.noCache"
-            md-selected-item="incapacidades.selectedItem"
-            md-search-text="incapacidades.searchText"
-            md-search-text-change="incapacidades.searchTextChange(incapacidades.searchText)"
-            md-selected-item-change="incapacidades.selectedItemChange(item)"
-            md-items="item in incapacidades.querySearch(incapacidades.searchText)"
-            md-item-text="item.display"
-            md-floating-label="Ingrese el número de documento">
-            <md-item-template>
+            <md-autocomplete flex required md-input-name="autocompleteField" md-input-minlength="2" md-input-maxlength="18" md-menu-class="autocomplete-custom-template"
+              md-menu-container-class="custom-container" md-no-cache="incapacidades.noCache" md-selected-item="incapacidades.selectedItem"
+              md-search-text="incapacidades.searchText" md-search-text-change="incapacidades.searchTextChange(incapacidades.searchText)"
+              md-selected-item-change="incapacidades.selectedItemChange(item)" md-items="item in incapacidades.querySearch(incapacidades.searchText)"
+              md-item-text="item.display" md-floating-label="Ingrese el número de documento">
+              <md-item-template>
                 <span class="item-title">
                   <span> {{item.display}} </span>
                 </span>
@@ -35,76 +26,98 @@
                   </span>
                 </span>
               </md-item-template>
-            <md-not-found>
-              {{ 'INCAPACIDADES.SIN_RESULTADOS' | translate }} "{{incapacidades.searchText}}".
-            </md-not-found>
-          </md-autocomplete>
+              <md-not-found>
+                {{ 'INCAPACIDADES.SIN_RESULTADOS' | translate }} "{{incapacidades.searchText}}".
+              </md-not-found>
+            </md-autocomplete>
+          </div>
+          <br>
+          <div class="alert alert-danger" ng-if="incapacidades.noContrato">
+            {{incapacidades.noContrato}}
+          </div>
         </div>
         <br>
-        <div class="alert alert-danger" ng-if="incapacidades.noContrato">
-          {{incapacidades.noContrato}}
-        </div>
-      </div>
-      <br>
 
-      <div class="form-group row">
+        <div class="form-group row">
           <div>
-              <div class="col-md-2 col-md-offset-2">
-                <label> {{ 'INCAPACIDADES.TIPO_DOCUMENTO' | translate }} </label>
-              </div>
-              <div class="col-md-2">
-                    {{incapacidades.tipoDocumento}}
-                </div>
+            <div class="col-md-2 col-md-offset-2">
+              <label> {{ 'INCAPACIDADES.TIPO_DOCUMENTO' | translate }} </label>
+            </div>
+            <div class="col-md-2">
+              {{incapacidades.tipoDocumento}}
+            </div>
 
-              <div class="col-md-2">
-                  <label> {{ 'INCAPACIDADES.NUM_DOCUMENTO' | translate }} </label>
-              </div>
-              <div class="col-md-2">
-                  {{incapacidades.numeroDocumento}}
-              </div>
+            <div class="col-md-2">
+              <label> {{ 'INCAPACIDADES.NUM_DOCUMENTO' | translate }} </label>
+            </div>
+            <div class="col-md-2">
+              {{incapacidades.numeroDocumento}}
+            </div>
           </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-3 col-md-offset-2">
-          <label> {{ 'INCAPACIDADES.TIPO' | translate }} </label>
         </div>
-        <div class="col-md-4">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          <div class="col-md-12" ng-if="!incapacidades.tipoIncapacidad">{{ 'INCAPACIDADES.SELECCIONE_OPCION' | translate }} <span class="caret"></span></div>
-          <div class="col-md-12" ng-if="incapacidades.tipoIncapacidad">{{incapacidades.tipoIncapacidad.AliasConcepto}}<span class="caret"></span></div>
-        </button>
-        <ul class="dropdown-menu">
-          <li ng-repeat="i in incapacidades.listaIncapacidades" ng-click="incapacidades.setTipoIncapacidad(i)" value="{{i.Id}}"><a href="">{{i.AliasConcepto}}</a></li>
-        </ul>
-      </div>
-    </div>
-    <br>
 
-    <div class="form-group row">
-      <label class="col-md-3 col-md-offset-2 control-label" for="txtFechaDesde">{{ 'INCAPACIDADES.FECHA_INCIO' | translate }}</label>
-      <div class="col-md-4">
-        <md-datepicker id="txtFechaDesde" name="txtFechaDesde" ng-model="incapacidades.fechaDesde" md-placeholder="Fecha de inicio" required></md-datepicker>
-      </div>
+        <div class="row">
+          <div class="col-md-3 col-md-offset-2">
+            <label> {{ 'INCAPACIDADES.TIPO' | translate }} </label>
+          </div>
+          <div class="col-md-4">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="col-md-12" ng-if="!incapacidades.tipoIncapacidad">{{ 'INCAPACIDADES.SELECCIONE_OPCION' | translate
+                }} <span class="caret"></span></div>
+              <div class="col-md-12" ng-if="incapacidades.tipoIncapacidad">{{incapacidades.tipoIncapacidad.AliasConcepto}}<span
+                  class="caret"></span></div>
+            </button>
+            <ul class="dropdown-menu">
+              <li ng-repeat="i in incapacidades.listaIncapacidades" ng-click="incapacidades.setTipoIncapacidad(i)" value="{{i.Id}}"><a
+                  href="">{{i.AliasConcepto}}</a></li>
+            </ul>
+          </div>
+        </div>
+        <br>
+
+        <div class="form-group row">
+          <label class="col-md-3 col-md-offset-2 control-label" for="txtFechaDesde">{{ 'INCAPACIDADES.FECHA_INCIO' | translate
+            }}
+          </label>
+          <div class="col-md-4">
+            <md-datepicker id="txtFechaDesde" name="txtFechaDesde" ng-model="incapacidades.fechaDesde" md-placeholder="Fecha de inicio"
+              required></md-datepicker>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 col-md-offset-2 control-label" for="txtFechaDesde">{{ 'INCAPACIDADES.FECHA_FIN' | translate
+            }}
+          </label>
+          <div class="col-md-4">
+            <md-datepicker id="txtFechaDesde" name="txtFechaDesde" ng-model="incapacidades.fechaHasta" md-mindate="incapacidades.minDate()"
+              md-placeholder="Fecha de inicio" required></md-datepicker>
+          </div>
+        </div>
+        <div class="alert alert-warning" ng-if="incapacidades.alerta">
+          {{incapacidades.alerta}}
+        </div>
+
+        <!-- Selección de nómina -->
+        <div class="form-group row">
+          <label class="col-md-3 col-md-offset-2 control-label">{{ 'INCAPACIDADES.TIPO_NOMINA' | translate }}</label>
+          <br><br>
+          <p class="col-md-offset-2">Seleccione las nóminas a las que esta persona pertenece</p>
+          <div class="col-md-offset-3 row">
+            <div class="row" ng-repeat="nomina in incapacidades.nominas">
+              <input type="checkbox" ng-checked="incapacidades.nominasPertenece.includes(nomina.Id)" ng-click="incapacidades.toggleSelection(nomina.Id)">              {{nomina.TipoNomina.Descripcion}}
+            </div>
+            <div>{{incapacidades.nominasPertenece | json}}</div>
+          </div>
+        </div>
     </div>
 
-    <div class="form-group row">
-      <label class="col-md-3 col-md-offset-2 control-label" for="txtFechaDesde">{{ 'INCAPACIDADES.FECHA_FIN' | translate }}</label>
-      <div class="col-md-4">
-        <md-datepicker id="txtFechaDesde" name="txtFechaDesde" ng-model="incapacidades.fechaHasta" md-mindate="incapacidades.minDate()" md-placeholder="Fecha de inicio" required></md-datepicker>
+    <div class="panel-footer">
+      <div class="col-md-offset-5">
+        <button type="submit" name="button" ng-click="incapacidades.registrarIncapacidad()" class="btn btn-success btn-output"> {{
+          'BTN.REGISTRAR' | translate }} </button>
       </div>
-    </div>
-    <div class="alert alert-warning" ng-if="incapacidades.alerta">
-      {{incapacidades.alerta}}
+      </form>
     </div>
   </div>
-
-  <div class="panel-footer">
-    <div class="col-md-offset-5">
-      <button type="submit" name="button" ng-click="incapacidades.registrarIncapacidad()" class="btn btn-success btn-output"> {{ 'BTN.REGISTRAR' | translate }} </button>
-    </div>
-  </form>
-</div>
-</div>
 </div>
