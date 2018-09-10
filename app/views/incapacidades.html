@@ -8,7 +8,7 @@
       <form method="post" ng-init="incapacidades.getProveedores()" name="myForm" ng-submit="incapacidades.test()">
         <div class="row">
           <div class="col-md-3 col-md-offset-2">
-            <label> {{ 'INCAPACIDADES.NOMBRE' | translate }} </label>
+            <label> {{ 'INCAPACIDADES.NUM_DOCUMENTO' | translate }} </label>
           </div>
           <div class="col-md-4">
             <md-autocomplete flex required md-input-name="autocompleteField" md-input-minlength="2" md-input-maxlength="18" md-menu-class="autocomplete-custom-template"
@@ -107,7 +107,6 @@
             <div class="row" ng-repeat="nomina in incapacidades.nominas">
               <input type="checkbox" ng-checked="incapacidades.nominasPertenece.includes(nomina.Id)" ng-click="incapacidades.toggleSelection(nomina.Id)">              {{nomina.TipoNomina.Descripcion}}
             </div>
-            <div>{{incapacidades.nominasPertenece | json}}</div>
           </div>
         </div>
     </div>

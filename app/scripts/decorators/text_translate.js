@@ -72,7 +72,7 @@ var text_es = {
     REGISTRADA: "Incapacidad registrada",
     ERROR_REGISTRO: "No se ha logrado registrar la incapacidad",
     TIPO_DOCUMENTO: "Tipo Documento",
-    NUM_DOCUMENTO: "Número",
+    NUM_DOCUMENTO: "Número de Documento",
     TIPO_NOMINA: "Tipo Nómina"
   },
   ACTIVOS: {
@@ -125,7 +125,7 @@ var text_es = {
     TITULO_TIPO_UPC: "Valor UPC Adicional",
     REGISTRAR_VALORES: "Registrar Nuevos Valores",
     SIN_UPC: "No existen UPC asociadas a esta persona",
-    GENERO: "Género",
+    GENERO: "Sexo",
     BENEFICIARIO: "Beneficiario",
     RESOLUCION: "Resolución",
     VIGENCIA: "Vigencia"
@@ -219,7 +219,7 @@ var text_en = {
     REGISTRADA: "Registered disability",
     ERROR_REGISTRO: "Unregistered disability",
     TIPO_DOCUMENTO: "Type of Document",
-    NUM_DOCUMENTO: "Number",
+    NUM_DOCUMENTO: "Document ID",
     TIPO_NOMINA: "Payroll Type"
   },
   ACTIVOS: {
