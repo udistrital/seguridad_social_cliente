@@ -55,7 +55,7 @@ angular.module('ssClienteApp')
     });
 
     seguridadSocialCrudService.get('zona_upc', '').then(function (response) {
-      for (let i = 0; i < response.data.length; i++) {
+      for (var i = 0; i < response.data.length; i++) {
         zonas[response.data[i].Nombre] = response.data[i].Id;
       }
     });

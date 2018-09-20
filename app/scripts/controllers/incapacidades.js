@@ -54,7 +54,6 @@ angular.module('ssClienteApp')
     }
 
     function createFilterFor(query) {
-      angular.lowercase = text => text.toLowerCase();
       var lowercaseQuery = angular.lowercase(query);
       return function filterFn(state) {
         return (state.value.indexOf(lowercaseQuery) === 0);
@@ -135,7 +134,7 @@ angular.module('ssClienteApp')
         var concepto = { Id: parseInt(self.tipoIncapacidad.Id) };
 
         for (var i = 0; i < self.nominasPertenece.length; i++) {
-          for (let j = 0; j < self.proveedor.contratos.length; j++) {
+          for (var j = 0; j < self.proveedor.contratos.length; j++) {
             var incapacidad = {
               ValorNovedad: 0.0,
               NumCuotas: 999,

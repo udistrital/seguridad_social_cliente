@@ -75,7 +75,7 @@ angular.module('ssClienteApp')
     seguridadSocialCrudService.get('rango_edad_upc', 'query=AplicaGenero__icontains:M').then(function (response) {
       var response = response.data;
       self.generos = {};
-      for (let i = 0; i < response.length; i++) {
+      for (var i = 0; i < response.length; i++) {
         const element = response[i];
         if (self.generos.length == 0) {
           self.generos[element.AplicaGenero] = true;
@@ -119,7 +119,7 @@ angular.module('ssClienteApp')
         age--;
       }
       self.edadUpc = age;
-      for (let i = 0; i < self.rangosEdad.length; i++) {
+      for (var i = 0; i < self.rangosEdad.length; i++) {
         var element = self.rangosEdad[i];
         if (age >= element.EdadMin && age <= element.EdadMax) {
           self.edad = element;
