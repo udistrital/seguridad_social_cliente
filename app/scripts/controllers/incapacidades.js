@@ -54,7 +54,8 @@ angular.module('ssClienteApp')
     }
 
     function createFilterFor(query) {
-      var lowercaseQuery = angular.lowercase(query);
+      // var lowercaseQuery = angular.lowercase(query);
+      var lowercaseQuery = query.toLowerCase();
       return function filterFn(state) {
         return (state.value.indexOf(lowercaseQuery) === 0);
       };
