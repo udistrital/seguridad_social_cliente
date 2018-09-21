@@ -130,7 +130,7 @@ angular.module('ssClienteApp')
     self.registrarIncapacidad = function () {
       var validar = validarCampos();
       var errorRegistro = false;
-      var incapacidades = {"Conceptos":[]};
+      var incapacidades = {"conceptos":[]};
       if (validar.validado) {
         var concepto = { Id: parseInt(self.tipoIncapacidad.Id) };
 
