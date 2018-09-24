@@ -109,7 +109,7 @@ var text_es = {
     DOCUMENTO: "Documento",
     NOMBRE: "Nombre",
     APELLIDO: "Apellido",
-    LISTA_UPC: "Lista de UPC Adicional",
+    LISTA_UPC: "Lista de Beneficiarios Adicionales",
     TITULO_LISTAR_VALORES: "Valor UPC Adicional",
     VALORES_ACTUALES: "Valores Actuales",
     ZONAS: "Zonas",
@@ -126,7 +126,7 @@ var text_es = {
     REGISTRAR_VALORES: "Registrar Nuevos Valores",
     SIN_UPC: "No existen UPC asociadas a esta persona",
     GENERO: "Sexo",
-    BENEFICIARIO: "Beneficiario",
+    BENEFICIARIO: "Beneficiario Adicional",
     RESOLUCION: "Resolución",
     VIGENCIA: "Vigencia"
   },
@@ -273,7 +273,7 @@ var text_en = {
     REGISTRAR_VALORES: "Register New Values",
     SIN_UPC: "There is not UPC associated to this person",
     GENERO : "Gender",
-    BENEFICIARIO: "Beneficiary",
+    BENEFICIARIO: "Extra Beneficiary",
     RESOLUCION: "Resolución",
     VIGENCIA: "Validity"
   },

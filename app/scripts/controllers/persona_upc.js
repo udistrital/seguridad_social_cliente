@@ -147,7 +147,7 @@ angular.module('ssClienteApp')
     self.guardarUpcAdicional = function () {
 
       var upcAdicional = {
-        PersonaAsociada: self.proveedor.id,
+        PersonaAsociada: self.proveedor.documento,
         ParametroEstandar: parseInt(self.tipoIdentificacion),
         NumDocumento: self.variablesForm.numDocumento,
         PrimerNombre: self.variablesForm.nombre,
@@ -159,14 +159,15 @@ angular.module('ssClienteApp')
         FechaInicio: null
       };
 
-      if (self.beneficiario) {
+      if (!self.beneficiario) {
         seguridadSocialService.get('utils/GetActualDate', '').then(function(response) {
           upcAdicional.FechaInicio = new Date(response.data);
           seguridadSocialCrudService.post('beneficiarios', upcAdicional).then(function (response) {
             if (response.statusText === 'Created') {
               swal('Beneficiario registrado');
             } else {
-              swal('No se ha Logrado Registrar el Beneficiario');
+              console.log(response.data);
+              swal('No se ha logrado registrar el beneficiario');
             }
           });
         });
@@ -175,10 +176,11 @@ angular.module('ssClienteApp')
         upcAdicional.TipoUpc = idTipoUpc;
         seguridadSocialCrudService.post('upc_adicional', upcAdicional).then(function (response) {
           if (response.statusText === 'Created') {
-            swal('UPC Adicional Registrada');
+            swal('Beneficiario Adicional Adicional Registrada');
             self.reset();
           } else {
-            swal('No se ha Logrado Registrar la UPC');
+            console.log(response.data);
+            swal('No se ha logrado registrar el beneficiario adicional');
           }
         });
       }
