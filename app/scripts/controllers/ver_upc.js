@@ -8,7 +8,7 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-  .controller('VerUpcCtrl', function (seguridadSocialCrudService, $translate, administrativaAmazonService) {
+  .controller('VerUpcCtrl', function (seguridadSocialCrudService, $scope, administrativaAmazonService) {
     var self = this;
 
     self.init = function () {
@@ -18,13 +18,16 @@ angular.module('ssClienteApp')
     self.gridOptions = {
       enableRowHeaderSelection: false,
       enableRowSelection: true,
+      enableFiltering: true,
+      paginationPageSize: 20,
       columnDefs: [
         { field: 'Id', visible: false },
-        { name: 'TipoDocumento', cellTemplate: '<div align="center">{{row.entity.ParametroEstandar}}</div>', headerCellTemplate: '<div align="center"><h5> {{\'UPC_ADICIONAL.TIPO_DOCUMENTO\' | translate }} </h5></div>' },
-        { field: 'Documento', cellTemplate: '<div align="center">{{row.entity.NumDocumento}}</div>', headerCellTemplate: '<div align="center"><h5> {{\'UPC_ADICIONAL.DOCUMENTO\' | translate }} </h5></div>' },
-        { field: 'Nombre', cellTemplate: '<div align="center">{{row.entity.PrimerNombre}} {{row.entity.SegundoNombre}}</div>', headerCellTemplate: '<div align="center"><h5> {{\'UPC_ADICIONAL.NOMBRE\' | translate }} </h5></div>' },
-        { field: 'Apellido', cellTemplate: '<div align="center">{{row.entity.PrimerApellido}} {{row.entity.SegundoApellido}}</div>', headerCellTemplate: '<div align="center"><h5> {{\'UPC_ADICIONAL.APELLIDO\' | translate }} </h5></div>' },
-        { field: 'TipoUpc.Valor', cellTemplate: '<div align="center">{{row.entity.TipoUpc.Valor | currency:"$":0}}</div>', headerCellTemplate: '<div align="center"><h5> {{\'UPC_ADICIONAL.VALOR_UPC\' | translate }} </h5></div>' },
+        { field: 'ParametroEstandar', name:"Tipo Documento", enableFiltering: false },
+        { field: 'NumDocumento', name: "Documento" },
+        { field: 'PrimerNombre', 
+          cellTemplate: '<div align="left" class="ui-grid-cell-contents">{{row.entity.PrimerNombre}} {{row.entity.SegundoNombre}}</div>' },
+        { field: 'PrimerApellido', cellTemplate: '<div align="left">{{row.entity.PrimerApellido}} {{row.entity.SegundoApellido}}</div>' },
+        { field: 'TipoUpc.Valor', name: "Valor", cellTemplate: '<div align="right">{{row.entity.TipoUpc.Valor | currency:"$":0}}</div>' },
         {
           name: 'Opciones',
           cellTemplate:
@@ -35,7 +38,8 @@ angular.module('ssClienteApp')
             '<i data-toggle="tooltip" title="Editar" class="fa fa-cog fa-lg" aria-hidden="true"></i></a> ' +
             '<a class="borrar" ng-click="grid.appScope.verUpc.load_row(row,\'desactivar\');" data-toggle="modal" data-target="#myModal">' +
             '<i data-toggle="tooltip" title="Borrar" class="fa fa-trash fa-lg" aria-hidden="true"></i></a>' +
-            '</center>'
+            '</center>',
+            enableFiltering: false
         }
       ]
     };

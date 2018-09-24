@@ -5,7 +5,7 @@
     </div>
     <div class="panel-body" ng-init="verUpc.init()">
       <div>
-        <div ui-grid="verUpc.gridOptions" ui-grid-auto-resize ng-class="{'ui-grid-row-dirty': row.isDirty, 'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError,'ui-grid-tree-header-row': row.treeLevel > -1,'ui-grid-row-selected': row.isSelected}"
+        <div ui-grid="verUpc.gridOptions" ui-grid-auto-resize ui-grid-pagination ng-class="{'ui-grid-row-dirty': row.isDirty, 'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError,'ui-grid-tree-header-row': row.treeLevel > -1,'ui-grid-row-selected': row.isSelected}"
          class="grid"></div>
       </div>
     </div>
