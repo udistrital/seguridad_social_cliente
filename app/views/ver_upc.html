@@ -4,9 +4,25 @@
         {{ 'UPC_ADICIONAL.LISTA_UPC' | translate }}
     </div>
     <div class="panel-body" ng-init="verUpc.init()">
-      <div>
-        <div ui-grid="verUpc.gridOptions" ui-grid-auto-resize ui-grid-pagination ng-class="{'ui-grid-row-dirty': row.isDirty, 'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError,'ui-grid-tree-header-row': row.treeLevel > -1,'ui-grid-row-selected': row.isSelected}"
-         class="grid"></div>
-      </div>
+        <div class="row">
+            <label for="opciones" class="col-md-offset-8">{{'UPC_ADICIONAL.VER' | translate}}</label>
+            <select id="opciones" ng-model="verUpc.opVista">
+                <option value="{{op}}" ng-repeat="op in verUpc.opciones">{{op}}</option>
+            </select>
+            <br>
+        </div>
+
+        <div ng-if="verUpc.opVista === 'Beneficiarios Adicionales'">
+            <h4>{{'UPC_ADICIONAL.BENEFICIARIOS_ADICIONALES' | translate}}</h4>
+            <br>
+            <div ui-grid="verUpc.gridOptions" ui-grid-auto-resize ui-grid-pagination ng-class="{'ui-grid-row-dirty': row.isDirty, 'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError,'ui-grid-tree-header-row': row.treeLevel > -1,'ui-grid-row-selected': row.isSelected}"
+                class="grid"></div>
+        </div>
+        <div ng-if="verUpc.opVista === 'Beneficiarios'">
+            <h4>{{'UPC_ADICIONAL.BENEFICIARIOS' | translate}}</h4>
+            <br>
+            <div ui-grid="verUpc.gridBeneficiariosOp" ui-grid-auto-resize ui-grid-pagination ng-class="{'ui-grid-row-dirty': row.isDirty, 'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError,'ui-grid-tree-header-row': row.treeLevel > -1,'ui-grid-row-selected': row.isSelected}"
+                class="grid"></div>
+        </div>
     </div>
 </div>

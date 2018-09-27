@@ -128,7 +128,10 @@ var text_es = {
     GENERO: "Sexo",
     BENEFICIARIO: "Beneficiario Adicional",
     RESOLUCION: "Resolución",
-    VIGENCIA: "Vigencia"
+    VIGENCIA: "Vigencia",
+    BENEFICIARIOS_ADICIONALES: "Beneficiarios Adicionales",
+    BENEFICIARIOS: "Beneficiarios",
+    VER: "Ver"
   },
   PLANILLAS: {
     TITULO: "Planillas",
@@ -275,7 +278,10 @@ var text_en = {
     GENERO : "Gender",
     BENEFICIARIO: "Extra Beneficiary",
     RESOLUCION: "Resolución",
-    VIGENCIA: "Validity"
+    VIGENCIA: "Validity",
+    BENEFICIARIOS_ADICIONALES: "UPC",
+    BENEFICIARIOS: "Beneficiaries",
+    VER: "View"
   },
   PLANILLAS: {
     TITULO: "Forms",
