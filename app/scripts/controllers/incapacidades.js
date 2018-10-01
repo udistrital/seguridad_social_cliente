@@ -8,7 +8,7 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-  .controller('IncapacidadesCtrl', function (titanCrudService, seguridadSocialService, $scope, $timeout, $q, $log, $translate) {
+  .controller('IncapacidadesCtrl', function (titanCrudService, titanMidService, seguridadSocialService, $scope, $timeout, $q, $log, $translate) {
     var self = this;
     var proveedor = 0;
     self.documento = "";
@@ -117,7 +117,7 @@ angular.module('ssClienteApp')
 
     // Llama al método post de concepto_nomina_por_persona desde titanCrudService
     function incapacidadPost(incapacidad, errorRegistro) {
-      titanCrudService.post('concepto_nomina_por_persona/TrConceptosPorPersona', incapacidad).then(function (response) {
+      titanMidService.post('concepto_nomina_por_persona/tr_registro_incapacidades', incapacidad).then(function (response) {
         if (response.statusText === 'Created') {
           errorRegistro = false;
         } else {
@@ -130,7 +130,7 @@ angular.module('ssClienteApp')
     self.registrarIncapacidad = function () {
       var validar = validarCampos();
       var errorRegistro = false;
-      var incapacidades = {"conceptos":[]};
+      var incapacidades = {"Conceptos":[]};
       if (validar.validado) {
         var concepto = { Id: parseInt(self.tipoIncapacidad.Id) };
 
@@ -149,12 +149,12 @@ angular.module('ssClienteApp')
               Activo: true
             };
             
-            incapacidades.conceptos.push(incapacidad);
+            incapacidades.Conceptos.push(incapacidad);
             // incapacidadPost(incapacidad);
           }
         }
         console.log("incapacidades...", incapacidades);
-
+        incapacidadPost(incapacidades, errorRegistro)
         if (errorRegistro) {
           swal($translate.instant('INCAPACIDADES.ERROR_REGISTRO'));
         } else {

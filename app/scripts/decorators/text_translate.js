@@ -73,7 +73,10 @@ var text_es = {
     ERROR_REGISTRO: "No se ha logrado registrar la incapacidad",
     TIPO_DOCUMENTO: "Tipo Documento",
     NUM_DOCUMENTO: "Número de Documento",
-    TIPO_NOMINA: "Tipo Nómina"
+    TIPO_NOMINA: "Tipo Nómina",
+    CODIGO: "Código de la Incapacidad",
+    INFO_PERSONA: "Información de la persona",
+    INFO_INCAPACIDAD: "Información de la incapacidad"
   },
   ACTIVOS: {
     TITULO: "Activos",
@@ -223,7 +226,10 @@ var text_en = {
     ERROR_REGISTRO: "Unregistered disability",
     TIPO_DOCUMENTO: "Type of Document",
     NUM_DOCUMENTO: "Document ID",
-    TIPO_NOMINA: "Payroll Type"
+    TIPO_NOMINA: "Payroll Type",
+    CODIGO: "Disability Code",
+    INFO_PERSONA: "Person information",
+    INFO_INCAPACIDAD: "Disability information"
   },
   ACTIVOS: {
     TITULO: "Title",

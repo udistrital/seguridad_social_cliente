@@ -2,17 +2,18 @@
 
 /**
  * @ngdoc service
- * @name ssClienteApp.seguridadSocialCrudService
+ * @name ssClienteApp.titanMidService
  * @description
- * # seguridadSocialCrudService
+ * # titanMidService
  * Service in the ssClienteApp.
  */
 angular.module('ssClienteApp')
-  .service('seguridadSocialCrudService', function ($http) {
+  .service('titanMidService', function ($http) {
+    // AngularJS will instantiate a singleton by calling "new" on this function
 
-    var path = 'http://localhost:8086/v1/';
-    // var path = 'http://10.20.0.254/ss_crud_api/v1/';
-    // var path = 'http://10.20.2.126:8086/v1/';
+    // var path = 'http://10.20.0.254/titan_api_mid/v1/';
+    var path = 'http://localhost:8082/v1/';
+
 
     return {
       get: function (tabla,params) {
