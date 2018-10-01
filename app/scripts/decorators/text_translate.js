@@ -76,7 +76,9 @@ var text_es = {
     TIPO_NOMINA: "Tipo Nómina",
     CODIGO: "Código de la Incapacidad",
     INFO_PERSONA: "Información de la persona",
-    INFO_INCAPACIDAD: "Información de la incapacidad"
+    INFO_INCAPACIDAD: "Información de la incapacidad",
+    INCAPACIDAD_DIAS: "Días de la incapacidad",
+    DIAS: "días"
   },
   ACTIVOS: {
     TITULO: "Activos",
@@ -229,7 +231,9 @@ var text_en = {
     TIPO_NOMINA: "Payroll Type",
     CODIGO: "Disability Code",
     INFO_PERSONA: "Person information",
-    INFO_INCAPACIDAD: "Disability information"
+    INFO_INCAPACIDAD: "Disability information",
+    INCAPACIDAD_DIAS: "Disability days",
+    DIAS: "Days"
   },
   ACTIVOS: {
     TITULO: "Title",

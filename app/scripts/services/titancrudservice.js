@@ -12,7 +12,7 @@ angular.module('ssClienteApp')
 
     var path = 'http://10.20.0.254/titan_api_crud/v1/';
     // path = 'http://10.20.2.146:8080/v1/';
-    path = 'http://localhost:8080/v1/';
+    // path = 'http://localhost:8080/v1/';
 
     return {
       get: function (tabla,params) {

@@ -12,6 +12,7 @@ angular.module('ssClienteApp')
     var self = this;
     var proveedor = 0;
     self.documento = "";
+    self.diasIncapacidad = 0;
     self.nominasPertenece = [];
 
     function getPersonas() {
@@ -124,6 +125,13 @@ angular.module('ssClienteApp')
           errorRegistro = true;
         }
       });
+    }
+
+    self.calcularDias = function() {
+      if (self.fechaDesde !== undefined && self.fechaHasta !== undefined) {
+        var diff = self.fechaHasta.getTime() - self.fechaDesde.getTime();
+        self.diasIncapacidad = (diff/(1000*60*60*24)) + 1; 
+      }
     }
 
     // Disparador para el botón de guardar
