@@ -78,13 +78,14 @@
           <label for="prorroga">
             {{'INCAPACIDADES.PRORROGA' | translate}}
           </label>
-          <input class="form-check-input" type="checkbox" id="prorroga"  ng-change="incapacidades.infoIncapacidades()" ng-model="incapacidades.prorroga">
+          <input ng-disabled="incapacidades.proveedor === undefined" class="form-check-input" type="checkbox" id="prorroga"  ng-change="incapacidades.infoIncapacidades()" ng-model="incapacidades.prorroga">
         </div>
         <br>
         
         <!-- Información de prorroga -->
         <div class="col-md-offset-1" ng-if="incapacidades.prorroga">
           <label for="">{{'INCAPACIDADES.SELECCIONAR_INC' | translate}}</label>
+          <lista-incapacidades contrato="incapacidades.contrato"></lista-incapacidades>
         </div>
 
         <!-- Información normal de inpacidad-->

@@ -188,33 +188,11 @@ angular.module('ssClienteApp')
             vigContrato = self.proveedor.contratos[i].VigenciaContrato;
           }
         }
-        console.log(self.proveedor);
+        // console.log(self.proveedor);
         
-        console.log({numContrato, vigContrato});
-        
-        var getIncapacidades =     function (tipoIncapacidad) {
-          var deferred = $q.defer();
-          titanCrudService.get('concepto_nomina_por_persona', 'query=Concepto.Nombreconcepto:'+tipoIncapacidad+',NumeroContrato:'+numContrato+',VigenciaContrato:'+vigContrato).then(function(response) {
-            deferred.resolve(response.data);
-          });
-          return deferred.promise;
-        }
-
-        
-
-        var promesas = [];
-        var incapcidadesT= [];
-        promesas.push(getIncapacidades('incapacidad_general'));
-        promesas.push(getIncapacidades('incapacidad_laboral'));
-        $q.all(promesas).then(function(response) {
-          for (var i = 0; i < response.length; i++) {
-            if (response[i] != null) {              
-              incapcidadesT = incapcidadesT.concat(response[i]);                
-            }
-          }
-        });
+        // console.log({numContrato, vigContrato});
+        self.contrato = {numContrato, vigContrato};
       }
-      console.log(incapcidadesT);
       
     } 
 
