@@ -158,10 +158,9 @@ angular.module('ssClienteApp')
             };
             
             incapacidades.Conceptos.push(incapacidad);
-            // incapacidadPost(incapacidad);
           }
         }
-        console.log("incapacidades...", incapacidades);
+
         incapacidadPost(incapacidades, errorRegistro)
         if (errorRegistro) {
           swal($translate.instant('INCAPACIDADES.ERROR_REGISTRO'));
@@ -174,5 +173,49 @@ angular.module('ssClienteApp')
         self.alerta = validar.mensaje;
       }
     };
+
+
+
+
+    self.infoIncapacidades = function() {
+      if (self.prorroga && self.proveedor !== undefined) {
+        var numContrato = "";
+        var vigContrato = 0;
+        for (var i = 0; i < self.proveedor.contratos.length; i++) {
+          
+          if(self.proveedor.contratos[i].VigenciaContrato === new Date().getFullYear()) {
+            numContrato = self.proveedor.contratos[i].NumeroContrato;
+            vigContrato = self.proveedor.contratos[i].VigenciaContrato;
+          }
+        }
+        console.log(self.proveedor);
+        
+        console.log({numContrato, vigContrato});
+        
+        var getIncapacidades =     function (tipoIncapacidad) {
+          var deferred = $q.defer();
+          titanCrudService.get('concepto_nomina_por_persona', 'query=Concepto.Nombreconcepto:'+tipoIncapacidad+',NumeroContrato:'+numContrato+',VigenciaContrato:'+vigContrato).then(function(response) {
+            deferred.resolve(response.data);
+          });
+          return deferred.promise;
+        }
+
+        
+
+        var promesas = [];
+        var incapcidadesT= [];
+        promesas.push(getIncapacidades('incapacidad_general'));
+        promesas.push(getIncapacidades('incapacidad_laboral'));
+        $q.all(promesas).then(function(response) {
+          for (var i = 0; i < response.length; i++) {
+            if (response[i] != null) {              
+              incapcidadesT = incapcidadesT.concat(response[i]);                
+            }
+          }
+        });
+      }
+      console.log(incapcidadesT);
+      
+    } 
 
   });

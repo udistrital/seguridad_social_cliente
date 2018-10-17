@@ -7,7 +7,7 @@
     <div class="panel-body">
       <form method="post" ng-init="incapacidades.getProveedores()" name="myForm" ng-submit="incapacidades.test()">
         <div class="row">
-          
+
           <div class="row">
             <h3 class="col-md-offset-1">{{'INCAPACIDADES.INFO_PERSONA' | translate}}</h3>
             <hr class="col-xs-8 col-md-offset-1">
@@ -65,81 +65,103 @@
         <br>
 
         <div class="row">
-            <h3 class="col-md-offset-1 font-weight-bold">{{'INCAPACIDADES.INFO_INCAPACIDAD' | translate}}</h3>
-            <hr class="col-xs-8 col-md-offset-1">
-          </div>
+          <h3 class="col-md-offset-1 font-weight-bold">{{'INCAPACIDADES.INFO_INCAPACIDAD' | translate}}</h3>
+          <hr class="col-xs-8 col-md-offset-1">
+        </div>
 
-        <!-- Tipo de incapacidad -->
-        <div class="row">
-          <div class="col-md-2 col-md-offset-1">
-            <label> {{ 'INCAPACIDADES.TIPO' | translate }} </label>
-          </div>
-          <div class="col-md-2">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              <div class="col-md-12" ng-if="!incapacidades.tipoIncapacidad">{{ 'INCAPACIDADES.SELECCIONE_OPCION' |
-                translate
-                }} <span class="caret"></span></div>
-              <div class="col-md-12" ng-if="incapacidades.tipoIncapacidad">{{incapacidades.tipoIncapacidad.AliasConcepto}}<span
-                  class="caret"></span></div>
-            </button>
-            <ul class="dropdown-menu">
-              <li ng-repeat="i in incapacidades.listaIncapacidades" ng-click="incapacidades.setTipoIncapacidad(i)"
-                value="{{i.Id}}"><a href="">{{i.AliasConcepto}}</a></li>
-            </ul>
-          </div>
+        <!--Prórroga-->
+        <div class="row col-md-offset-1">
+          <small id="passwordHelpBlock" class="form-text text-muted">
+            {{'INCAPACIDADES.INFO_PRORROGA' | translate}}
+          </small>
+          <br>
+          <label for="prorroga">
+            {{'INCAPACIDADES.PRORROGA' | translate}}
+          </label>
+          <input class="form-check-input" type="checkbox" id="prorroga"  ng-change="incapacidades.infoIncapacidades()" ng-model="incapacidades.prorroga">
+        </div>
+        <br>
+        
+        <!-- Información de prorroga -->
+        <div class="col-md-offset-1" ng-if="incapacidades.prorroga">
+          <label for="">{{'INCAPACIDADES.SELECCIONAR_INC' | translate}}</label>
+        </div>
 
-          <!-- Código de la incapacidad-->
-          <div class="col-md-3 col-md-offset-1">
+        <!-- Información normal de inpacidad-->
+        <div ng-if="!incapacidades.prorroga">
+          <!-- Tipo de incapacidad -->
+          <div class="row">
+            <div class="col-md-2 col-md-offset-1">
+              <label> {{ 'INCAPACIDADES.TIPO' | translate }} </label>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <div class="col-md-12" ng-if="!incapacidades.tipoIncapacidad">{{ 'INCAPACIDADES.SELECCIONE_OPCION' |
+                  translate
+                  }} <span class="caret"></span></div>
+                <div class="col-md-12" ng-if="incapacidades.tipoIncapacidad">{{incapacidades.tipoIncapacidad.AliasConcepto}}<span
+                    class="caret"></span></div>
+              </button>
+              <ul class="dropdown-menu">
+                <li ng-repeat="i in incapacidades.listaIncapacidades" ng-click="incapacidades.setTipoIncapacidad(i)"
+                  value="{{i.Id}}"><a href="">{{i.AliasConcepto}}</a></li>
+              </ul>
+            </div>
+
+            <!-- Código de la incapacidad-->
+            <div class="col-md-3 col-md-offset-1">
               <label for="codigo">{{'INCAPACIDADES.CODIGO' | translate}}</label>
             </div>
             <div class="col-md-1">
               <input type="text" id="codigo" ng-model="incapacidades.codigo" placeholder="Ej: H4C56A">
             </div>
-        </div>
-        <br>
-
-        <!-- Fecha de las incapacidades -->
-        <div class="form-group row">
-          <label class="col-md-2 col-md-offset-1 control-label" for="txtFechaDesde">{{ 'INCAPACIDADES.FECHA_INCIO' |
-            translate
-            }}
-          </label>
-          <div class="col-md-1">
-            <md-datepicker ng-change="incapacidades.calcularDias()" id="txtFechaDesde" name="txtFechaDesde" ng-model="incapacidades.fechaDesde" md-placeholder="Fecha de inicio"
-              required></md-datepicker>
           </div>
+          <br>
 
-          <label class="col-md-2 col-md-offset-2 control-label" for="txtFechaDesde">{{ 'INCAPACIDADES.FECHA_FIN' |
+          <!-- Fecha de las incapacidades -->
+          <div class="form-group row">
+            <label class="col-md-2 col-md-offset-1 control-label" for="txtFechaDesde">{{ 'INCAPACIDADES.FECHA_INCIO' |
               translate
               }}
             </label>
             <div class="col-md-1">
-              <md-datepicker id="txtFechaDesde" ng-change="incapacidades.calcularDias()" name="txtFechaDesde" ng-model="incapacidades.fechaHasta" md-mindate="incapacidades.minDate()"
+              <md-datepicker ng-change="incapacidades.calcularDias()" id="txtFechaDesde" name="txtFechaDesde" ng-model="incapacidades.fechaDesde"
                 md-placeholder="Fecha de inicio" required></md-datepicker>
             </div>
-        </div>
 
-        <div class="alert alert-warning" ng-if="incapacidades.alerta">
-          {{incapacidades.alerta}}
-        </div>
-
-        <div class="form-group row">
-          <label class="col-md-2 col-md-offset-1">{{'INCAPACIDADES.INCAPACIDAD_DIAS' | translate}}</label>
-          <div class="col-xs-2">
-            <label ng-if="incapacidades.diasIncapacidad !== 0">{{incapacidades.diasIncapacidad}} {{'INCAPACIDADES.DIAS' | translate}}</label>
+            <label class="col-md-2 col-md-offset-2 control-label" for="txtFechaDesde">{{ 'INCAPACIDADES.FECHA_FIN' |
+              translate
+              }}
+            </label>
+            <div class="col-md-1">
+              <md-datepicker id="txtFechaDesde" ng-change="incapacidades.calcularDias()" name="txtFechaDesde" ng-model="incapacidades.fechaHasta"
+                md-mindate="incapacidades.minDate()" md-placeholder="Fecha de inicio" required></md-datepicker>
+            </div>
           </div>
-        </div>
 
-        <!-- Selección de nómina -->
-        <div class="form-group row">
-          <label class="col-md-3 col-md-offset-3 control-label">{{ 'INCAPACIDADES.TIPO_NOMINA' | translate }}</label>
-          <br><br>
-          <p class="col-md-offset-3">Seleccione las nóminas a las que esta persona pertenece</p>
-          <div class="col-md-offset-3 row">
-            <div class="row" ng-repeat="nomina in incapacidades.nominas">
-              <input type="checkbox" ng-checked="incapacidades.nominasPertenece.includes(nomina.Id)" ng-click="incapacidades.toggleSelection(nomina.Id)">
-              {{nomina.TipoNomina.Descripcion}}
+          <div class="alert alert-warning" ng-if="incapacidades.alerta">
+            {{incapacidades.alerta}}
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 col-md-offset-1">{{'INCAPACIDADES.INCAPACIDAD_DIAS' | translate}}</label>
+            <div class="col-xs-2">
+              <label ng-if="incapacidades.diasIncapacidad !== 0">{{incapacidades.diasIncapacidad}}
+                {{'INCAPACIDADES.DIAS' | translate}}</label>
+            </div>
+          </div>
+
+          <!-- Selección de nómina -->
+          <div class="form-group row">
+            <label class="col-md-3 col-md-offset-3 control-label">{{ 'INCAPACIDADES.TIPO_NOMINA' | translate }}</label>
+            <br><br>
+            <p class="col-md-offset-3">Seleccione las nóminas a las que esta persona pertenece</p>
+            <div class="col-md-offset-3 row">
+              <div class="row" ng-repeat="nomina in incapacidades.nominas">
+                <input type="checkbox" ng-checked="incapacidades.nominasPertenece.includes(nomina.Id)" ng-click="incapacidades.toggleSelection(nomina.Id)">
+                {{nomina.TipoNomina.Descripcion}}
+              </div>
             </div>
           </div>
         </div>
