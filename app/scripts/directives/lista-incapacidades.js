@@ -11,7 +11,8 @@ angular.module('ssClienteApp')
     return {
       restrict: 'E',
       scope:{
-        contrato:'=?'
+        contrato:'=?',
+        fechaDesde: '=?'
       },
       
       templateUrl: 'views/directives/lista-incapacidades.html',
@@ -35,60 +36,13 @@ angular.module('ssClienteApp')
         };
 
         self.select = function(row) {
-          console.log(row);
+          self.incapcidad = row;
+          $scope.fechaDesde = row.FechaDesde;
         }
 
-
         seguridadSocialService.get('incapacidades/incapacidadesPersona/'+$scope.contrato.numContrato+'/'+$scope.contrato.vigContrato, '').then(function(response) {
-          console.log(response.data);
           self.gridOptions.data = response.data;
         });
-
-        // var getIncapacidades = function (tipoIncapacidad) {
-        //   var deferred = $q.defer();
-        //   titanCrudService.get('concepto_nomina_por_persona', 'query=Concepto.Nombreconcepto:'+tipoIncapacidad+',NumeroContrato:'+$scope.contrato.numContrato+',VigenciaContrato:'+$scope.contrato.vigContrato+',Activo:true').then(function(response) {
-        //     deferred.resolve(response.data);
-        //   });
-        //   return deferred.promise;
-        // }
-
-        // var gerCodigoIncacidad = function(idIncapcidad) {
-        //   var deferred = $q.defer();
-        //   seguridadSocialCrudService.get('detalle_novedad_seguridad_social', 'query=ConceptoNominaPorPersona:'+idIncapcidad).then(function(response) {
-        //     deferred.resolve(response.data);
-        //   });
-        //   return deferred.promise;
-        // }
-
-        // var promesas = [];
-        // self.incapcidadesT= [];
-        // promesas.push(getIncapacidades('incapacidad_general'));
-        // promesas.push(getIncapacidades('incapacidad_laboral'));
-        // $q.all(promesas).then(function(response) {
-        //   for (var i = 0; i < response.length; i++) {
-        //     if (response[i] != null) {              
-        //       self.incapcidadesT = self.incapcidadesT.concat(response[i]);
-        //     }
-        //   }
-        //   var promesasCodigo = [];
-
-        //   for(var i = 0; i < self.incapcidadesT.length; i++) {
-        //     promesasCodigo.push(gerCodigoIncacidad(self.incapcidadesT[i].Id));    
-        //   }
-
-        //   self.codigos = [];
-        //   $q.all(promesasCodigo).then(function(response) {
-        //     for (var i = 0; i < response.length; i++) {
-        //       self.codigos = self.codigos.concat(response[i]);
-        //     }
-        //     console.log("incapicadesT: ", self.incapcidadesT);
-        //     console.log("codigos: ", self.codigos);
-            
-        //   });
-          // self.gridOptions.data = self.incapcidadesT;
-          // $q.all(getIncapacidades)
-          
-        // });
 
       },
       controllerAs:'d_listaIncapacidades'

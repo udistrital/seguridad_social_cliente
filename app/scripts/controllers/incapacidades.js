@@ -134,6 +134,13 @@ angular.module('ssClienteApp')
       }
     }
 
+    self.calcularDiasProrroga = function() {
+      if (self.prorrogaFechaDesde !== undefined && self.fechaProrroga !== undefined) {
+        var diff = self.fechaProrroga.getTime() - new Date(self.prorrogaFechaDesde).getTime();
+        self.diasProrroga = Math.trunc((diff/(1000*60*60*24)) + 1); 
+      }
+    }
+
     // Disparador para el botón de guardar
     self.registrarIncapacidad = function () {
       var validar = validarCampos();
@@ -161,7 +168,7 @@ angular.module('ssClienteApp')
           }
         }
 
-        incapacidadPost(incapacidades, errorRegistro)
+        incapacidadPost(incapacidades, errorRegistro);
         if (errorRegistro) {
           swal($translate.instant('INCAPACIDADES.ERROR_REGISTRO'));
         } else {
@@ -173,9 +180,6 @@ angular.module('ssClienteApp')
         self.alerta = validar.mensaje;
       }
     };
-
-
-
 
     self.infoIncapacidades = function() {
       if (self.prorroga && self.proveedor !== undefined) {

@@ -81,7 +81,8 @@ var text_es = {
     DIAS: "días",
     INFO_PRORROGA: "Seleccione si la incapacidad va a ser una prorroga",
     PRORROGA: "Prórroga",
-    SELECCIONAR_INC: "Seleccione la incapacidad"
+    SELECCIONAR_INC: "Seleccione la incapacidad",
+    FECHA_PRORROGA: "Fecha de prorroga"
   },
   ACTIVOS: {
     TITULO: "Activos",
@@ -239,7 +240,8 @@ var text_en = {
     DIAS: "Days",
     INFO_PRORROGA: "Select if the disability is goin to be extended",
     PRORROGA: "Extend",
-    SELECCIONAR_INC: "Select disability"
+    SELECCIONAR_INC: "Select disability",
+    FECHA_PRORROGA: "Extends date"
   },
   ACTIVOS: {
     TITULO: "Title",
