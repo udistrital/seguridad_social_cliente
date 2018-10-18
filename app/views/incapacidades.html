@@ -86,14 +86,14 @@
         <!-- Información de prorroga -->
         <div class="col-md-offset-1" ng-if="incapacidades.prorroga">
           <label for="">{{'INCAPACIDADES.SELECCIONAR_INC' | translate}}</label>
-          <lista-incapacidades contrato="incapacidades.contrato" fecha-desde="incapacidades.prorrogaFechaDesde"></lista-incapacidades>
+          <lista-incapacidades contrato="incapacidades.contrato" incapacidad="incapacidades.incapacidadProrroga"></lista-incapacidades>
 
           <div class="row">
             <label class="col-md-2 col-md-offset-1 control-label">{{ 'INCAPACIDADES.FECHA_INCIO' | translate }}</label>
-            <label>{{incapacidades.prorrogaFechaDesde | date:"dd-MM-yyyy"}}</label>
+            <label>{{incapacidades.incapacidadProrroga.FechaDesde | date:"dd-MM-yyyy"}}</label>
           </div>
           
-          <div class="row" ng-if="incapacidades.prorrogaFechaDesde !== undefined">
+          <div class="row" ng-if="incapacidades.incapacidadProrroga !== undefined">
             <label for="col-md-2 col-md-offset-1 control-label">{{ 'INCAPACIDADES.FECHA_PRORROGA' | translate }}</label>
             <md-datepicker ng-change="incapacidades.calcularDiasProrroga()" id="txtFechaProrroga" name="txtFechaProrroga" ng-model="incapacidades.fechaProrroga"
                 md-placeholder="Fecha de prorroga" required></md-datepicker>

@@ -12,7 +12,7 @@ angular.module('ssClienteApp')
       restrict: 'E',
       scope:{
         contrato:'=?',
-        fechaDesde: '=?'
+        incapacidad: '=?'
       },
       
       templateUrl: 'views/directives/lista-incapacidades.html',
@@ -36,8 +36,7 @@ angular.module('ssClienteApp')
         };
 
         self.select = function(row) {
-          self.incapcidad = row;
-          $scope.fechaDesde = row.FechaDesde;
+          $scope.incapacidad = row;
         }
 
         seguridadSocialService.get('incapacidades/incapacidadesPersona/'+$scope.contrato.numContrato+'/'+$scope.contrato.vigContrato, '').then(function(response) {
