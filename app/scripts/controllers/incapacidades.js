@@ -124,13 +124,23 @@ angular.module('ssClienteApp')
 
     // Llama al método post de concepto_nomina_por_persona desde titanCrudService
     function incapacidadPost(incapacidad, errorRegistro) {
-      titanMidService.post('concepto_nomina_por_persona/tr_registro_incapacidades', incapacidad).then(function (response) {
-        if (response.statusText === 'Created') {
-          errorRegistro = false;
-        } else {
-          errorRegistro = true;
-        }
-      });
+      if(self.prorroga) {
+        titanMidService.post('concepto_nomina_por_persona/tr_registro_prorroga_incapacidad', incapacidad).then(function (response) {
+          if (response.data.Type === 'success') {
+            errorRegistro = false;
+          } else {
+            errorRegistro = true;
+          }
+        });
+      } else {
+        titanMidService.post('concepto_nomina_por_persona/tr_registro_incapacidades', incapacidad).then(function (response) {
+          if (response.statusText === 'Created') {
+            errorRegistro = false;
+          } else {
+            errorRegistro = true;
+          }
+        });
+      }
     }
 
     self.calcularDias = function() {
@@ -149,15 +159,14 @@ angular.module('ssClienteApp')
 
     // Disparador para el botón de guardar
     self.registrarIncapacidad = function () {
-
+      var errorRegistro = false;
       if (self.prorroga) {
         self.incapacidadProrroga.FechaHasta = self.fechaProrroga;
         self.incapacidadProrroga.Concepto = self.conceptoProrroga;
         self.incapacidadProrroga.Descripcion = 'Prorroga de la incapacidad con código '+self.incapacidadProrroga.Codigo;
-        
+        incapacidadPost(self.incapacidadProrroga, errorRegistro);
       } else {
         var validar = validarCampos();
-        var errorRegistro = false;
         var incapacidades = {"Conceptos":[]};
         if (validar.validado) {
           var concepto = { Id: parseInt(self.tipoIncapacidad.Id) };
@@ -174,7 +183,8 @@ angular.module('ssClienteApp')
                 VigenciaContrato: self.proveedor.contratos[j].VigenciaContrato,
                 Concepto: concepto,
                 Nomina: { Id: self.nominasPertenece[i] },
-                Activo: true
+                Activo: true,
+                Descripcion: self.codigo
               };
               
               incapacidades.Conceptos.push(incapacidad);
@@ -182,15 +192,15 @@ angular.module('ssClienteApp')
           }
   
           incapacidadPost(incapacidades, errorRegistro);
-          if (errorRegistro) {
-            swal($translate.instant('INCAPACIDADES.ERROR_REGISTRO'));
-          } else {
-            swal($translate.instant('INCAPACIDADES.REGISTRADA'));
-          }
-  
         } else {
           self.alerta = validar.alerta;
           self.alerta = validar.mensaje;
+        }
+
+        if (errorRegistro) {
+          swal($translate.instant('INCAPACIDADES.ERROR_REGISTRO'));
+        } else {
+          swal($translate.instant('INCAPACIDADES.REGISTRADA'));
         }
       }
     };
