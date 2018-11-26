@@ -8,11 +8,9 @@
  * Service in the ssClienteApp.
  */
 angular.module('ssClienteApp')
-  .service('titanCrudService', function ($http) {
+  .service('titanCrudService', function ($http, CONF) {
 
-    var path = 'http://10.20.0.254/titan_api_crud/v1/';
-    // path = 'http://10.20.2.146:8080/v1/';
-    path = 'http://localhost:8080/v1/';
+    var path = CONF.GENERAL.TITAN_CRUD_SERVICE;
 
     return {
       get: function (tabla,params) {

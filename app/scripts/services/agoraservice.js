@@ -8,10 +8,11 @@
  * Service in the ssClienteApp.
  */
 angular.module('ssClienteApp')
-  .service('agoraService', function ($http) {
+  .service('agoraService', function ($http, CONF) {
 
-    var path = 'http://10.20.0.254/administrativa_amazon_api/v1/';
-
+    // var path = 'http://10.20.0.254/administrativa_amazon_api/v1/';
+    var path = CONF.GENERAL.AGORA_SERVICE;
+    
     // Public API here
     return {
       getServicio: function(servicio, parametro) {

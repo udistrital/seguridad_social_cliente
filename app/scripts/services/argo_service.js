@@ -8,10 +8,9 @@
  * Service in the ssClienteApp.
  */
 angular.module('ssClienteApp')
-  .service('argoService', function ($http) {
+  .service('argoService', function ($http, CONF) {
 
-    var path = 'http://10.20.0.254/administrativa_amazon_api/v1/';
-
+    var path = CONF.GENERAL.ARGO_SERVICE;
     // Public API here
     return {
       getOne: function(tabla, params) {

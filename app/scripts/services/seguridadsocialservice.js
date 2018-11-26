@@ -8,11 +8,9 @@
  * Service in the ssClienteApp.
  */
 angular.module('ssClienteApp')
-  .service('seguridadSocialService', function ($http) {
+  .service('seguridadSocialService', function ($http, CONF) {
 
-    var path = "http://localhost:8085/v1/";
-    // var path = "http://10.20.0.254/ss_mid_api/v1/";
-    // var path = 'http://10.20.189.241:8085/v1/';
+    var path = CONF.GENERAL.SS_MID_SERVCE;
 
     return {
       getServicio: function(servicio, parametro) {

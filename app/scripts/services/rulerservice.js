@@ -8,9 +8,9 @@
  * Service in the ssClienteApp.
  */
 angular.module('ssClienteApp')
-  .service('rulerservice', function ($http) {
+  .service('rulerservice', function ($http, CONF) {
 
-    var path = 'http://10.20.0.254/ruler/v1/';
+    var path = CONF.GENERAL.RULER;
 
     return {
       get: function (tabla,params) {

@@ -8,11 +8,9 @@
  * Service in the ssClienteApp.
  */
 angular.module('ssClienteApp')
-  .service('seguridadSocialCrudService', function ($http) {
+  .service('seguridadSocialCrudService', function ($http, CONF) {
 
-    var path = 'http://localhost:8086/v1/';
-    // var path = 'http://10.20.0.254/ss_crud_api/v1/';
-    // var path = 'http://10.20.189.241:8086/v1/';
+    var path = CONF.GENERAL.SS_CRUD_SERVICE;
 
     return {
       get: function (tabla,params) {
