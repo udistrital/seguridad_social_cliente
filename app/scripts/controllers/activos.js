@@ -8,7 +8,7 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-.controller('ActivosCtrl', function (seguridadSocialService, titanCrudService, seguridadSocialCrudService, agoraService, argoService, $scope, $translate) {
+.controller('ActivosCtrl', function (seguridadSocialService, titanCrudService, seguridadSocialCrudService, agoraService, argoService, $scope, $translate, administrativaAmazonService) {
   var self = this;
   var dataDescuentos = [];
   var nominaObj;   // Objeto json con la nómina seleccionada
@@ -32,6 +32,10 @@ angular.module('ssClienteApp')
     }
   }
   calcularAnios();
+
+  administrativaAmazonService.get('informacion_proveedor', '').then(function(response) {
+console.log("re prueba: ", response.data);
+  });
 
   titanCrudService.get('concepto_nomina','limit=0&query=NaturalezaConcepto.Nombre:seguridad_social').then(function (response) {
     for (var i = 0; i < response.data.length; i++) {

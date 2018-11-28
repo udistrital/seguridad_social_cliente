@@ -29,8 +29,8 @@
  * Variables de configuración de entorno local
  */
 var conf_local = {
-    AGORA_SERVICE: "http://10.20.0.254/administrativa_amazon_api/v1/",
-    ARGO_SERVICE: "http://10.20.0.254/administrativa_amazon_api/v1/",
+    // AGORA_SERVICE: "http://10.20.0.254/administrativa_amazon_api/v1/",
+    AGORA_SERVICE: 'https://autenticacion.portaloas.udistrital.edu.co/apioas/administrativa_amazon_api/v1/',
     ARGO_SERVICE: "http://10.20.0.254/administrativa_amazon_api/v1/",
     TITAN_MID_SERVICE: "http://10.20.0.254/titan_api_mid/v1/",
     TITAN_CRUD_SERVICE: "http://10.20.0.254/titan_api_crud/v1/",
@@ -63,6 +63,7 @@ var conf_local = {
  * Variables de configuración de preproducción - pruebas en la nube
  */
 var conf_cloud_preproduccion = {
+
 };
 
 /**
