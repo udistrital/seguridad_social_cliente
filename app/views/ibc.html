@@ -7,13 +7,12 @@
     <button type="button" class="btn btn-warning btn-outline" ng-click="ibc.habilitarEdicion()"> {{ 'BTN.EDITAR' | translate }} </button> <br>
     <label> {{ 'IBC.SELECCION_CONCEPTOS' | translate }} </label>
     <br>
-    <div class="col-md-3" ng-repeat="c in ibc.conceptosActivos" >
+    <div class="col-md-4" ng-repeat="c in ibc.conceptosActivos" >
       <div>
         <div class="row">
           <div class="col-md-2" >
-            <input class="form-control" type="checkbox" id="{{c.Id}}" ng-model="item"
-            ng-true-value="{{c}}" ng-false-value="{{c}}"
-            ng-change="ibc.select(item)" checked/>
+            <input class="form-control" type="checkbox" id="{{c.Id}}" ng-model="ibc.item"
+            ng-click="ibc.select(ibc.conceptosActivos)" ng-checked="{{c.Estado}}"/>
           </div>
           <div class="col-md-10">
             <spam class="form-control" >
@@ -24,7 +23,7 @@
       </div>
     </div>
     <hr>
-    <div class="row" align ="center">
+    <div class="row">
       <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#myModal"> {{ 'BTN.GUARDAR' | translate }} </button>
     </div>
 

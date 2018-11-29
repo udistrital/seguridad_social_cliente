@@ -18,7 +18,73 @@ angular.module('ssClienteApp')
   225,226,227,230,232, 239,240,242,245,248,249,250,251,252,253,254,257
   */
 
+ var temporal =
+ [
+   {
+       "Id": 986,
+       "Nombre": "nombreRegla1240",
+       "Descripcion": "AJUSTE P.ANTI.VAC.RETRO",
+       "Estado": true
+   },
+   {
+       "Id": 987,
+       "Nombre": "nombreRegla1242",
+       "Descripcion": "AJUSTE DOCE BONIF.VAC.RETRO",
+       "Estado": true
+   },
+   {
+       "Id": 988,
+       "Nombre": "nombreRegla1245",
+       "Descripcion": "AJUSTE SUEL.BAS.VACA RETRO",
+       "Estado": true
+   },
+   {
+       "Id": 989,
+       "Nombre": "nombreRegla1248",
+       "Descripcion": "AJUSTE ASIG.ADIC.DECRETO V.",
+       "Estado": true
+   },
+   {
+       "Id": 990,
+       "Nombre": "nombreRegla1249",
+       "Descripcion": "AJUSTE DOCE. BONI.SERVICIOS V.",
+       "Estado": true
+   },
+   {
+       "Id": 991,
+       "Nombre": "nombreRegla1250",
+       "Descripcion": "AJUSTE DOCE. PRIMA SERVICIOS V",
+       "Estado": true
+   },
+   {
+       "Id": 992,
+       "Nombre": "nombreRegla1251",
+       "Descripcion": "AJUSTE GASTOS REP.V",
+       "Estado": true
+   },
+   {
+       "Id": 994,
+       "Nombre": "nombreRegla1253",
+       "Descripcion": "AJUSTE PRIMA TECNICA V.",
+       "Estado": true
+   },
+   {
+       "Id": 995,
+       "Nombre": "nombreRegla1254",
+       "Descripcion": "AJUSTE SUELDO BASICO V",
+       "Estado": false
+   },
+   {
+       "Id": 996,
+       "Nombre": "nombreRegla1257",
+       "Descripcion": "AJUSTE ASIG.DECRETO",
+       "Estado": false
+   }
+];
+
   seguridadSocialService.get('pago/ConceptosIbc', '').then(function(response) {
+    console.log(response.data);
+    
     angular.forEach(response.data, function(data){
       conceptosActivos.push(data)
     });
@@ -27,6 +93,7 @@ angular.module('ssClienteApp')
       bloquearConceptos();
     });
     self.conceptosActivos = conceptosActivos;
+    //self.conceptosActivos = temporal;
   });
 
   /*
@@ -40,37 +107,25 @@ angular.module('ssClienteApp')
   };
 
   self.select = function(item) {
-    //console.log(item);
-    var encontrado = buscarConcepto(item);
-    //console.log(encontrado);
-    if (encontrado <= 0) {
-      conceptos.push(item);
-    } else {
-      conceptos.splice(encontrado,1);
-    }
-    console.log(conceptos);
-    self.conceptos = conceptos;
+    console.log(item);
+    self.conceptosActivos.find(buscarConcepto)
+    //console.log(self.conceptosActivos);
   };
 
 
   function buscarConcepto(item) {
-    if (conceptos.length == 0) {
-      return 0;
-    } else {
-      var searchTerm = item.Id,
-      index = -1;
-      for(var i = 0; i < conceptos.length; i++) {
-        if (conceptos[i].Id === searchTerm) {
-          index = i;
-          break;
-        }
+    for(var i = 0; i < self.conceptosActivos.length; i++) {
+      if (self.conceptosActivos[i].Id === item.Id) {
+        self.conceptosActivos[i].Estado = !self.conceptosActivos[i].Estado;
       }
-      return index;
     }
   }
 
   self.guardar = function() {
     swal('Conceptos registrados exitosamente')
+    seguridadSocialService.post('conceptos_ibc/ActualizarConceptos/', self.conceptosActivos).then(function(response) {
+      console.log(response.data);
+    })
   }
 
   self.habilitarEdicion = function() {
