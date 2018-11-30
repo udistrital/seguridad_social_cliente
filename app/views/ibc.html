@@ -11,8 +11,8 @@
       <div>
         <div class="row">
           <div class="col-md-2" >
-            <input class="form-control" type="checkbox" id="{{c.Id}}" ng-model="ibc.item"
-            ng-click="ibc.select(ibc.conceptosActivos)" ng-checked="{{c.Estado}}"/>
+            <input class="form-control" type="checkbox" id="{{c.Id}}"
+            ng-click="ibc.actualizarConcepto(c)" ng-checked="{{c.Estado}}"/>
           </div>
           <div class="col-md-10">
             <spam class="form-control" >
@@ -39,7 +39,7 @@
           </div>
           <div class="modal-body">
             <ul>
-              <li ng-repeat="c in ibc.conceptos"> {{c.Descripcion}} </li>
+              <li ng-repeat="c in ibc.conceptosActivos" ng-if="c.Estado"> {{c.Descripcion}} </li>
             </ul>
           </div>
           <div class="modal-footer">
