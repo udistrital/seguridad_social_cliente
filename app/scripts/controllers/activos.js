@@ -33,10 +33,6 @@ angular.module('ssClienteApp')
   }
   calcularAnios();
 
-  administrativaAmazonService.get('informacion_proveedor', '').then(function(response) {
-console.log("re prueba: ", response.data);
-  });
-
   titanCrudService.get('concepto_nomina','limit=0&query=NaturalezaConcepto.Nombre:seguridad_social').then(function (response) {
     for (var i = 0; i < response.data.length; i++) {
       if (response.data[i].AliasConcepto.includes("Pago") || response.data[i].AliasConcepto.includes("pago")) {
@@ -47,7 +43,9 @@ console.log("re prueba: ", response.data);
 
   //Trae las nóminas liquidadas de acuerdo al mes y año seleccionado
   self.buscarNomina = function() {
-    titanCrudService.get('preliquidacion', 'query=EstadoPreliquidacion.Activo:true,EstadoPreliquidacion.Nombre:EnOrdenPago,Mes:'+self.mesPeriodo+',Ano:'+self.anioPeriodo)
+    console.log('preliquidacion?query=EstadoPreliquidacion.Activo:true,EstadoPreliquidacion.Nombre:EnOrdenPago,Mes:'+self.mesPeriodo+',Ano:'+self.anioPeriodo);
+    
+    titanCrudService.get('preliquidacion', 'query=EstadoPreliquidacion.Activo:true,EstadoPreliquidacion.Nombre:Abierta,Mes:'+self.mesPeriodo+',Ano:'+self.anioPeriodo)
     .then(function(response) {
       if (response.data !== null) {
         self.nominas = response.data;
@@ -187,7 +185,7 @@ console.log("re prueba: ", response.data);
 
       columnDefs : [
         {field: 'Persona', visible : false},
-        {field: 'NombrePersona', visible: true, width: '25%', headerCellTemplate: '<div align="center">Nombre</div>'},
+        {field: 'NombrePersona', name: "Nombre Completo", visible: true, width: '25%' },
         {
           field: 'SaludTotal', visible: true, displayName : $translate.instant('ACTIVOS.SALUD'),
           headerCellTemplate: '<div"><center> {{ \'ACTIVOS.SALUD\' | translate }} <center></div>',
