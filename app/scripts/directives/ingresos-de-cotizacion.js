@@ -43,17 +43,25 @@ angular.module('ssClienteApp')
         ]};
 
         $scope.$watch("persona", function(){
-          titanCrudService.get('detalle_preliquidacion','limit=0&query=NumeroContrato:'+$scope.persona.Persona+',Concepto.TipoConcepto.Nombre:seguridad_social,Preliquidacion.Id:'+JSON.parse($scope.preliquidacion).Id+'&fields=Concepto,ValorCalculado,DiasLiquidados')
+          titanCrudService.get('detalle_preliquidacion','limit=0&query=Persona:'+$scope.persona.IdProveedor+',Concepto.TipoConcepto.Nombre:seguridad_social,Preliquidacion.Id:'+JSON.parse($scope.preliquidacion).Id+'&fields=Concepto,ValorCalculado,DiasLiquidados')
           .then(function(response) {
             var detalle_liquidacion = response.data;
             detalle_liquidacion.push(
               {
-                Concepto: { AliasConcepto: 'Salud Universidad' },
+                Concepto: { AliasConcepto: 'Valor correspondiente a la UD por salud' },
                 ValorCalculado: $scope.persona.SaludUd
               },
               {
-                Concepto: { AliasConcepto: 'Pensión Universidad'},
+                Concepto: { AliasConcepto: 'Valor correspondiente al trabajador por salud'},
+                ValorCalculado: $scope.persona.SaludTotal - $scope.persona.SaludUd
+              },
+              {
+                Concepto: { AliasConcepto: 'Valor correspondiente a la UD por pensión'},
                 ValorCalculado: $scope.persona.PensionUd
+              },
+              {
+                Concepto: { AliasConcepto: 'Valor correspondiente al trabajador por pensión'},
+                ValorCalculado: $scope.persona.PensionTotal - $scope.persona.PensionUd
               });
             self.gridOptions.data = detalle_liquidacion;
           });
