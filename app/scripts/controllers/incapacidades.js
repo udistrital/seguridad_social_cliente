@@ -219,7 +219,7 @@ angular.module('ssClienteApp')
         // console.log(self.proveedor);
         
         // console.log({numContrato, vigContrato});
-        self.contrato = {numContrato, vigContrato};
+        self.contrato = {"numContrato": numContrato, "vigContrato": vigContrato};
       }
       
     } 
