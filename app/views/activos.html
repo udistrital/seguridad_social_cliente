@@ -44,8 +44,8 @@
             'BTN.VER_REGISTROS' | translate }} </button>
     </div>
 
-    <div class="alert alert-danger" ng-if="activos.divError">
-        <strong> {{ 'ERROR' | translate }} </strong><br> {{activos.errorMensaje}}
+    <div class="alert alert-warning" ng-if="activos.divError">
+        <strong> {{ 'ALERTA' | translate }} </strong><br> {{activos.errorMensajeParte1}} <b>{{activos.nominaErrorMensaje}}</b> {{activos.errorMensajeParte2}}
     </div>
 
     <loadingcircle load="load"></loadingcircle>
