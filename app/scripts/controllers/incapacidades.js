@@ -71,6 +71,13 @@ angular.module('ssClienteApp')
     titanCrudService.get('concepto_nomina', 'query=TipoConcepto.Nombre:seguridad_social,NombreConcepto__startswith:incapacidad').then(
       function (response) {
         self.listaIncapacidades = response.data;
+        titanCrudService.get('concepto_nomina', 'query=TipoConcepto.Nombre:seguridad_social,NombreConcepto__startswith:licencia').then(
+          function (responseLicencia) {
+            for (var i = 0; i < responseLicencia.data.length; i++) {
+              self.listaIncapacidades.push(responseLicencia.data[i]);
+            }
+          }
+        );
       }
     );
 
@@ -184,9 +191,9 @@ angular.module('ssClienteApp')
                 Concepto: concepto,
                 Nomina: { Id: self.nominasPertenece[i] },
                 Activo: true,
-                Descripcion: self.codigo
+                Descripcion: self.codigo,
+                Persona: parseInt(self.proveedor.idProveedor)
               };
-              
               incapacidades.Conceptos.push(incapacidad);
             }
           }
