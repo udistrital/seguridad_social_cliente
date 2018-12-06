@@ -62,8 +62,9 @@ angular.module('ssClienteApp')
     self.divError = false;
     if (comprobarDatosIngresados()) {
       seguridadSocialCrudService.get('periodo_pago','query=Mes:'+parseInt(self.mesPeriodo.value)+',Anio:'+parseInt(self.anioPeriodo)+',tipo_liquidacion:'+self.tipoLiquidacion+'&liimit=1').then(function(response) {
+        
         periodoPago = null
-        if (response.data == null) {
+        if (Object.keys(response.data[0]).length === 0) {
           self.divError = true;
           self.errorMensaje = 'El periodo ingresado no tiene información.';
         } else {
