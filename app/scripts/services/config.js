@@ -41,9 +41,6 @@
  * Variables de configuración de entorno de pruebas
  */
  var conf_pruebas = {
-     // AGORA_SERVICE: "http://10.20.0.254/administrativa_amazon_api/v1/",
-    // AGORA_SERVICE: 'https://autenticacion.portaloas.udistrital.edu.co/apioas/administrativa_amazon_api/v1/',
-    // ARGO_SERVICE: "http://10.20.0.254/administrativa_amazon_api/v1/",
     AGORA_SERVICE: 'https://tuleap.udistrital.edu.co/go_api/administrativa_amazon_api/v1/',
     ARGO_SERVICE: "https://tuleap.udistrital.edu.co/go_api/administrativa_amazon_api/v1/",
     TITAN_MID_SERVICE: "http://10.20.0.254/titan_api_mid/v1/",
@@ -52,18 +49,17 @@
     ADMINISTRATIVA_AMAZON_SERVICE: "http://10.20.0.254/administrativa_amazon_api/v1/",
     SS_MID_SERVCE: "http://10.20.0.254/ss_mid_api/v1/",
     SS_MID_SERVCE: "http://10.20.0.254/ss_crud_api/v1/",
-    // SESIONES_SERVICE:"https://autenticacion.portaloas.udistrital.edu.co/apioas/sesiones_crud/v1/",
     CONFIGURACION_SERVICE: "http://10.20.0.254/configuracion_api/v1/",
     TOKEN: {
         AUTORIZATION_URL: "https://autenticacion.portaloas.udistrital.edu.co/oauth2/authorize",
         URL_USER_INFO: "https://autenticacion.portaloas.udistrital.edu.co/oauth2/userinfo",
-        CLIENTE_ID:"X6MhgfZi_RhCPVIazI2aIrq6pWoa",
-        REDIRECT_URL: "http://localhost:9102/",
+        CLIENTE_ID:"PpTcStdRjAAAfGCKoFVmDcpx_nQa",
+        REDIRECT_URL: "http://10.20.0.254/seguridad_social_cliente/",
         RESPONSE_TYPE: "id_token token",
         SCOPE: "openid email documento",
         BUTTON_CLASS: "btn btn-warning btn-sm",
         SIGN_OUT_URL: "https://autenticacion.portaloas.udistrital.edu.co/oidc/logout",
-        SIGN_OUT_REDIRECT_URL: "http://localhost:9102/",
+        SIGN_OUT_REDIRECT_URL: "http://10.20.0.254/seguridad_social_cliente/",
         SIGN_OUT_APPEND_TOKEN: "true",
     }
     // AUTENTICATION_MID_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/autenticacion_mid/v1/"
