@@ -232,6 +232,12 @@ angular.module('ssClienteApp')
           cellTemplate: '<div align="right">{{row.entity.PensionTotal | currency}}</div>'
         },
         {
+          field: 'FondoSolidaridad', visible: true, displayName: $translate.instant('ACTIVOS.PENSION'),
+          headerCellTemplate: '<div align="center"> {{ \'ACTIVOS.FONDO\' | translate }} </div>',
+          cellFilter: 'currency',
+          cellTemplate: '<div align="right">{{row.entity.FondoSolidaridad | currency}}</div>'
+        },
+        {
           field: 'Arl', visible: true, displayName: $translate.instant('ACTIVOS.ARL'),
           headerCellTemplate: '<div align="center"> {{ \'ACTIVOS.ARL\' | translate }} </div>',
           cellFilter: 'currency',
