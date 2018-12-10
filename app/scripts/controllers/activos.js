@@ -23,8 +23,10 @@ angular.module('ssClienteApp')
     var concpSegSoc = []; // Tiene la información de los conceptos correspondientes a pagos
 
     self.meses = {
-      1: "Enero", 2: "Febrero", 3: "Marzo", 4: "Abril", 5: "Mayo", 6: "Junio",
-      7: "Julio", 8: "Agosto", 9: "Septiembre", 10: "Octubre", 11: "Noviembre", 12: "Diciembre"
+      1: $translate.instant("ENERO"), 2: $translate.instant("FEBRERO"), 3: $translate.instant("MARZO"), 
+      4: $translate.instant("ABRIL"), 5: $translate.instant("MAYO"), 6: $translate.instant("JUNIO"),
+      7: $translate.instant("JULIO"), 8: $translate.instant("AGOSTO"), 9: $translate.instant("SEPTIEMBRE"), 
+      10: $translate.instant("OCTUBRE"), 11: $translate.instant("NOVIEMBRE"), 12: $translate.instant("DICIEMBRE")
     };
 
     //Crea un arreglo de objetos para tener los años desde el 1900 hasta el año actual con el metodo getFullYear()

@@ -14,6 +14,20 @@ var text_es = {
   PENSION: "Pensión",
   ERROR: "Error!",
   ALERTA: "Alerta!",
+  MESES: {
+    ENERO: "Enero",
+    FEBRERO: "Febrero",
+    MARZO: "Marzo",
+    ABRRIL: "Abril",
+    MAYO: "Mayo",
+    JUNIO: "Junio",
+    JULIO: "Julio",
+    AGOSTO: "Agosto",
+    SEPTIEMBRE: "Septiembre",
+    OCTUBRE: "Octubre",
+    NOVIEMBRE: "Noviembre",
+    DICIEMBRE: "Diciembre"
+  },
   BTN: {
     GUARDAR: "Guardar",
     BUSCAR: "Buscar",
@@ -175,6 +189,20 @@ var text_en = {
   ACTIVO: "Active",
   ERROR: "Error!",
   ALERTA: "Alert!",
+  MESES: {
+    ENERO: "January",
+    FEBRERO: "February",
+    MARZO: "March",
+    ABRRIL: "April",
+    MAYO: "May",
+    JUNIO: "June",
+    JULIO: "July",
+    AGOSTO: "August",
+    SEPTIEMBRE: "September",
+    OCTUBRE: "October",
+    NOVIEMBRE: "November",
+    DICIEMBRE: "December"
+  },
   BTN: {
     GUARDAR: "Save",
     BUSCAR: "Search",

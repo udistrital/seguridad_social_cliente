@@ -118,5 +118,5 @@ var conf_cloud_preproduccion = {
  */
 angular.module("ssClienteApp")
   .constant("CONF", {
-      GENERAL: conf_pruebas
+      GENERAL: conf_local
   });
