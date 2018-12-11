@@ -74,7 +74,11 @@ var text_es = {
     COMISION_NO_REMUNERADA: "Comisión no Remunerada",
     LICENCIA_NO_REMUNERADA: "Licencia no Remunerada",
     TARIFA_CCF: "Tarifa de Caja de Compensación Familiar",
-    APORTE_ICBF: "Aporte ICBF"
+    APORTE_ICBF: "Aporte ICBF",
+    APORTE_SENA: "SENA",
+    APORTE_MEN: "MEN",
+    APORTE_ESAP: "ESAP",
+    VIGENCIA: "Vigencia"
   },
   INCAPACIDADES: {
     TITULO: "Incapacidades",
@@ -249,7 +253,11 @@ var text_en = {
     COMISION_NO_REMUNERADA: "Unpaid commission",
     LICENCIA_NO_REMUNERADA: "Unpaid License",
     TARIFA_CCF: "Family Compensation Fund Rate",
-    APORTE_ICBF: "ICBF Rate"
+    APORTE_ICBF: "ICBF Rate",
+    APORTE_SENA: "SENA",
+    APORTE_MEN: "MEN",
+    APORTE_ESAP: "ESAP",
+    VIGENCIA: "Vigencia"
   },
   INCAPACIDADES: {
     TITULO: "Disabilities",

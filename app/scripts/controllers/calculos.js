@@ -8,14 +8,42 @@
  * Controller of the ssClienteApp
  */
 angular.module('ssClienteApp')
-  .controller('CalculosCtrl', function (rulerservice) {
+  .controller('CalculosCtrl', function (seguridadSocialService) {
     var self = this;
-    self.nivelesArl = [];
+    self.nivelesArl = [{"clase": "CLASE "+romanize(1), "valor": 0}];
 
-    rulerservice.get('predicado', 'query=Nombre__startswith:nivel_arl').then(function (response) {
-      console.log(typeof(response.data));
-      if(typeof(response.data) === "object") {
-        self.nivelesArl = response.data;
+    seguridadSocialService.get('generador_reglas/ObtenerHechosCalculo', '').then(function (response) {
+      if (Object.keys(response.data).length !== 0) {
+        self.conceptosCalculo = response.data.Body;
+        self.resolucion = self.conceptosCalculo[0].Resolucion.Resolucion;
+        self.vigencia = self.conceptosCalculo[0].Resolucion.Vigencia;
+        for (var i = 0; i < self.conceptosCalculo.length; i++) {
+          switch (self.conceptosCalculo[i].NombreAporte) {
+            case "salud":
+               self.salud = self.conceptosCalculo[i].Porcentaje;
+              break;
+            case "pension":
+              self.pension = self.conceptosCalculo[i].Porcentaje;
+              break;
+            case "arl":
+              if (self.nivelesArl.length > 0) {
+                self.nivelesArl[0].valor = self.conceptosCalculo[i].Porcentaje;
+              }
+            case "caja":
+               self.caja = self.conceptosCalculo[i].Porcentaje;
+              break;
+            case "icbf":
+               self.icbf = self.conceptosCalculo[i].Porcentaje;
+              break;
+            case "sena":
+               self.sena = self.conceptosCalculo[i].Porcentaje;
+              break;
+            case "men":
+              self.men = self.conceptosCalculo[i].Porcentaje;
+            case "esap":
+               self.esap = self.conceptosCalculo[i].Porcentaje;
+          }
+        }
       }
     });
 
@@ -31,20 +59,56 @@ angular.module('ssClienteApp')
     }
 
     self.save = function() {
-      console.log("resolución: ", self.resolucion);
-      console.log("% pensión: ", self.pension);
-      console.log("% salud: ", self.salud);
-      console.log("% ARL: ", self.arl);
-      console.log("% comisión: ", self.comision);
-      console.log("% licencia no remunerada: ", self.licencia);
-      console.log("% caja: ", self.caja);
-      console.log("% icbf: ", self.icbf);
+      var porcentaje = "0";
+      for (var i = 0; i < self.conceptosCalculo.length; i++) {
+        switch (self.conceptosCalculo[i].NombreAporte) {
+          case "salud":
+            porcentaje = self.salud;
+            break;
+          case "pension":
+            porcentaje = self.pension;
+            break;
+          case "arl":
+            if (self.nivelesArl.length > 0) {
+              porcentaje = self.nivelesArl[0].valor;
+            }
+          case "caja":
+            porcentaje = self.caja;
+            break;
+          case "icbf":
+            porcentaje = self.icbf;
+            break;
+          case "sena":
+            porcentaje = self.sena;
+            break;
+          case "men":
+            porcentaje = self.men;
+          case "esap":
+            porcentaje = self.esap;
+        }
+        self.conceptosCalculo[i].Porcentaje = porcentaje;
+        self.conceptosCalculo[i].Resolucion.Resolucion = self.resolucion; 
+        self.conceptosCalculo[i].Resolucion.Vigencia = self.vigencia;
+      }
       
-      // swal(
-      //   'Registro',
-      //   'Información Guardada',
-      //   'success'
-      // )
+      seguridadSocialService.post('generador_reglas/RegistrarNuevosHechos', self.conceptosCalculo).then(function(response) {
+        if (Object.keys(response.data).length !== 0) {
+          if (response.data.Type === 'success')
+          swal(
+            'Registro',
+            'Información Guardada',
+            'success'
+          )
+        } else {
+          swal(
+            'Error',
+            '',
+            'error'
+          )
+        }
+      })
+
+      
     }
 
     // tomado de: https://gist.github.com/cronos2/6207591

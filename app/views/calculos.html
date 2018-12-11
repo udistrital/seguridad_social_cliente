@@ -7,131 +7,181 @@
     <form name="myForm">
       <h2>{{ 'CALCULO.PARAMETROS_CALCULO' | translate }}</h2>
       <hr />
-      <div id="datosCalculo" class="col-md-8 col-md-offset-2">
-        <!-- RESOLUCION -->
-        <div class="form-group row" ng-class="{ 'has-error' : myForm.resolucion.$invalid && !myForm.resolucion.$pristine }">
-          <label for="resolucion" class="col-sm-6 col-form-label"><strong>{{ 'CALCULO.RESOLUCION' | translate }}</strong></label>
-          <div class="col-xs-4">
-            <textarea name="resolucion" ng-model="calculo.resolucion" rows="2" class="form-control" placeholder="Escriba el nombre de la resolución al que harán referencía estos valores."
-              required></textarea>
-            <p ng-show="myForm.resolucion.$invalid && !myForm.resolucion.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
-              | translate}}</p>
-          </div>
-        </div>
-        <!-- PENSION -->
-        <div class="form-group row" ng-class="{ 'has-error' : myForm.pension.$invalid && !myForm.pension.$pristine }">
-          <label for="pension" class="col-sm-6 col-form-label">{{ 'CALCULO.APORTE_PENSION' | translate }}</label>
-          <div class="col-xs-4">
-            <div class="input-group">
-              <input type="number" ng-model="calculo.pension" name="pension" class="form-control" required />
-              <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
-            </div>
-            <p ng-show="myForm.pension.$invalid && !myForm.pension.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
-              | translate}}</p>
-          </div>
-        </div>
-        <!-- SALUD-->
-        <div class="form-group row" ng-class="{ 'has-error' : myForm.salud.$invalid && !myForm.salud.$pristine }">
-          <label for="salud" class="col-sm-6 col-form-label"> {{ 'CALCULO.APORTE_SALUD' | translate }} </label>
-          <div class="col-xs-4">
-            <div class="input-group">
-              <input type="number" name="salud" ng-model="calculo.salud" class="form-control" required />
-              <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
-            </div>
-            <p ng-show="myForm.salud.$invalid && !myForm.salud.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
-              | translate}}</p>
-          </div>
-        </div>
-        <!--ARL-->
-        <!-- <div class="form-group row" ng-class="{ 'has-error' : myForm.arl.$invalid && !myForm.arl.$pristine }">
-          <label for="arl" class="col-sm-6 col-form-label"> {{ 'CALCULO.TARIFA_ARL' | translate }} </label>
-          <div class="col-xs-4">
-            <div class="input-group">
-              <input type="number" class="form-control" name="arl" ng-model="calculo.arl" required>
-              <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
-            </div>
-            <p ng-show="myForm.arl.$invalid && !myForm.arl.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
-              | translate}}</p>
-          </div>
-        </div> -->
+      <div id="datosCalculo" class="col-md-12 col-md-offset-2">
 
-        <!--Niveles ARL-->
-        <div class="row">
-            <label class="col-sm-6 col-form-label"> {{ 'CALCULO.TARIFA_ARL' | translate }} </label>
-        </div>
-        <div class="form-group row">
-          <div class="form-group col-md-offset-1" data-ng-repeat="nivelARl in calculo.nivelesArl">
-            <div class="row">
-                <label for="{{nivelARl.Nombre}}">{{nivelARl.clase}}</label>
-                <button type="button" class="btn btn-danger btn-outline-danger btn-sm" ng-click="calculo.eliminarNivelArl()">
-                  <span class="glyphicon glyphicon-remove"></span>
-                </button>
-            </div>
-            <div class="form-group row">
-                <div class="input-group col-md-3">
-                    <input type="number" class="form-control" ng-modal="{{nivelARl.Nombre}}" id="{{nivelARl.Nombre}}" value="{{nivelARl.valor}}">
-                    <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>  
-                </div>
-            </div>
-            
-          </div>
-          <button type="button" class="btn btn-primary btn-outline" ng-click="calculo.agrearNivelArl()">
-            {{'CALCULO.AGREGAR_NIVEL_ARL' | translate}}</button>
-        </div>
-        <!-- COMISION NO REMUNERADA -->
-        <div class="form-group row" ng-class="{ 'has-error' : myForm.comision.$invalid && !myForm.comision.$pristine }">
-          <label for="comision" class="col-sm-6 col-form-label"> {{ 'CALCULO.COMISION_NO_REMUNERADA' | translate }}
-          </label>
-          <div class="col-xs-4">
-            <div class="input-group">
-              <input type="number" name="comision" ng-model="calculo.comision" class="form-control" required />
-              <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
-            </div>
-            <p ng-show="myForm.comision.$invalid && !myForm.comision.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
-              | translate}}</p>
-          </div>
-        </div>
-        <!-- LICENCIA NO REMUNERADA -->
-        <div class="form-group row" ng-class="{ 'has-error' : myForm.licencia.$invalid && !myForm.licencia.$pristine }">
-          <label for="licencia" class="col-sm-6 col-form-label"> {{ 'CALCULO.LICENCIA_NO_REMUNERADA' | translate }}
-          </label>
-          <div class="col-xs-4">
-            <div class="input-group">
-              <input type="number" name="licencia" ng-model="calculo.licencia" class="form-control" required />
-              <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
-            </div>
-            <p ng-show="myForm.licencia.$invalid && !myForm.licencia.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
-              | translate}}</p>
-          </div>
-        </div>
-        <!-- CAJA DE COMPENSACION FAMILIAR -->
-        <div class="form-group row" ng-class="{ 'has-error' : myForm.caja.$invalid && !myForm.caja.$pristine }">
-          <label for="caja" class="col-sm-6 col-form-label"> {{ 'CALCULO.TARIFA_CCF' | translate }} </label>
-          <div class="col-xs-4">
-            <div class="input-group">
-              <input type="number" name="caja" ng-model="calculo.caja" class="form-control" required />
-              <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
-              <p ng-show="myForm.caja.$invalid && !myForm.caja.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
+        <!-- RESOLUCION -->
+        <div class="form-group" ng-class="{ 'has-error' : myForm.resolucion.$invalid && !myForm.resolucion.$pristine }">
+          <div class="row">
+            <label for="resolucion" class="col-sm-2 col-form-label"><strong>{{ 'CALCULO.RESOLUCION' | translate }}</strong></label>
+            <div class="col-xs-6">
+              <textarea name="resolucion" ng-model="calculo.resolucion" rows="2" class="form-control" placeholder="Escriba el nombre de la resolución a la que harán referencía estos valores."
+                required></textarea>
+              <p ng-show="myForm.resolucion.$invalid && !myForm.resolucion.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
                 | translate}}</p>
             </div>
           </div>
-        </div>
-        <!-- INSTITUTO DE BIENESTAR FAMILIAR -->
-        <div class="form-group row" ng-class="{ 'has-error' : myForm.icbf.$invalid && !myForm.icbf.$pristine }">
-          <label for="icbf" class="col-sm-6 col-form-label"> {{ 'CALCULO.APORTE_ICBF' | translate }} </label>
-          <div class="col-xs-4">
-            <div class="input-group">
-              <input type="number" name="icbf" ng-model="calculo.icbf" class="form-control" required />
-              <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+
+          <!--VIGENCIA RESOLUCION-->
+          <div class="row" ng-class="{ 'has-error' : myForm.vigencia.$invalid && !myForm.vigencia.$pristine }">
+            <label class="col-sm-2  col-form-label">{{ 'CALCULO.VIGENCIA' | translate }}</label>
+            <div class="col-xs-5">
+              <div class="input-group">
+                <input type="text" ng-model="calculo.vigencia" class="form-control" required />
+              </div>
             </div>
-            <p ng-show="myForm.icbf.$invalid && !myForm.icbf.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
-              | translate}}</p>
           </div>
         </div>
-        <div align="center">
-          <button type="button" class="btn btn-success btn-outline" ng-click="calculo.save()">{{'BTN.GUARDAR' |
-            translate}}</button>
+        <br>
+        <div>
+          <div class="col-md-5">
+            <!-- PENSION -->
+            <div class="form-group row" ng-class="{ 'has-error' : myForm.pension.$invalid && !myForm.pension.$pristine }">
+              <label for="pension" class="col-sm-4 col-form-label">{{ 'CALCULO.APORTE_PENSION' | translate }}</label>
+              <div class="col-xs-6">
+                <div class="input-group">
+                  <input type="text" ng-model="calculo.pension" name="pension" class="form-control" required />
+                  <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                </div>
+                <p ng-show="myForm.pension.$invalid && !myForm.pension.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
+                  | translate}}</p>
+              </div>
+            </div>
+            <!-- SALUD-->
+            <div class="form-group row" ng-class="{ 'has-error' : myForm.salud.$invalid && !myForm.salud.$pristine }">
+              <label for="salud" class="col-sm-4 col-form-label"> {{ 'CALCULO.APORTE_SALUD' | translate }} </label>
+              <div class="col-xs-6">
+                <div class="input-group">
+                  <input type="text" name="salud" ng-model="calculo.salud" class="form-control" required />
+                  <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                </div>
+                <p ng-show="myForm.salud.$invalid && !myForm.salud.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
+                  | translate}}</p>
+              </div>
+            </div>
+
+            <!-- COMISION NO REMUNERADA -->
+            <div class="form-group row" ng-class="{ 'has-error' : myForm.comision.$invalid && !myForm.comision.$pristine }">
+              <label for="comision" class="col-sm-4 col-form-label"> {{ 'CALCULO.COMISION_NO_REMUNERADA' | translate }}
+              </label>
+              <div class="col-xs-6">
+                <div class="input-group">
+                  <input type="text" name="comision" ng-model="calculo.comision" class="form-control" required />
+                  <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                </div>
+                <p ng-show="myForm.comision.$invalid && !myForm.comision.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
+                  | translate}}</p>
+              </div>
+            </div>
+            <!-- LICENCIA NO REMUNERADA -->
+            <div class="form-group row" ng-class="{ 'has-error' : myForm.licencia.$invalid && !myForm.licencia.$pristine }">
+              <label for="licencia" class="col-sm-4 col-form-label"> {{ 'CALCULO.LICENCIA_NO_REMUNERADA' | translate }}
+              </label>
+              <div class="col-xs-6">
+                <div class="input-group">
+                  <input type="text" name="licencia" ng-model="calculo.licencia" class="form-control" required />
+                  <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                </div>
+                <p ng-show="myForm.licencia.$invalid && !myForm.licencia.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
+                  | translate}}</p>
+              </div>
+            </div>
+            <!-- CAJA DE COMPENSACION FAMILIAR -->
+            <div class="form-group row" ng-class="{ 'has-error' : myForm.caja.$invalid && !myForm.caja.$pristine }">
+              <label for="caja" class="col-sm-4 col-form-label"> {{ 'CALCULO.TARIFA_CCF' | translate }} </label>
+              <div class="col-xs-6">
+                <div class="input-group">
+                  <input type="text" name="caja" ng-model="calculo.caja" class="form-control" required />
+                  <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                  <p ng-show="myForm.caja.$invalid && !myForm.caja.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
+                    | translate}}</p>
+                </div>
+              </div>
+            </div>
+            <!-- INSTITUTO DE BIENESTAR FAMILIAR -->
+            <div class="form-group row" ng-class="{ 'has-error' : myForm.icbf.$invalid && !myForm.icbf.$pristine }">
+              <label for="icbf" class="col-sm-4 col-form-label"> {{ 'CALCULO.APORTE_ICBF' | translate }} </label>
+              <div class="col-xs-6">
+                <div class="input-group">
+                  <input type="text" name="icbf" ng-model="calculo.icbf" class="form-control" required />
+                  <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                </div>
+                <p ng-show="myForm.icbf.$invalid && !myForm.icbf.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
+                  | translate}}</p>
+              </div>
+            </div>
+
+            <!--SENA-->
+            <div class="form-group row" ng-class="{ 'has-error' : myForm.sena.$invalid && !myForm.sena.$pristine }">
+              <label for="sena" class="col-sm-4 col-form-label"> {{ 'CALCULO.APORTE_SENA' | translate }} </label>
+              <div class="col-xs-6">
+                <div class="input-group">
+                  <input type="text" class="form-control" name="sena" ng-model="calculo.sena" required>
+                  <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                </div>
+                <p ng-show="myForm.sena.$invalid && !myForm.sena.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
+                  | translate}}</p>
+              </div>
+            </div>
+
+            <!--MEN-->
+            <div class="form-group row" ng-class="{ 'has-error' : myForm.men.$invalid && !myForm.men.$pristine }">
+              <label for="men" class="col-sm-4 col-form-label"> {{ 'CALCULO.APORTE_MEN' | translate }} </label>
+              <div class="col-xs-6">
+                <div class="input-group">
+                  <input type="text" class="form-control" name="men" ng-model="calculo.men" required>
+                  <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                </div>
+                <p ng-show="myForm.men.$invalid && !myForm.men.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
+                  | translate}}</p>
+              </div>
+            </div>
+
+            <!--ESAP-->
+            <div class="form-group row" ng-class="{ 'has-error' : myForm.esap.$invalid && !myForm.esap.$pristine }">
+              <label for="esap" class="col-sm-4 col-form-label"> {{ 'CALCULO.APORTE_ESAP' | translate }} </label>
+              <div class="col-xs-6">
+                <div class="input-group">
+                  <input type="text" class="form-control" name="esap" ng-model="calculo.esap" required>
+                  <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                </div>
+                <p ng-show="myForm.esap.$invalid && !myForm.esap.$pristine" class="help-block">{{'VALIDACION.CAMPO_REQUERIDO'
+                  | translate}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <!--Niveles ARL-->
+            <div class="row">
+              <label class="col-sm-4 col-form-label"> {{ 'CALCULO.TARIFA_ARL' | translate }} </label>
+            </div>
+            <div class="form-group row">
+              <div class="form-group col-md-offset-1" data-ng-repeat="nivelARl in calculo.nivelesArl">
+                <div class="row">
+                  <label for="{{nivelARl.Nombre}}">{{nivelARl.clase}}</label>
+                  <button type="button" class="btn btn-danger btn-outline-danger btn-sm" ng-click="calculo.eliminarNivelArl()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </button>
+                </div>
+                <div class="form-group row">
+                  <div class="input-group col-md-5">
+                    <input type="text" class="form-control" ng-modal="{{nivelARl.Nombre}}" id="{{nivelARl.Nombre}}"
+                      value="{{nivelARl.valor}}">
+                    <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                  </div>
+                </div>
+
+              </div>
+              <button type="button" class="btn btn-primary btn-outline" ng-click="calculo.agrearNivelArl()">
+                {{'CALCULO.AGREGAR_NIVEL_ARL' | translate}}</button>
+            </div>
+          </div>
         </div>
+
+
+      </div>
+      <div align="center">
+        <button type="button" class="btn btn-success btn-outline" ng-click="calculo.save()">{{'BTN.GUARDAR' |
+          translate}}</button>
       </div>
   </div>
   </form>
