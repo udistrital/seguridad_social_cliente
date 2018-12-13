@@ -12,7 +12,7 @@ angular.module('ssClienteApp')
     var self = this;
     var dataDescuentos = [];
     var nominaObj;   // Objeto json con la nómina seleccionada
-    var contratos = [];
+    var personas = [];
 
     self.novedadesDiv = false;
 
@@ -37,12 +37,8 @@ angular.module('ssClienteApp')
     }
     calcularAnios();
 
-    titanCrudService.get('concepto_nomina', 'limit=0&query=NaturalezaConcepto.Nombre:seguridad_social').then(function (response) {
-      for (var i = 0; i < response.data.length; i++) {
-        if (response.data[i].AliasConcepto.includes("Pago") || response.data[i].AliasConcepto.includes("pago")) {
-          concpSegSoc.push(response.data[i]);
-        }
-      }
+    titanCrudService.get('concepto_nomina', 'limit=0&query=TipoConcepto.Nombre:pago_seguridad_social').then(function (response) {
+          concpSegSoc = response.data;
     });
 
     //Trae las nóminas liquidadas de acuerdo al mes y año seleccionado
@@ -66,7 +62,7 @@ angular.module('ssClienteApp')
 
     self.nominaSeleccionada = function () {
       dataDescuentos = [];
-      contratos = [];
+      personas = [];
       nominaObj = JSON.parse(self.nomina);  // Conviente el string de self.nomina a un objetso json
 
       seguridadSocialCrudService.get('periodo_pago', 'query=Mes:' + self.mesPeriodo + ',Anio:' + self.anioPeriodo + ',TipoLiquidacion:' + nominaObj.Nomina.TipoNomina.Nombre + ',EstadoSeguridadSocial.Nombre:Abierta').then(function (response) {
@@ -93,7 +89,7 @@ angular.module('ssClienteApp')
             if (response.data !== null) {
               for (var i in response.data) {
                 dataDescuentos.push(response.data[i]);
-                contratos.push(response.data[i].NumeroContrato);
+                personas.push(response.data[i].IdProveedor.toString());
               }
               self.gridOptions.data = dataDescuentos;
             } else {
@@ -111,7 +107,7 @@ angular.module('ssClienteApp')
             if (response.data !== null) {
               for (var i in response.data) {
                 dataDescuentos.push(response.data[i]);
-                contratos.push(response.data[i].NumeroContrato);
+                personas.push(response.data[i].IdProveedor.toString());
               }
               self.gridOptions.data = dataDescuentos;
             } else {
@@ -147,7 +143,7 @@ angular.module('ssClienteApp')
 
           var transaccion =
           {
-            Contratos: contratos,
+            Personas: personas,
             PeriodoPago: periodo_pago,
             Pagos: []
           };
@@ -181,7 +177,7 @@ angular.module('ssClienteApp')
                   valor = dataDescuentos[i].Icbf;
                   break;
                 //caja_compensacion
-                default:
+                case "caja_compensacion":
                   tipoPago = concpSegSoc[j].Id;
                   valor = dataDescuentos[i].Caja;
                   break;
