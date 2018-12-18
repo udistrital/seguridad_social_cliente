@@ -13,17 +13,6 @@ angular.module('ssClienteApp')
     var csvContent = '';     // variable para generar el archivo plano
     var periodoPago = {};
 
-
-    var contratistas = "0200001CC1013611972      0101                00 11001LEON                   SANCHEZ                    FABIAN                   DARIO                             0           EPS010      CCF04 30303030469204    000469204000469204000469204000469204000001600018140000000000000000000000000000000000000000000000012.5   000137600000000000               000000000              " + "00000000000.00052200000000000000250000000040000188000000000000000000000000300001410000000000000000000000000000000000                  N14-23 1                                                                                                                                                       000000000240\n" +
-      "0200002CC1018459927        0101              00 11001MARTINEZ                    AVEDAÑO                    MARIA                   FERNANDA                           0           EPS010      CCF04 303030301101609   001101609001101609001101609001101609000001600025720000000000000000000000000000000000000000000000012.5   000191400000000000               000000000              " + "00000000000.00052200000000000000580000000040000441000000000000000000000000300003310000000000000000000000000000000000                  N14-23 1                                                                                                                                                       000000000240\n" +
-      "0200003CC79777053        0101                00 11001DAZA                        CORREDOR                   ALEJANDRO               PAOLO                              0           EPS010      CCF04 30303030938408    000938408000938408000938408000938408000001600023770000000000000000000000000000000000000000000000012.5   000177500000000000               000000000              " + "00000000000.00052200000000000000490000000040000376000000000000000000000000300002820000000000000000000000000000000000                  N14-23 1                                                                                                                                                       000000000240\n" +
-      "0200004CC1071166654      0101                00 11001ALVAREZ                     CASAS                      VIVIANA                 ANDREA                             0           EPS010      CCF04 30303030367203    000367203000367203000367203000367203000001600016910000000000000000000000000000000000000000000000012.5   000129000000000000               000000000              " + "00000000000.00052200000000000000200000000040000147000000000000000000000000300001110000000000000000000000000000000000                  N14-23 1                                                                                                                                                       000000000240\n" +
-      "0200005CC86089071        0101                00 11001POLANCO                     LOPEZ                      MALCOM                  ANDRES                             0           EPS010      CCF04 30303030550805    000550805000550805000550805000550805000001600019110000000000000000000000000000000000000000000000012.5   000144600000000000               000000000              " + "00000000000.00052200000000000000290000000040000221000000000000000000000000300001660000000000000000000000000000000000                  N14-23 1                                                                                                                                                       000000000240\n" +
-      "0200006CC14265904        0101                00 11001MEJIA                       SUANCHA                    HUMBERTO                                                   0           EPS010      CCF04 30303030469204    000469204000469204000469204000469204000001600018140000000000000000000000000000000000000000000000012.5   000137600000000000               000000000              " + "00000000000.00052200000000000000250000000040000188000000000000000000000000300001410000000000000000000000000000000000                  N14-23 1                                                                                                                                                       000000000240\n" +
-      "0200007CC152896764       0101                00 11001AHUMADA                      QUITO                     DIANA                   SORAYA                             0           EPS010      CCF04 30303030469204    000469204000469204000469204000469204000001600018140000000000000000000000000000000000000000000000012.5   000137600000000000               000000000              " + "00000000000.00052200000000000000250000000040000188000000000000000000000000300001410000000000000000000000000000000000                  N14-23 1                                                                                                                                                       000000000240\n" +
-      "0200008CC1018453759      0101                00 11001CAMACHO                     REY                        MATEO                                                      0           EPS010      CCF04 30303030938408    000938408000938408000938408000938408000001600023770000000000000000000000000000000000000000000000012.5   000177500000000000               000000000              " + "00000000000.00052200000000000000490000000040000376000000000000000000000000300002820000000000000000000000000000000000                  N14-23 1                                                                                                                                                       000000000240\n" +
-      "0200009CC1031129583      0101                00 11001AREVALO                     HERNANDEZ                  YEIMY                   JOHANA                             0           EPS011      CCF04 30303030938408    000938408000938408000938408000938408000001600023770000000000000000000000000000000000000000000000012.5   000177500000000000               000000000              " + "00000000000.00052200000000000000490000000040000376000000000000000000000000300002820000000000000000000000000000000000                  N14-23 1                                                                                                                                                       000000000240\n";
-
     self.anios = [];
     self.proveedores = [];
 
@@ -81,25 +70,22 @@ angular.module('ssClienteApp')
             self.divError = true;
             self.errorMensaje = 'El periodo ingresado no tiene información.';
           } else {
-            console.log(periodoPago)
-
 
             seguridadSocialService.post('planillas/GenerarPlanillaActivos', periodoPago).then(function (response) {
-              console.log("response: ", response);
 
-              seguridadSocialService.get('pago/GetTotalIbc/' + periodoPago.Liquidacion, '').then(function (responseIbc) {
-                console.log(responseIbc.data);
-                self.totalIbc = responseIbc.data
+              seguridadSocialService.get('pago/GetInfoCabecera/' + periodoPago.Liquidacion, '').then(function (responseCabecera) {
+                self.infoAdicionalCabecera = responseCabecera.data
+                console.log(self.infoAdicionalCabecera);
+                
+                crearCabecera(self.mesPeriodo.value, self.anioPeriodo);
+                escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalPersonas, 5), 5);
+                escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalNomina, 12), 12);
+                escribirArchivo(self.infoAdicionalCabecera.CodigoUD, 2);
+                escribirArchivo(self.infoAdicionalCabecera.CodigoOperador, 2);
+                // escribirArchivo(self.totalIbc.toString(), 21);
 
-                crearCabecera(self.mesPeriodo.value, self.anioPeriodo, self.totalIbc);
-                console.log(self.totalIbc.toString());
-                escribirArchivo(self.totalIbc.toString(), 21);
-                console.log(csvContent);
-                
-                
                 csvContent += '\n';
-                console.log(self.tipoLiquidacion);
-                // console.log(response)
+
                 if (self.tipoLiquidacion === "CT") {
                   csvContent += contratistas;
                 } else {
@@ -146,10 +132,8 @@ angular.module('ssClienteApp')
 
     /* Función para crear la cabecera del archivo plano
     */
-    function crearCabecera(mes, anio, totalIbc) {
-      console.log({ mes, anio });
-
-      escribirArchivo("0100000", 7);
+    function crearCabecera(mes, anio) {
+      escribirArchivo('0100000', 7);
       escribirArchivo("UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS", 200);
       escribirArchivo("NI899999230", 18);
       escribirArchivo("7E", 22);
@@ -159,20 +143,28 @@ angular.module('ssClienteApp')
       if (mes === 12) {
         mes = 1
         var mesPlanilla = (mes < 10 ? "0" + mes : "" + mes);
-        console.log(mes);
         escribirArchivo(anio + "-" + mesPlanilla, 7);
       } else {
-        var mesPlanilla = (mes < 10 ? "0"+(mes-1) : ""+(mes-1));
-        console.log(mes);
-        console.log(mesPlanilla);
-        escribirArchivo(anio+"-"+mesPlanilla, 7);
+        var mesPlanilla = (mes < 10 ? "0" + (mes - 1) : "" + (mes - 1));
+        escribirArchivo(anio + "-" + mesPlanilla, 7);
       }
 
       var mesPlanilla = (mesPensionTemp < 10 ? "0" + mesPensionTemp : "" + mesPensionTemp)
       escribirArchivo(anio + "-" + mesPlanilla, 27);
-      console.log(totalIbc);
+    }
+
+    function completarSecuenciaNum(numero, longitud) {
+      var longFaltante = longitud - numero.toString().length;
+      var secuenciaCompletada = "";
+
+      for (var i = 0; i < longFaltante; i++) {
+        secuenciaCompletada += "0";
+      }
+      console.log({longFaltante, secuenciaCompletada});
       
-      escribirArchivo(totalIbc, 21);
+      secuenciaCompletada += numero;
+      console.log({longFaltante, secuenciaCompletada});
+      return secuenciaCompletada;
     }
 
     /* Función para escribir en el archivo, hace una iteración sobre la longitud del texto
