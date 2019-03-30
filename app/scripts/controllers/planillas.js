@@ -160,10 +160,10 @@ angular.module('ssClienteApp')
       for (var i = 0; i < longFaltante; i++) {
         secuenciaCompletada += "0";
       }
-      console.log({longFaltante, secuenciaCompletada});
+      
       
       secuenciaCompletada += numero;
-      console.log({longFaltante, secuenciaCompletada});
+      
       return secuenciaCompletada;
     }
 
