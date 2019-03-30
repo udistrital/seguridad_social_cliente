@@ -17,7 +17,7 @@ pipeline:
      - npm install
      - npm install natives
      - bower install --allow-root
-     - grunt build
+     - grunt -v build
           
     when:
       branch: [master, develop]
