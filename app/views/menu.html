@@ -61,7 +61,7 @@
         <li class="dropdown ">
           <a class=" notificacion_vista dropdown-toggle " data-toggle="dropdown" ng-if="notificacion.no_vistos()> 0">
                       <i class="fa fa-bell fa-fw faa-ring animated"></i>{{notificacion.no_vistos()}}
-                      <i class="fa fa-caret-down"></i>
+                      <i class="fa fa-caret-down"></i>title
                   </a>
           <a class="dropdown-toggle" data-toggle="dropdown" ng-if="notificacion.no_vistos() == 0">
                       <i class="fa fa-bell fa-fw"></i>
@@ -140,7 +140,7 @@
             <img class="menu-app" id="{{app.id}}" class="img-circle"/>
             </img>
           <a  title="{{app.title}}" ng-click="redirect_url(app.url)" target="_blank">
-                      {{app.id}}
+                      {{app.title}}
                   </a>
           </div>
         </md-content>
