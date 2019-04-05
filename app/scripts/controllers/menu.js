@@ -15,7 +15,7 @@ angular.module('ssClienteApp')
             en: "btn btn-primary btn-circle btn-outline"
         };
         $scope.menu_app = [{
-                id: "Seguridad Social",
+                id: "seguridadsocial",
                 title: "Seguridad Social",
                 url: "https://seguridadsocial.portaloas.udistrital.edu.co"
             },
@@ -45,7 +45,7 @@ angular.module('ssClienteApp')
                 url: "https://funcionarios.portaloas.udistrital.edu.co/kyron"
             }, {
                 id: "sga",
-                title: "SGA",
+                title: "SISTEMA DE GESTION ACADEMICA",
                 url: "https://estudiantes.portaloas.udistrital.edu.co"
             }
         ];
