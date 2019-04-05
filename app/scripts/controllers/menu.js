@@ -17,20 +17,20 @@ angular.module('ssClienteApp')
         $scope.menu_app = [{
                 id: "kronos",
                 title: "KRONOS",
-                url: "http://10.20.0.254/kronos"
+                url: ""
             },
             {
                 id: "agora",
                 title: "AGORA",
-                url: "https://pruebasfuncionarios.intranetoas.udistrital.edu.co/agora"
+                url: "https://funcionarios.portaloas.udistrital.edu.co/agora"
             }, {
                 id: "argo",
                 title: "ARGO",
-                url: "https://pruebasfuncionarios.intranetoas.udistrital.edu.co/argo"
+                url: "https://funcionarios.portaloas.udistrital.edu.co/argo"
             }, {
                 id: "arka",
                 title: "ARKA",
-                url: "https://pruebasfuncionarios.intranetoas.udistrital.edu.co/arka"
+                url: "https://funcionarios.portaloas.udistrital.edu.co/arka"
             }, {
                 id: "temis",
                 title: "TEMIS",
@@ -38,19 +38,19 @@ angular.module('ssClienteApp')
             }, {
                 id: "polux",
                 title: "POLUX",
-                url: "http://10.20.0.254/polux"
+                url: ""
             }, {
                 id: "jano",
                 title: "JANO",
-                url: "http://10.20.0.254/kronos"
+                url: "https://funcionarios.portaloas.udistrital.edu.co/jano"
             }, {
                 id: "kyron",
                 title: "KYRON",
-                url: "http://10.20.0.254/kronos"
+                url: "https://funcionarios.portaloas.udistrital.edu.co/kyron"
             }, {
                 id: "sga",
                 title: "SGA",
-                url: "http://10.20.0.254/kronos"
+                url: "https://estudiantes.portaloas.udistrital.edu.co"
             }
         ];
         $scope.notificacion = notificacion;
