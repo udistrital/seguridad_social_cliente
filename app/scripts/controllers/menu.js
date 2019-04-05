@@ -15,9 +15,9 @@ angular.module('ssClienteApp')
             en: "btn btn-primary btn-circle btn-outline"
         };
         $scope.menu_app = [{
-                id: "kronos",
-                title: "KRONOS",
-                url: ""
+                id: "Seguridad Social",
+                title: "Seguridad Social",
+                url: "https://seguridadsocial.portaloas.udistrital.edu.co"
             },
             {
                 id: "agora",
@@ -35,10 +35,6 @@ angular.module('ssClienteApp')
                 id: "temis",
                 title: "TEMIS",
                 url: "https://pruebasfuncionarios.intranetoas.udistrital.edu.co/gefad"
-            }, {
-                id: "polux",
-                title: "POLUX",
-                url: ""
             }, {
                 id: "jano",
                 title: "JANO",
