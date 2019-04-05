@@ -137,8 +137,7 @@
       <md-sidenav class="md-sidenav-left" md-component-id="left">
         <md-content>
           <div ng-repeat="app in menu_app">
-            <img class="menu-app" id="{{app.id}}" class="img-circle" style="max-width:50px"
-             alt='{{app.id}} image' />
+            <img class="menu-app" id="{{app.id}}" class="img-circle"/>
             </img>
           <a  title="{{app.title}}" ng-click="redirect_url(app.url)" target="_blank">
                       {{app.id}}
