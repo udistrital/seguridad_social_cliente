@@ -20,6 +20,11 @@ angular.module('ssClienteApp')
                 url: "https://seguridadsocial.portaloas.udistrital.edu.co"
             },
             {
+                id: "titan",
+                title: "TITAN",
+                url: "https://titan.portaloas.udistrital.edu.co"
+            },
+            {
                 id: "agora",
                 title: "AGORA",
                 url: "https://funcionarios.portaloas.udistrital.edu.co/agora"
