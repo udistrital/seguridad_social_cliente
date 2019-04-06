@@ -16,7 +16,7 @@ angular.module('ssClienteApp')
         };
         $scope.menu_app = [{
                 id: "seguridadsocial",
-                title: "Seguridad Social",
+                title: "SEGURIDAD SOCIAL",
                 url: "https://seguridadsocial.portaloas.udistrital.edu.co"
             },
             {
