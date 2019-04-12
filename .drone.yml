@@ -16,7 +16,7 @@ pipeline:
      - npm install grunt-sonar-runner --save-dev
      - grunt sonarRunner:analysis
     when:
-      branch: [develop]
+      branch: [dev]
       event: push
 
   # install the AngularJS program
