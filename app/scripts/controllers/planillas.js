@@ -89,7 +89,7 @@ angular.module('ssClienteApp')
                 // escribirArchivo(self.totalIbc.toString(), 21);
 
                 csvContent += '\n';
-                csvContent += response.data;
+                csvContent += response.data.informacion;
                 csvContent = csvContent.replace(/([^\r])\n/g, "$1\r\n");
                 var blob = new Blob([csvContent], { type: 'text/csv' });
                 var filename = 'PlanillaTipoE.csv';
