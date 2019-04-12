@@ -21,8 +21,9 @@ angular.module('ssClienteApp')
     });
 
     seguridadSocialService.get('utils/GetActualDate', '').then(function (response) {
-      if (Object.keys(response.data[0]).length !== 0) {
-        self.fechaActual = new Date(response.data);
+      
+      if (Object.keys(response.data.fecha_actual).length !== 0) {
+        self.fechaActual = new Date(response.data.fecha_actual);
       }
     });
 
@@ -72,7 +73,10 @@ angular.module('ssClienteApp')
           } else {
 
             seguridadSocialService.post('planillas/GenerarPlanillaActivos', periodoPago).then(function (response) {
-
+              console.log('planillas/GenerarPlanillaActivos');
+              console.log(periodoPago);
+              
+              
               seguridadSocialService.get('pago/GetInfoCabecera/' + periodoPago.Liquidacion, '').then(function (responseCabecera) {
                 self.infoAdicionalCabecera = responseCabecera.data
                 console.log(self.infoAdicionalCabecera);
@@ -85,12 +89,7 @@ angular.module('ssClienteApp')
                 // escribirArchivo(self.totalIbc.toString(), 21);
 
                 csvContent += '\n';
-
-                if (self.tipoLiquidacion === "CT") {
-                  csvContent += contratistas;
-                } else {
-                  csvContent += response.data;
-                }
+                csvContent += response.data.informacion;
                 csvContent = csvContent.replace(/([^\r])\n/g, "$1\r\n");
                 var blob = new Blob([csvContent], { type: 'text/csv' });
                 var filename = 'PlanillaTipoE.csv';
@@ -160,10 +159,10 @@ angular.module('ssClienteApp')
       for (var i = 0; i < longFaltante; i++) {
         secuenciaCompletada += "0";
       }
-      console.log({longFaltante, secuenciaCompletada});
+      
       
       secuenciaCompletada += numero;
-      console.log({longFaltante, secuenciaCompletada});
+      
       return secuenciaCompletada;
     }
 

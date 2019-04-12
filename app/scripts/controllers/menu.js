@@ -15,42 +15,43 @@ angular.module('ssClienteApp')
             en: "btn btn-primary btn-circle btn-outline"
         };
         $scope.menu_app = [{
-                id: "kronos",
-                title: "KRONOS",
-                url: "http://10.20.0.254/kronos"
+                id: "seguridadsocial",
+                title: "SEGURIDAD SOCIAL",
+                url: "https://seguridadsocial.portaloas.udistrital.edu.co"
+            },
+            {
+                id: "titan",
+                title: "TITAN",
+                url: "https://titan.portaloas.udistrital.edu.co"
             },
             {
                 id: "agora",
                 title: "AGORA",
-                url: "https://pruebasfuncionarios.intranetoas.udistrital.edu.co/agora"
+                url: "https://funcionarios.portaloas.udistrital.edu.co/agora"
             }, {
                 id: "argo",
                 title: "ARGO",
-                url: "https://pruebasfuncionarios.intranetoas.udistrital.edu.co/argo"
+                url: "https://funcionarios.portaloas.udistrital.edu.co/argo"
             }, {
                 id: "arka",
                 title: "ARKA",
-                url: "https://pruebasfuncionarios.intranetoas.udistrital.edu.co/arka"
+                url: "https://funcionarios.portaloas.udistrital.edu.co/arka"
             }, {
                 id: "temis",
                 title: "TEMIS",
                 url: "https://pruebasfuncionarios.intranetoas.udistrital.edu.co/gefad"
             }, {
-                id: "polux",
-                title: "POLUX",
-                url: "http://10.20.0.254/polux"
-            }, {
                 id: "jano",
                 title: "JANO",
-                url: "http://10.20.0.254/kronos"
+                url: "https://funcionarios.portaloas.udistrital.edu.co/jano"
             }, {
                 id: "kyron",
                 title: "KYRON",
-                url: "http://10.20.0.254/kronos"
+                url: "https://funcionarios.portaloas.udistrital.edu.co/kyron"
             }, {
                 id: "sga",
-                title: "SGA",
-                url: "http://10.20.0.254/kronos"
+                title: "SISTEMA DE GESTION ACADEMICA",
+                url: "https://estudiantes.portaloas.udistrital.edu.co"
             }
         ];
         $scope.notificacion = notificacion;
@@ -100,7 +101,7 @@ angular.module('ssClienteApp')
                 console.log(roles);
                 
                 // roles='ASISTENTE_RECURSOS_HUMANOS_SS';
-                configuracionRequest.get('menu_opcion_padre/ArbolMenus/' + roles + '/Titan','').then(function(response) {
+                configuracionRequest.get('menu_opcion_padre/ArbolMenus/' + roles + '/ss','').then(function(response) {
                     console.log(response);
                     $rootScope.my_menu = response.data;
     

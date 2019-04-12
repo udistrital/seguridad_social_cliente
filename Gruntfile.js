@@ -9,6 +9,9 @@
 
 module.exports = function(grunt) {
 
+    // Test wich SonarQube
+    grunt.loadNpmTasks('grunt-sonar-runner');
+
     // Time how long tasks take. Can help when optimizing build times
     require('time-grunt')(grunt);
 
@@ -428,6 +431,29 @@ module.exports = function(grunt) {
                 'svgmin'
             ]
         },
+
+            // sonar
+    sonarRunner: {
+        analysis: {
+          options: {
+            debug: true,
+            separator: '\n',
+            dryRun: false,
+            sonar: {
+              host: {
+                url: 'http://10.20.0.77:9000'
+              },
+              projectKey: 'ss_cliente',
+              projectName: 'ss_cliente',
+              projectVersion: '0.1',
+              sources: ['app','test'].join(','),
+              language: 'js',
+              sourceEncoding: 'UTF-8'
+            }
+          }
+        }
+      },
+      // fin sonar
 
         // Test settings
         karma: {

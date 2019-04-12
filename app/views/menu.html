@@ -61,7 +61,7 @@
         <li class="dropdown ">
           <a class=" notificacion_vista dropdown-toggle " data-toggle="dropdown" ng-if="notificacion.no_vistos()> 0">
                       <i class="fa fa-bell fa-fw faa-ring animated"></i>{{notificacion.no_vistos()}}
-                      <i class="fa fa-caret-down"></i>
+                      <i class="fa fa-caret-down"></i>title
                   </a>
           <a class="dropdown-toggle" data-toggle="dropdown" ng-if="notificacion.no_vistos() == 0">
                       <i class="fa fa-bell fa-fw"></i>
@@ -136,9 +136,14 @@
     <section layout="row" flex>
       <md-sidenav class="md-sidenav-left" md-component-id="left">
         <md-content>
-          <a ng-repeat="app in menu_app" title="{{app.title}}" ng-click="redirect_url(app.url)" target="_blank">
-                      <img class="menu-app" id="{{app.id}}"></img>
+          <div ng-repeat="app in menu_app">
+            <img class="menu-app img-circle" id="{{app.id}}"/>
+            </img>
+          <a  title="{{app.title}}" ng-click="redirect_url(app.url)" target="_blank">
+                      {{app.title}}
                   </a>
+          <md-divider></md-divider>
+          </div>
         </md-content>
       </md-sidenav>
     </section>

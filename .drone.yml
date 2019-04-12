@@ -7,19 +7,27 @@ workspace:
 
 pipeline:
 
-  # build and test the go program
-  nodejs:
+  # run grunt sonar runner
+  grunt-sonar-runner:
+    image: timbru31/java-node
+    commands:
+     - npm install -g grunt-cli bower
+     - npm install grunt --save-dev
+     - npm install grunt-sonar-runner --save-dev
+     - grunt sonarRunner:analysis
+    when:
+      branch: [dev]
+      event: push
+
+  # install the AngularJS program
+  nodejs-build:
     image: node:10.7.0
     commands:
-
-     #- apt-get update -y
-
      - npm install -g grunt-cli bower
-     - npm install
      - npm install natives
+     - npm install
      - bower install --allow-root
      - grunt build
-          
     when:
       branch: [master, develop]
       event: push
