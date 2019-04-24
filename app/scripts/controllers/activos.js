@@ -43,10 +43,10 @@ angular.module('ssClienteApp')
 
     //Trae las nóminas liquidadas de acuerdo al mes y año seleccionado
     self.buscarNomina = function () {
-      console.log('preliquidacion?query=EstadoPreliquidacion.Activo:true,EstadoPreliquidacion.Nombre:EnOrdenPago,Mes:' + self.mesPeriodo + ',Ano:' + self.anioPeriodo);
 
       titanCrudService.get('preliquidacion', 'query=EstadoPreliquidacion.Activo:true,EstadoPreliquidacion.Nombre:Abierta,Mes:' + self.mesPeriodo + ',Ano:' + self.anioPeriodo)
         .then(function (response) {
+
           if (response.data !== null) {
             self.nominas = response.data;
             self.divNominas = true;
@@ -55,8 +55,13 @@ angular.module('ssClienteApp')
             self.divNominas = false;
             self.nominas = null;
             self.divError = true;
-            self.errorMensaje = "No se encontrarón nóminas liquidadas para " + self.meses[self.mesPeriodo] + " de " + self.anioPeriodo;
+            self.errorMensajeParte1 = "No se encontrarón nóminas liquidadas para " + self.meses[self.mesPeriodo] + " de " + self.anioPeriodo;
           }
+        }, function(){
+          self.divNominas = false;
+            self.nominas = null;
+            self.divError = true;
+            self.errorMensajeParte1 = "No se encontrarón nóminas liquidadas para " + self.meses[self.mesPeriodo] + " de " + self.anioPeriodo;
         });
     };
 
@@ -65,10 +70,9 @@ angular.module('ssClienteApp')
       personas = [];
       nominaObj = JSON.parse(self.nomina);  // Conviente el string de self.nomina a un objetso json
 
-      seguridadSocialCrudService.get('periodo_pago', 'query=Mes:' + self.mesPeriodo + ',Anio:' + self.anioPeriodo + ',TipoLiquidacion:' + nominaObj.Nomina.TipoNomina.Nombre + ',EstadoSeguridadSocial.Nombre:Abierta').then(function (response) {
-        console.log('periodo_pago?query=Mes:' + self.mesPeriodo + ',Anio:' + self.anioPeriodo + ',TipoLiquidacion:' + nominaObj.Nomina.TipoNomina.Nombre + ',EstadoSeguridadSocial.Nombre:Abierta');
-        console.log(response.data);
-        
+      seguridadSocialCrudService.get('periodo_pago', 'query=Mes:' + self.mesPeriodo + 
+        ',Anio:' + self.anioPeriodo + ',TipoLiquidacion:' + nominaObj.Nomina.TipoNomina.Nombre + 
+        ',EstadoSeguridadSocial.Nombre:Abierta').then(function (response) {
         if (Object.keys(response.data[0]).length !== 0) {
           self.divError = true;
         } else {
@@ -81,10 +85,7 @@ angular.module('ssClienteApp')
 
       switch (nominaObj.Nomina.TipoNomina.Nombre) {
         case "HCH":
-          console.log("Es honorarios");
           seguridadSocialService.get('pago/CalcularSegSocialHonorarios/' + nominaObj.Id).then(function (response) {
-            console.log('pago/CalcularSegSocialHonorarios/', nominaObj.Id);
-            console.log("response: ", response.data);
 
             if (response.data !== null) {
               for (var i in response.data) {
@@ -101,9 +102,6 @@ angular.module('ssClienteApp')
 
         default:
           seguridadSocialService.getServicio('pago/CalcularSegSocial', nominaObj.Id).then(function (response) {
-            console.log('pago/CalcularSegSocial', nominaObj.Id);
-            console.log("response: ", response.data);
-
             if (response.data !== null) {
               for (var i in response.data) {
                 dataDescuentos.push(response.data[i]);
@@ -187,8 +185,6 @@ angular.module('ssClienteApp')
               transaccion.Pagos.push(pago);
             }
           }
-
-          console.log(transaccion);
           
           seguridadSocialService.post('pago/RegistrarPagos', transaccion).then(function (response) {
             if (response.data.Code === "Ok") {
