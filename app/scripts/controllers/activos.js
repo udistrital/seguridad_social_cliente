@@ -43,7 +43,8 @@ angular.module('ssClienteApp')
 
     //Trae las nóminas liquidadas de acuerdo al mes y año seleccionado
     self.buscarNomina = function () {
-
+      self.novedadesDiv = false;
+      self.gridPersonas = false;
       titanCrudService.get('preliquidacion', 'query=EstadoPreliquidacion.Activo:true,EstadoPreliquidacion.Nombre:Abierta,Mes:' + self.mesPeriodo + ',Ano:' + self.anioPeriodo)
         .then(function (response) {
 
@@ -69,6 +70,8 @@ angular.module('ssClienteApp')
       dataDescuentos = [];
       personas = [];
       nominaObj = JSON.parse(self.nomina);  // Conviente el string de self.nomina a un objetso json
+      self.novedadesDiv = false;
+      self.gridPersonas = true;
 
       seguridadSocialCrudService.get('periodo_pago', 'query=Mes:' + self.mesPeriodo + 
         ',Anio:' + self.anioPeriodo + ',TipoLiquidacion:' + nominaObj.Nomina.TipoNomina.Nombre + 
