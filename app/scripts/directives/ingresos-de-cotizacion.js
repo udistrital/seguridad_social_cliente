@@ -25,7 +25,7 @@ angular.module('ssClienteApp')
         showTreeExpandNoChildren: false,
 
         columnDefs: [
-          {field: 'Concepto.AliasConcepto', visible: true, displayName: 'Concepto', width: '50%',
+          {field: 'Concepto.AliasConcepto', visible: true, displayName: 'Concepto', width: '70%',
             cellTooltip: function(row, col) {
                 return row.entity.Concepto.AliasConcepto;
               }},
@@ -33,11 +33,11 @@ angular.module('ssClienteApp')
             field: 'Persona.Id', visible: false, displayName: 'Persona'
           },
           {
-            field: 'ValorCalculado', visible: true, displayName: 'Valor',
+            field: 'ValorCalculado', visible: true, displayName: 'Valor', width: '18%',
             cellFilter: 'currency', cellTemplate: '<div align="right">{{row.entity.ValorCalculado | currency}}</div>'
           },
           {
-            field: 'DiasLiquidados', visible: true, displayName: 'Días Liquidados',
+            field: 'DiasLiquidados', visible: true, displayName: 'Días', 
             cellTemplate: '<div align="center">{{row.entity.DiasLiquidados}}</div>'
           }
         ]};
