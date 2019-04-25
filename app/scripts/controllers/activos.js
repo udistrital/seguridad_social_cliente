@@ -8,12 +8,11 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-  .controller('ActivosCtrl', function (seguridadSocialService, titanCrudService, seguridadSocialCrudService, agoraService, argoService, $scope, $translate, administrativaAmazonService) {
+  .controller('ActivosCtrl', function (seguridadSocialService, titanCrudService, seguridadSocialCrudService, $translate) {
     var self = this;
     var dataDescuentos = [];
     var nominaObj;   // Objeto json con la nómina seleccionada
     var personas = [];
-
     self.novedadesDiv = false;
 
     self.anioPeriodo = new Date().getFullYear();
@@ -82,8 +81,8 @@ angular.module('ssClienteApp')
           } else {
             self.divError = false;
           }
-          self.errorMensajeParte1 = 'Parece que ya existen registros de seguridad social con la nómina'
-          self.nominaErrorMensaje = nominaObj.Nomina.Descripcion
+          self.errorMensajeParte1 = 'Parece que ya existen registros de seguridad social con la nómina';
+          self.nominaErrorMensaje = nominaObj.Nomina.Descripcion;
           self.errorMensajeParte2 = 'de para el periodo: ' + self.meses[self.mesPeriodo] + ' del ' + self.anioPeriodo;
         });
 
@@ -101,6 +100,7 @@ angular.module('ssClienteApp')
           });
           break;
       }
+      // self.gridOptions.gridFooterTemplate = '<div class="ui-grid-bottom-panel" style="text-align: center">Total Personas: </div>';
     };
 
     /* 
@@ -110,7 +110,7 @@ angular.module('ssClienteApp')
     */
     function agregarInformacionGrid(data) {
       var proveedores = {};
-      var resultadosProveedores = new Array();
+      var resultadosProveedores = [];
       if (data !== null) {
         for (var i in data) {
           if (proveedores.hasOwnProperty(data[i].IdProveedor)) {
@@ -125,16 +125,16 @@ angular.module('ssClienteApp')
           } else {
             proveedores[data[i].IdProveedor] = data[i];
           }
-          
+
           dataDescuentos.push(data[i]); // Es el arreglo que se utiliza para guardar la información
           personas.push(data[i].IdProveedor.toString());
         }
         for (var key in proveedores) {
           if (proveedores.hasOwnProperty(key)) {
-            resultadosProveedores.push(proveedores[key])
+            resultadosProveedores.push(proveedores[key]);
           }
         }
-        
+
         self.gridOptions.data = resultadosProveedores;
       } else {
         self.gridOptions.data = null;
@@ -234,7 +234,7 @@ angular.module('ssClienteApp')
       multiSelect: false,
       treeRowHeaderAlwaysVisible: false,
       showTreeExpandNoChildren: false,
-
+      showGridFooter: true,
       columnDefs: [
         { field: 'Persona', visible: false },
         { field: 'NombrePersona', name: "Nombre Completo", visible: true, width: '25%' },
