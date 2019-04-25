@@ -23,9 +23,9 @@ angular.module('ssClienteApp')
     var concpSegSoc = []; // Tiene la información de los conceptos correspondientes a pagos
 
     self.meses = {
-      1: $translate.instant("ENERO"), 2: $translate.instant("FEBRERO"), 3: $translate.instant("MARZO"), 
+      1: $translate.instant("ENERO"), 2: $translate.instant("FEBRERO"), 3: $translate.instant("MARZO"),
       4: $translate.instant("ABRIL"), 5: $translate.instant("MAYO"), 6: $translate.instant("JUNIO"),
-      7: $translate.instant("JULIO"), 8: $translate.instant("AGOSTO"), 9: $translate.instant("SEPTIEMBRE"), 
+      7: $translate.instant("JULIO"), 8: $translate.instant("AGOSTO"), 9: $translate.instant("SEPTIEMBRE"),
       10: $translate.instant("OCTUBRE"), 11: $translate.instant("NOVIEMBRE"), 12: $translate.instant("DICIEMBRE")
     };
 
@@ -38,7 +38,7 @@ angular.module('ssClienteApp')
     calcularAnios();
 
     titanCrudService.get('concepto_nomina', 'limit=0&query=TipoConcepto.Nombre:pago_seguridad_social').then(function (response) {
-          concpSegSoc = response.data;
+      concpSegSoc = response.data;
     });
 
     //Trae las nóminas liquidadas de acuerdo al mes y año seleccionado
@@ -58,66 +58,88 @@ angular.module('ssClienteApp')
             self.divError = true;
             self.errorMensajeParte1 = "No se encontrarón nóminas liquidadas para " + self.meses[self.mesPeriodo] + " de " + self.anioPeriodo;
           }
-        }, function(){
+        }, function () {
           self.divNominas = false;
-            self.nominas = null;
-            self.divError = true;
-            self.errorMensajeParte1 = "No se encontrarón nóminas liquidadas para " + self.meses[self.mesPeriodo] + " de " + self.anioPeriodo;
+          self.nominas = null;
+          self.divError = true;
+          self.errorMensajeParte1 = "No se encontrarón nóminas liquidadas para " + self.meses[self.mesPeriodo] + " de " + self.anioPeriodo;
         });
     };
 
     self.nominaSeleccionada = function () {
+      self.gridOptions.data = [];
       dataDescuentos = [];
       personas = [];
       nominaObj = JSON.parse(self.nomina);  // Conviente el string de self.nomina a un objetso json
       self.novedadesDiv = false;
       self.gridPersonas = true;
 
-      seguridadSocialCrudService.get('periodo_pago', 'query=Mes:' + self.mesPeriodo + 
-        ',Anio:' + self.anioPeriodo + ',TipoLiquidacion:' + nominaObj.Nomina.TipoNomina.Nombre + 
+      seguridadSocialCrudService.get('periodo_pago', 'query=Mes:' + self.mesPeriodo +
+        ',Anio:' + self.anioPeriodo + ',TipoLiquidacion:' + nominaObj.Nomina.TipoNomina.Nombre +
         ',EstadoSeguridadSocial.Nombre:Abierta').then(function (response) {
-        if (Object.keys(response.data[0]).length !== 0) {
-          self.divError = true;
-        } else {
-          self.divError = false;
-        }
-        self.errorMensajeParte1 = 'Parece que ya existen registros de seguridad social con la nómina'
-        self.nominaErrorMensaje = nominaObj.Nomina.Descripcion
-        self.errorMensajeParte2 = 'de para el periodo: ' + self.meses[self.mesPeriodo] +' del ' + self.anioPeriodo;
-      });
+          if (Object.keys(response.data[0]).length !== 0) {
+            self.divError = true;
+          } else {
+            self.divError = false;
+          }
+          self.errorMensajeParte1 = 'Parece que ya existen registros de seguridad social con la nómina'
+          self.nominaErrorMensaje = nominaObj.Nomina.Descripcion
+          self.errorMensajeParte2 = 'de para el periodo: ' + self.meses[self.mesPeriodo] + ' del ' + self.anioPeriodo;
+        });
 
       switch (nominaObj.Nomina.TipoNomina.Nombre) {
         case "HCH":
+        case "CT":
           seguridadSocialService.get('pago/CalcularSegSocialHonorarios/' + nominaObj.Id).then(function (response) {
-
-            if (response.data !== null) {
-              for (var i in response.data) {
-                dataDescuentos.push(response.data[i]);
-                personas.push(response.data[i].IdProveedor.toString());
-              }
-              self.gridOptions.data = dataDescuentos;
-            } else {
-              self.gridOptions.data = null;
-            }
+            agregarInformacionGrid(response.data);
           });
-
           break;
 
         default:
           seguridadSocialService.getServicio('pago/CalcularSegSocial', nominaObj.Id).then(function (response) {
-            if (response.data !== null) {
-              for (var i in response.data) {
-                dataDescuentos.push(response.data[i]);
-                personas.push(response.data[i].IdProveedor.toString());
-              }
-              self.gridOptions.data = dataDescuentos;
-            } else {
-              self.gridOptions.data = null;
-            }
+            agregarInformacionGrid(response.data);
           });
           break;
       }
     };
+
+    /* 
+    agregarInformacionGrid Función para agregar información al grid de acuerdo a los calculos de seguridad social
+    En caso de que alguna persona tenga aparezca más de una vez (por tener varias vinculaciones, por ejemplo, dos vinculaciones
+      de docente de honorarios) la función se encarga de agrupar los valores y sumarlos para tener un total correspondiente
+    */
+    function agregarInformacionGrid(data) {
+      var proveedores = {};
+      var resultadosProveedores = new Array();
+      if (data !== null) {
+        for (var i in data) {
+          if (proveedores.hasOwnProperty(data[i].IdProveedor)) {
+            proveedores[data[i].IdProveedor].SaludUd += data[i].SaludUd;
+            proveedores[data[i].IdProveedor].SaludTotal += data[i].SaludTotal;
+            proveedores[data[i].IdProveedor].PensionUd += data[i].PensionUd;
+            proveedores[data[i].IdProveedor].PensionTotal += data[i].PensionTotal;
+            proveedores[data[i].IdProveedor].FondoSolidaridad += data[i].FondoSolidaridad;
+            proveedores[data[i].IdProveedor].Arl += data[i].Arl;
+            proveedores[data[i].IdProveedor].Caja += data[i].Caja;
+            proveedores[data[i].IdProveedor].Icbf += data[i].Icbf;
+          } else {
+            proveedores[data[i].IdProveedor] = data[i];
+          }
+          
+          dataDescuentos.push(data[i]); // Es el arreglo que se utiliza para guardar la información
+          personas.push(data[i].IdProveedor.toString());
+        }
+        for (var key in proveedores) {
+          if (proveedores.hasOwnProperty(key)) {
+            resultadosProveedores.push(proveedores[key])
+          }
+        }
+        
+        self.gridOptions.data = resultadosProveedores;
+      } else {
+        self.gridOptions.data = null;
+      }
+    }
 
 
     //Función para registrar un nuevo periodo de pago
@@ -188,7 +210,7 @@ angular.module('ssClienteApp')
               transaccion.Pagos.push(pago);
             }
           }
-          
+
           seguridadSocialService.post('pago/RegistrarPagos', transaccion).then(function (response) {
             if (response.data.Code === "Ok") {
               swal(
