@@ -51,7 +51,6 @@ angular.module('ssClienteApp')
             var detalle_liquidacion = [];
 
             for (var concepto of response.data) {
-              console.log(concepto);
               if (ingresos_cotizacion.hasOwnProperty(concepto.Concepto.NombreConcepto)) {
                 ingresos_cotizacion[concepto.Concepto.NombreConcepto].ValorCalculado += concepto.ValorCalculado;
               } else {
