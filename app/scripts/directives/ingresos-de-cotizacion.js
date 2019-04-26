@@ -15,7 +15,7 @@ angular.module('ssClienteApp')
       preliquidacion: '='
     },
     templateUrl: 'views/directives/ingresos-de-cotizacion.html',
-    controller:function(uigridservice, titanCrudService, $scope){
+    controller:function(titanCrudService, $scope){
       var self = this;
 
       self.gridOptions = {
@@ -43,9 +43,33 @@ angular.module('ssClienteApp')
         ]};
 
         $scope.$watch("persona", function(){
-          titanCrudService.get('detalle_preliquidacion','limit=0&query=Persona:'+$scope.persona.IdProveedor+',Concepto.TipoConcepto.Nombre:seguridad_social,Preliquidacion.Id:'+JSON.parse($scope.preliquidacion).Id+'&fields=Concepto,ValorCalculado,DiasLiquidados')
+          titanCrudService.get('detalle_preliquidacion','limit=0&query=Persona:'+$scope.persona.IdProveedor+
+            ',Concepto.TipoConcepto.Nombre:seguridad_social,Preliquidacion.Id:'+JSON.parse($scope.preliquidacion).Id+
+            '&fields=Persona,Concepto,ValorCalculado,DiasLiquidados')
           .then(function(response) {
-            var detalle_liquidacion = response.data;
+            var ingresos_cotizacion = {};
+            var detalle_liquidacion = [];
+
+            for (var concepto of response.data) {
+              console.log(concepto);
+              if (ingresos_cotizacion.hasOwnProperty(concepto.Concepto.NombreConcepto)) {
+                ingresos_cotizacion[concepto.Concepto.NombreConcepto].ValorCalculado += concepto.ValorCalculado;
+              } else {
+                ingresos_cotizacion[concepto.Concepto.NombreConcepto] = 
+                {
+                  Concepto: {AliasConcepto:concepto.Concepto.AliasConcepto},
+                  ValorCalculado: concepto.ValorCalculado,
+                  DiasLiquidados: concepto.DiasLiquidados
+                };
+              }
+            }
+
+            for (var key in ingresos_cotizacion) {
+              if (ingresos_cotizacion.hasOwnProperty(key)) {
+                detalle_liquidacion.push(ingresos_cotizacion[key]);
+              }
+            }
+            
             detalle_liquidacion.push(
               {
                 Concepto: { AliasConcepto: 'Valor correspondiente a la UD por salud' },
