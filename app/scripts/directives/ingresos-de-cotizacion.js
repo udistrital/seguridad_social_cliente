@@ -50,15 +50,15 @@ angular.module('ssClienteApp')
             var ingresos_cotizacion = {};
             var detalle_liquidacion = [];
 
-            for (var concepto of response.data) {
-              if (ingresos_cotizacion.hasOwnProperty(concepto.Concepto.NombreConcepto)) {
-                ingresos_cotizacion[concepto.Concepto.NombreConcepto].ValorCalculado += concepto.ValorCalculado;
+            for (var i = 0; i < response.data.length; i++) {
+              if (ingresos_cotizacion.hasOwnProperty(response.data[i].Concepto.NombreConcepto)) {
+                ingresos_cotizacion[response.data[i].Concepto.NombreConcepto].ValorCalculado += response.data[i].ValorCalculado;
               } else {
-                ingresos_cotizacion[concepto.Concepto.NombreConcepto] = 
+                ingresos_cotizacion[response.data[i].Concepto.NombreConcepto] = 
                 {
-                  Concepto: {AliasConcepto:concepto.Concepto.AliasConcepto},
-                  ValorCalculado: concepto.ValorCalculado,
-                  DiasLiquidados: concepto.DiasLiquidados
+                  Concepto: {AliasConcepto:response.data[i].Concepto.AliasConcepto},
+                  ValorCalculado: response.data[i].ValorCalculado,
+                  DiasLiquidados: response.data[i].DiasLiquidados
                 };
               }
             }
