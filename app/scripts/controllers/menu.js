@@ -98,17 +98,14 @@ angular.module('ssClienteApp')
                 }
     
                 roles = roles.replace(/,/g, '%2C');
-                console.log(roles);
                 
                 // roles='ASISTENTE_RECURSOS_HUMANOS_SS';
                 configuracionRequest.get('menu_opcion_padre/ArbolMenus/' + roles + '/ss','').then(function(response) {
-                    console.log(response);
                     $rootScope.my_menu = response.data;
     
                 })
                 .catch(
                     function(response) {
-                        console.log(response);
                         $rootScope.my_menu = response.data;
         
                     });

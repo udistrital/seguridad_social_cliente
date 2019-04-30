@@ -49,7 +49,7 @@
     </div>
 
     <loadingcircle load="load"></loadingcircle>
-    <div class="panel-body" ng-if="activos.gridOptions.data">
+    <div class="panel-body" ng-if="activos.gridPersonas">
         <hr size="50">
         <table style="width:100%;">
             <td>
@@ -59,10 +59,10 @@
         </table>
 
         <div class="row" ng-if="activos.novedadesDiv">
-            <div class="col-sm-6" align="left" style="width:50%;">
+            <div class="col-sm-6" align="left" style="width:55%;">
                 <ingresos-de-cotizacion persona="activos.persona" preliquidacion="activos.nomina"> </ingresos-de-cotizacion>
             </div>
-            <div class="col-sm-6" align="rigth" style="width:50%;">
+            <div class="col-sm-6" align="rigth" style="width:45%;">
                 <concepto-por-persona persona="activos.persona" preliquidacion="activos.nomina"> </concepto-por-persona>
             </div>
             <br>

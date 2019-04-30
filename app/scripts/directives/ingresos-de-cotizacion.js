@@ -15,7 +15,7 @@ angular.module('ssClienteApp')
       preliquidacion: '='
     },
     templateUrl: 'views/directives/ingresos-de-cotizacion.html',
-    controller:function(uigridservice, titanCrudService, $scope){
+    controller:function(titanCrudService, $scope){
       var self = this;
 
       self.gridOptions = {
@@ -25,7 +25,7 @@ angular.module('ssClienteApp')
         showTreeExpandNoChildren: false,
 
         columnDefs: [
-          {field: 'Concepto.AliasConcepto', visible: true, displayName: 'Concepto', width: '50%',
+          {field: 'Concepto.AliasConcepto', visible: true, displayName: 'Concepto', width: '70%',
             cellTooltip: function(row, col) {
                 return row.entity.Concepto.AliasConcepto;
               }},
@@ -33,19 +33,42 @@ angular.module('ssClienteApp')
             field: 'Persona.Id', visible: false, displayName: 'Persona'
           },
           {
-            field: 'ValorCalculado', visible: true, displayName: 'Valor',
+            field: 'ValorCalculado', visible: true, displayName: 'Valor', width: '18%',
             cellFilter: 'currency', cellTemplate: '<div align="right">{{row.entity.ValorCalculado | currency}}</div>'
           },
           {
-            field: 'DiasLiquidados', visible: true, displayName: 'Días Liquidados',
+            field: 'DiasLiquidados', visible: true, displayName: 'Días', 
             cellTemplate: '<div align="center">{{row.entity.DiasLiquidados}}</div>'
           }
         ]};
 
         $scope.$watch("persona", function(){
-          titanCrudService.get('detalle_preliquidacion','limit=0&query=Persona:'+$scope.persona.IdProveedor+',Concepto.TipoConcepto.Nombre:seguridad_social,Preliquidacion.Id:'+JSON.parse($scope.preliquidacion).Id+'&fields=Concepto,ValorCalculado,DiasLiquidados')
+          titanCrudService.get('detalle_preliquidacion','limit=0&query=Persona:'+$scope.persona.IdProveedor+
+            ',Concepto.TipoConcepto.Nombre:seguridad_social,Preliquidacion.Id:'+JSON.parse($scope.preliquidacion).Id+
+            '&fields=Persona,Concepto,ValorCalculado,DiasLiquidados')
           .then(function(response) {
-            var detalle_liquidacion = response.data;
+            var ingresos_cotizacion = {};
+            var detalle_liquidacion = [];
+
+            for (var concepto of response.data) {
+              if (ingresos_cotizacion.hasOwnProperty(concepto.Concepto.NombreConcepto)) {
+                ingresos_cotizacion[concepto.Concepto.NombreConcepto].ValorCalculado += concepto.ValorCalculado;
+              } else {
+                ingresos_cotizacion[concepto.Concepto.NombreConcepto] = 
+                {
+                  Concepto: {AliasConcepto:concepto.Concepto.AliasConcepto},
+                  ValorCalculado: concepto.ValorCalculado,
+                  DiasLiquidados: concepto.DiasLiquidados
+                };
+              }
+            }
+
+            for (var key in ingresos_cotizacion) {
+              if (ingresos_cotizacion.hasOwnProperty(key)) {
+                detalle_liquidacion.push(ingresos_cotizacion[key]);
+              }
+            }
+            
             detalle_liquidacion.push(
               {
                 Concepto: { AliasConcepto: 'Valor correspondiente a la UD por salud' },
