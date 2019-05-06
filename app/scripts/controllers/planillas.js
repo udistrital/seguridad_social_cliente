@@ -8,10 +8,13 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-  .controller('PlanillasCtrl', function (seguridadSocialCrudService, seguridadSocialService, titanCrudService) {
+  .controller('PlanillasCtrl', function (seguridadSocialCrudService, seguridadSocialService, titanCrudService, $q) {
     var self = this;
     var csvContent = '';     // variable para generar el archivo plano
     var periodoPago = {};
+
+    var promises = [];
+    var personasPlanilla = [];
 
     self.anios = [];
     self.proveedores = [];
@@ -21,7 +24,7 @@ angular.module('ssClienteApp')
     });
 
     seguridadSocialService.get('utils/GetActualDate', '').then(function (response) {
-      
+
       if (Object.keys(response.data.fecha_actual).length !== 0) {
         self.fechaActual = new Date(response.data.fecha_actual);
       }
@@ -52,11 +55,28 @@ angular.module('ssClienteApp')
       return estado;
     }
 
+    async function getPersonas(limit, offset) {
+      for (var i = 0; i < limit; i = i+offset) {
+        console.log(limit,',',offset);
+        var valor = await seguridadSocialService.post('planillas/GenerarPlanillaActivos/'+offset+'/'+i, periodoPago);
+        console.log(valor);
+        valor.data.forEach(function(dato) {
+          personasPlanilla.push(dato);
+        });
+      }
+      console.log('termino todas las promesas');
+      console.log('personasPlanilla: ', personasPlanilla);
+    }
+
     // se encarga de generar el archivo
     self.buscarPagos = function () {
+      personasPlanilla = [];
       csvContent = '';
       self.divError = false;
       if (comprobarDatosIngresados()) {
+
+
+
         seguridadSocialCrudService.get('periodo_pago', 'query=Mes:' + parseInt(self.mesPeriodo.value) + ',Anio:' + parseInt(self.anioPeriodo) + ',tipo_liquidacion:' + self.tipoLiquidacion + '&liimit=1').then(function (response) {
 
           periodoPago = null
@@ -72,41 +92,75 @@ angular.module('ssClienteApp')
             self.errorMensaje = 'El periodo ingresado no tiene información.';
           } else {
 
-            seguridadSocialService.post('planillas/GenerarPlanillaActivos', periodoPago).then(function (response) {
-              console.log('planillas/GenerarPlanillaActivos');
-              console.log(periodoPago);
-              
-              
-              seguridadSocialService.get('pago/GetInfoCabecera/' + periodoPago.Liquidacion, '').then(function (responseCabecera) {
-                self.infoAdicionalCabecera = responseCabecera.data
-                console.log(self.infoAdicionalCabecera);
-                
-                crearCabecera(self.mesPeriodo.value, self.anioPeriodo);
-                escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalPersonas, 5), 5);
-                escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalNomina, 12), 12);
-                escribirArchivo(self.infoAdicionalCabecera.CodigoUD, 2);
-                escribirArchivo(self.infoAdicionalCabecera.CodigoOperador, 2);
-                // escribirArchivo(self.totalIbc.toString(), 21);
+            titanCrudService.get('detalle_preliquidacion', 'limit=-1&query=Concepto.NombreConcepto:ibc_liquidado,Preliquidacion.Id:' + periodoPago.Liquidacion).then(function (response) {
+              crearCabecera(self.mesPeriodo.value, self.anioPeriodo);
 
-                csvContent += '\n';
-                csvContent += response.data.informacion;
-                csvContent = csvContent.replace(/([^\r])\n/g, "$1\r\n");
-                var blob = new Blob([csvContent], { type: 'text/csv' });
-                var filename = 'PlanillaTipoE.csv';
-                if (window.navigator.msSaveOrOpenBlob) {
-                  window.navigator.msSaveBlob(blob, filename);
-                }
-                else {
-                  var elem = window.document.createElement('a');
-                  elem.href = window.URL.createObjectURL(blob);
-                  elem.download = filename;
-                  document.body.appendChild(elem);
-                  elem.click();
-                  document.body.removeChild(elem);
-                }
-              });
+              var totalLiquidacion = response.data.length;
+              var particion = totalLiquidacion * 0.3;
+              // var i = 0;
+              // console.log({ "totalLiquidacion": totalLiquidacion, "particion": particion });
+
+              // seguridadSocialService.get('pago/GetInfoCabecera/' + periodoPago.Liquidacion, '').then(function (responseCabecera) {
+              //   self.infoAdicionalCabecera = responseCabecera.data
+              //   console.log(self.infoAdicionalCabecera);
+
+
+              //   escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalPersonas, 5), 5);
+              //   escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalNomina, 12), 12);
+              //   escribirArchivo(self.infoAdicionalCabecera.CodigoUD, 2);
+              //   escribirArchivo(self.infoAdicionalCabecera.CodigoOperador, 2);
+
+              //   console.log('planillas/GenerarPlanillaActivos');
+              //   console.log(periodoPago);
+
+              getPersonas(totalLiquidacion, particion);
+
+              // f1();
+
+              // for (var i = 0; i < totalLiquidacion; i = i + particion) {
+                
+              //   promises.push(getPersonas(particion, i));
+              //    // var data = getPersonas(particion, i);
+              //    // console.log(data);
+
+              // }
+
+              // Promise.all(promises).then(function(data) {
+              //   console.log('Promise.all: ',data);
+                
+              // });
+              
+              // var defer = $q.defer();
+              // $q.all(promises).then(function(data) {
+              //   console.log('todas las promesas fueron resueltas');
+              //   console.log(data);
+              //   var x = defer.resolve(data);
+              //   console.log(defer.promise);
+              // }, function(err) {
+              //   console.log('error:', err);
+              // }, function(update) {
+              //   console.log('update promises...',update);
+              // });
+
+              // csvContent += '\n';
+              //   csvContent += response.data.informacion;
+              //   csvContent = csvContent.replace(/([^\r])\n/g, "$1\r\n");
+              //   var blob = new Blob([csvContent], { type: 'text/csv' });
+              //   var filename = 'PlanillaTipoE.csv';
+              //   if (window.navigator.msSaveOrOpenBlob) {
+              //     window.navigator.msSaveBlob(blob, filename);
+              //   }
+              //   else {
+              //     var elem = window.document.createElement('a');
+              //     elem.href = window.URL.createObjectURL(blob);
+              //     elem.download = filename;
+              //     document.body.appendChild(elem);
+              //     elem.click();
+              //     document.body.removeChild(elem);
+              // }
 
             });
+            // });
           }
         });
       }
@@ -159,10 +213,10 @@ angular.module('ssClienteApp')
       for (var i = 0; i < longFaltante; i++) {
         secuenciaCompletada += "0";
       }
-      
-      
+
+
       secuenciaCompletada += numero;
-      
+
       return secuenciaCompletada;
     }
 
