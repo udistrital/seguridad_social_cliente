@@ -55,17 +55,32 @@ angular.module('ssClienteApp')
       return estado;
     }
 
-    async function getPersonas(limit, offset) {
+    function getPersonas(limit, offset) {
+      promises = [];
       for (var i = 0; i < limit; i = i+offset) {
-        console.log(limit,',',offset);
-        var valor = await seguridadSocialService.post('planillas/GenerarPlanillaActivos/'+offset+'/'+i, periodoPago);
-        console.log(valor);
-        valor.data.forEach(function(dato) {
-          personasPlanilla.push(dato);
-        });
+        var promise = seguridadSocialService.get('planillas/PruebaPlanilla/'+i, periodoPago);
+        promises.push(promise);
       }
-      console.log('termino todas las promesas');
-      console.log('personasPlanilla: ', personasPlanilla);
+
+      promises.reduce(function(p, val) {
+        return p.then(function(response) {
+            // console.log(val);
+            // console.log(response);
+            personasPlanilla.push(response.data);
+            return val;
+        });
+    }, $q.when(true)).then(function(finalResult) {
+        // done here
+        personasPlanilla.push(finalResult.data);
+        // console.log(finalResult);
+        console.log(personasPlanilla);
+        
+    }, function(err) {
+      console.log(err);
+        // error here
+    });
+      // console.log('termino todas las promesas');
+      // console.log('personasPlanilla: ', personasPlanilla);
     }
 
     // se encarga de generar el archivo
