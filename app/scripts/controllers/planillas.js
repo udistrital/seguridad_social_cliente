@@ -58,7 +58,7 @@ angular.module('ssClienteApp')
     function getPersonas(limit, offset) {
       promises = [];
       for (var i = 0; i < limit; i = i+offset) {
-        var promise = seguridadSocialService.get('planillas/PruebaPlanilla/'+i, periodoPago);
+        var promise = seguridadSocialService.post('planillas/GenerarPlanillaActivos/'+offset+'/'+i, periodoPago);
         promises.push(promise);
       }
 
