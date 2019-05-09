@@ -8,12 +8,11 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-  .controller('PlanillasCtrl', function (seguridadSocialCrudService, seguridadSocialService, titanCrudService, $q) {
+  .controller('PlanillasCtrl', function (seguridadSocialCrudService, seguridadSocialService, titanCrudService, $q, $interval) {
     var self = this;
     var csvContent = '';     // variable para generar el archivo plano
     var periodoPago = {};
 
-    var promises = [];
     var personasPlanilla = [];
 
     self.anios = [];
@@ -56,41 +55,37 @@ angular.module('ssClienteApp')
     }
 
     function getPersonas(limit, offset) {
-      promises = [];
-      for (var i = 0; i < limit; i = i+offset) {
-        var promise = seguridadSocialService.post('planillas/GenerarPlanillaActivos/'+offset+'/'+i, periodoPago);
-        promises.push(promise);
+      var begin = 0;
+      var numPeticiones = 0; // número de peticiones para las particiones
+      for (var i = 0; i < limit; i += offset) {
+        numPeticiones++;
       }
 
-      promises.reduce(function(p, val) {
-        return p.then(function(response) {
-            // console.log(val);
-            // console.log(response);
-            personasPlanilla.push(response.data);
-            return val;
-        });
-    }, $q.when(true)).then(function(finalResult) {
-        // done here
-        personasPlanilla.push(finalResult.data);
-        // console.log(finalResult);
-        console.log(personasPlanilla);
-        
-    }, function(err) {
-      console.log(err);
-        // error here
-    });
-      // console.log('termino todas las promesas');
-      // console.log('personasPlanilla: ', personasPlanilla);
+      var start = new Date().getTime();
+      var tiempoPromesas = 0;
+
+
+      return seguridadSocialService.post('planillas/GenerarPlanillaActivos/' + offset + '/' + begin, periodoPago).then(function (response) {
+        var end = new Date().getTime();
+        tiempoPromesas = end - start;
+        return response.data;
+      }).then(function (primerResponse) {
+        personasPlanilla = personasPlanilla.concat(primerResponse);
+        begin += offset;
+        return $interval(function () {
+          seguridadSocialService.post('planillas/GenerarPlanillaActivos/' + offset + '/' + begin, periodoPago).then(function (response) {
+            personasPlanilla = personasPlanilla.concat(response.data);
+          });
+          begin += offset;
+        }, tiempoPromesas + 2000, numPeticiones);
+      });
     }
 
     // se encarga de generar el archivo
     self.buscarPagos = function () {
-      personasPlanilla = [];
       csvContent = '';
       self.divError = false;
       if (comprobarDatosIngresados()) {
-
-
 
         seguridadSocialCrudService.get('periodo_pago', 'query=Mes:' + parseInt(self.mesPeriodo.value) + ',Anio:' + parseInt(self.anioPeriodo) + ',tipo_liquidacion:' + self.tipoLiquidacion + '&liimit=1').then(function (response) {
 
@@ -111,71 +106,65 @@ angular.module('ssClienteApp')
               crearCabecera(self.mesPeriodo.value, self.anioPeriodo);
 
               var totalLiquidacion = response.data.length;
-              var particion = totalLiquidacion * 0.3;
-              // var i = 0;
-              // console.log({ "totalLiquidacion": totalLiquidacion, "particion": particion });
+              var particion = Math.trunc(totalLiquidacion * 0.3);
+              console.log('totalLiquidacion ', totalLiquidacion, ' particion ', particion);
 
               // seguridadSocialService.get('pago/GetInfoCabecera/' + periodoPago.Liquidacion, '').then(function (responseCabecera) {
-              //   self.infoAdicionalCabecera = responseCabecera.data
-              //   console.log(self.infoAdicionalCabecera);
 
+              //   console.log(responseCabecera);
+
+              //   self.infoAdicionalCabecera = responseCabecera.data
 
               //   escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalPersonas, 5), 5);
               //   escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalNomina, 12), 12);
               //   escribirArchivo(self.infoAdicionalCabecera.CodigoUD, 2);
               //   escribirArchivo(self.infoAdicionalCabecera.CodigoOperador, 2);
 
-              //   console.log('planillas/GenerarPlanillaActivos');
-              //   console.log(periodoPago);
+              // }).then(function () {
+              getPersonas(totalLiquidacion, particion).then(function () {
+                var contadorSecuencia = 1; // secuencia del archivo plano
 
-              getPersonas(totalLiquidacion, particion);
+                Object.keys(personasPlanilla).forEach(function (key) {
+                  csvContent += '\n';
+                  Object.keys(personasPlanilla[key]).forEach(function (innerKey) {
+                    console.log(personasPlanilla[key][innerKey]["Valor"], typeof personasPlanilla[key][innerKey]["Valor"]);
+                    if (isNaN (personasPlanilla[key][innerKey]["Valor"])) {
+                      escribirArchivo(personasPlanilla[key][innerKey]["Valor"], personasPlanilla[key][innerKey]["Longitud"]);
+                    } else {
+                      escribirArchivo(completarSecuenciaNumero(personasPlanilla[key][innerKey]["Valor"], personasPlanilla[key][innerKey]["Longitud"]), personasPlanilla[key][innerKey]["Longitud"]);
+                    }
+                    if (innerKey == "TipoRegistro") {
+                      escribirArchivo(completarSecuenciaNumero(contadorSecuencia, 2), 2);
+                    }
+                  });
+                  contadorSecuencia++;
+                });
+                console.log(csvContent);
 
-              // f1();
+                // personasPlanilla.forEach(function(elemento) {
+                //   var fila = elemento. 
+                //   console.log(elemento);
+                // });
 
-              // for (var i = 0; i < totalLiquidacion; i = i + particion) {
-                
-              //   promises.push(getPersonas(particion, i));
-              //    // var data = getPersonas(particion, i);
-              //    // console.log(data);
-
-              // }
-
-              // Promise.all(promises).then(function(data) {
-              //   console.log('Promise.all: ',data);
-                
+                // csvContent += '\n';
+                // // csvContent += response.data.informacion;
+                // csvContent = csvContent.replace(/([^\r])\n/g, "$1\r\n");
+                // var blob = new Blob([csvContent], { type: 'text/csv' });
+                // var filename = 'Planilla_'+self.tipoLiquidacion+'.csv';
+                // if (window.navigator.msSaveOrOpenBlob) {
+                //   window.navigator.msSaveBlob(blob, filename);
+                // }
+                // else {
+                //   var elem = window.document.createElement('a');
+                //   elem.href = window.URL.createObjectURL(blob);
+                //   elem.download = filename;
+                //   document.body.appendChild(elem);
+                //   elem.click();
+                //   document.body.removeChild(elem);
+                // }
+              });
               // });
-              
-              // var defer = $q.defer();
-              // $q.all(promises).then(function(data) {
-              //   console.log('todas las promesas fueron resueltas');
-              //   console.log(data);
-              //   var x = defer.resolve(data);
-              //   console.log(defer.promise);
-              // }, function(err) {
-              //   console.log('error:', err);
-              // }, function(update) {
-              //   console.log('update promises...',update);
-              // });
-
-              // csvContent += '\n';
-              //   csvContent += response.data.informacion;
-              //   csvContent = csvContent.replace(/([^\r])\n/g, "$1\r\n");
-              //   var blob = new Blob([csvContent], { type: 'text/csv' });
-              //   var filename = 'PlanillaTipoE.csv';
-              //   if (window.navigator.msSaveOrOpenBlob) {
-              //     window.navigator.msSaveBlob(blob, filename);
-              //   }
-              //   else {
-              //     var elem = window.document.createElement('a');
-              //     elem.href = window.URL.createObjectURL(blob);
-              //     elem.download = filename;
-              //     document.body.appendChild(elem);
-              //     elem.click();
-              //     document.body.removeChild(elem);
-              // }
-
             });
-            // });
           }
         });
       }
@@ -250,6 +239,17 @@ angular.module('ssClienteApp')
           csvContent += " ";
         }
       }
+    }
+
+
+    function completarSecuenciaNumero(numero, longitud) {
+      var stringNumero = String(numero);
+      var secuencia = '';
+      for (var i = 0; i < longitud - stringNumero.length; i++) {
+        secuencia += '0';
+      }
+      secuencia += String(stringNumero);
+      return secuencia;
     }
 
     self.setSeleccionado = function (item, op) {
