@@ -107,28 +107,25 @@ angular.module('ssClienteApp')
 
               var totalLiquidacion = response.data.length;
               var particion = Math.trunc(totalLiquidacion * 0.3);
-              console.log('totalLiquidacion ', totalLiquidacion, ' particion ', particion);
 
-              // seguridadSocialService.get('pago/GetInfoCabecera/' + periodoPago.Liquidacion, '').then(function (responseCabecera) {
+              seguridadSocialService.get('pago/GetInfoCabecera/' + periodoPago.Liquidacion, '').then(function (responseCabecera) {
+                self.infoAdicionalCabecera = responseCabecera.data
 
-              //   console.log(responseCabecera);
+                escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalPersonas, 5), 5);
+                escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalNomina, 12), 12);
+                escribirArchivo(self.infoAdicionalCabecera.CodigoUD, 2);
+                escribirArchivo(self.infoAdicionalCabecera.CodigoOperador, 2);
 
-              //   self.infoAdicionalCabecera = responseCabecera.data
-
-              //   escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalPersonas, 5), 5);
-              //   escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalNomina, 12), 12);
-              //   escribirArchivo(self.infoAdicionalCabecera.CodigoUD, 2);
-              //   escribirArchivo(self.infoAdicionalCabecera.CodigoOperador, 2);
-
-              // }).then(function () {
+              }).then(function () {
               getPersonas(totalLiquidacion, particion).then(function () {
                 var contadorSecuencia = 1; // secuencia del archivo plano
 
                 Object.keys(personasPlanilla).forEach(function (key) {
                   csvContent += '\n';
                   Object.keys(personasPlanilla[key]).forEach(function (innerKey) {
-                    console.log(personasPlanilla[key][innerKey]["Valor"], typeof personasPlanilla[key][innerKey]["Valor"]);
                     if (isNaN (personasPlanilla[key][innerKey]["Valor"])) {
+                      escribirArchivo(personasPlanilla[key][innerKey]["Valor"], personasPlanilla[key][innerKey]["Longitud"]);
+                    } else if(typeof personasPlanilla[key][innerKey]["Valor"] == "string") {
                       escribirArchivo(personasPlanilla[key][innerKey]["Valor"], personasPlanilla[key][innerKey]["Longitud"]);
                     } else {
                       escribirArchivo(completarSecuenciaNumero(personasPlanilla[key][innerKey]["Valor"], personasPlanilla[key][innerKey]["Longitud"]), personasPlanilla[key][innerKey]["Longitud"]);
@@ -139,31 +136,23 @@ angular.module('ssClienteApp')
                   });
                   contadorSecuencia++;
                 });
-                console.log(csvContent);
 
-                // personasPlanilla.forEach(function(elemento) {
-                //   var fila = elemento. 
-                //   console.log(elemento);
-                // });
-
-                // csvContent += '\n';
-                // // csvContent += response.data.informacion;
-                // csvContent = csvContent.replace(/([^\r])\n/g, "$1\r\n");
-                // var blob = new Blob([csvContent], { type: 'text/csv' });
-                // var filename = 'Planilla_'+self.tipoLiquidacion+'.csv';
-                // if (window.navigator.msSaveOrOpenBlob) {
-                //   window.navigator.msSaveBlob(blob, filename);
-                // }
-                // else {
-                //   var elem = window.document.createElement('a');
-                //   elem.href = window.URL.createObjectURL(blob);
-                //   elem.download = filename;
-                //   document.body.appendChild(elem);
-                //   elem.click();
-                //   document.body.removeChild(elem);
-                // }
+                csvContent = csvContent.replace(/([^\r])\n/g, "$1\r\n");
+                var blob = new Blob([csvContent], { type: 'text/csv' });
+                var filename = 'Planilla_'+self.tipoLiquidacion+'.csv';
+                if (window.navigator.msSaveOrOpenBlob) {
+                  window.navigator.msSaveBlob(blob, filename);
+                }
+                else {
+                  var elem = window.document.createElement('a');
+                  elem.href = window.URL.createObjectURL(blob);
+                  elem.download = filename;
+                  document.body.appendChild(elem);
+                  elem.click();
+                  document.body.removeChild(elem);
+                }
               });
-              // });
+              });
             });
           }
         });
