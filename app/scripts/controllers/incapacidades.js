@@ -16,7 +16,7 @@ angular.module('ssClienteApp')
     self.nominasPertenece = [];
 
     function getPersonas() {
-      seguridadSocialService.get('incapacidades', 'documento=' + self.searchText).then(function (response) {
+      seguridadSocialService.get('incapacidades/BuscarPersonas/'+self.searchText, '').then(function (response) {
         self.states = response.data;
       });
     }

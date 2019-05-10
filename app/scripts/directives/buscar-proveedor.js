@@ -18,7 +18,7 @@ angular.module('ssClienteApp')
         var ctrl = this;
 
         function getPersonas() {
-          seguridadSocialService.get('incapacidades', 'documento='+ctrl.searchText).then(function(response) {
+          seguridadSocialService.get('incapacidades/BuscarPersonas/'+ctrl.searchText, '').then(function(response) {
             ctrl.states = response.data;
           });
         }
