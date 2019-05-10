@@ -107,7 +107,6 @@ angular.module('ssClienteApp')
 
               var totalLiquidacion = response.data.length;
               var particion = Math.trunc(totalLiquidacion * 0.3);
-
               seguridadSocialService.get('pago/GetInfoCabecera/' + periodoPago.Liquidacion, '').then(function (responseCabecera) {
                 self.infoAdicionalCabecera = responseCabecera.data
 
@@ -119,7 +118,6 @@ angular.module('ssClienteApp')
               }).then(function () {
               getPersonas(totalLiquidacion, particion).then(function () {
                 var contadorSecuencia = 1; // secuencia del archivo plano
-
                 Object.keys(personasPlanilla).forEach(function (key) {
                   csvContent += '\n';
                   Object.keys(personasPlanilla[key]).forEach(function (innerKey) {
@@ -131,7 +129,7 @@ angular.module('ssClienteApp')
                       escribirArchivo(completarSecuenciaNumero(personasPlanilla[key][innerKey]["Valor"], personasPlanilla[key][innerKey]["Longitud"]), personasPlanilla[key][innerKey]["Longitud"]);
                     }
                     if (innerKey == "TipoRegistro") {
-                      escribirArchivo(completarSecuenciaNumero(contadorSecuencia, 2), 2);
+                      escribirArchivo(completarSecuenciaNumero(contadorSecuencia, 5), 5);
                     }
                   });
                   contadorSecuencia++;
@@ -151,6 +149,7 @@ angular.module('ssClienteApp')
                   elem.click();
                   document.body.removeChild(elem);
                 }
+                csvContent = '';
               });
               });
             });
