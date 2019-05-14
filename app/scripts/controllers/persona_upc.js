@@ -11,6 +11,7 @@ angular.module('ssClienteApp')
   .controller('PersonaUpcCtrl', function (administrativaAmazonService, seguridadSocialCrudService, titanCrudService, seguridadSocialService, $scope, $timeout, $q, $log) {
     var self = this;
     var idProveedor = 0;
+    var fechaActual = null;
 
     self.variablesForm = {
       numDocumento: self.numDocumento,
@@ -18,6 +19,10 @@ angular.module('ssClienteApp')
       apellido: self.apellido,
       valorUpc: { "Valor": 0 },
     };
+
+    seguridadSocialService.get('utils/GetActualDate', '').then(function(response) {
+      fechaActual = new Date(response.data.fecha_actual);
+    });
 
     var proveedores = [];
     administrativaAmazonService.get('informacion_proveedor', 'query=TipoPersona:NATURAL&fields=NomProveedor,Id').then(function (response) {
@@ -156,12 +161,10 @@ angular.module('ssClienteApp')
         SegundoApellido: self.variablesForm.segundoApellido,
         FechaNacimiento: self.variablesForm.fechaNacimiento,
         Activo: true,
-        FechaInicio: null
+        FechaInicio: fechaActual
       };
 
       if (!self.beneficiario) {
-        seguridadSocialService.get('utils/GetActualDate', '').then(function(response) {
-          upcAdicional.FechaInicio = new Date(response.data);
           seguridadSocialCrudService.post('beneficiarios', upcAdicional).then(function (response) {
             if (response.statusText === 'Created') {
               swal('Beneficiario registrado');
@@ -170,7 +173,6 @@ angular.module('ssClienteApp')
               swal('No se ha logrado registrar el beneficiario');
             }
           });
-        });
       } else {
         var idTipoUpc = { Id: self.variablesForm.valorUpc.Id };
         upcAdicional.TipoUpc = idTipoUpc;
@@ -179,20 +181,10 @@ angular.module('ssClienteApp')
             swal('Beneficiario Adicional Adicional Registrada');
             self.reset();
           } else {
-            console.log(response.data);
             swal('No se ha logrado registrar el beneficiario adicional');
           }
         });
       }
-
-      // seguridadSocialCrudService.post('upc_adicional',upcAdicional).then(function(response) {
-      //   if (response.statusText === 'Created') {
-      //     swal('UPC Adicional Registrada');
-      //     self.reset();
-      //   } else {
-      //     swal('No se ha Logrado Registrar la UPC');
-      //   }
-      // });
 
     };
   });
