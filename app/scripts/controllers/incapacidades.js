@@ -172,6 +172,11 @@ angular.module('ssClienteApp')
         self.incapacidadProrroga.Concepto = self.conceptoProrroga;
         self.incapacidadProrroga.Descripcion = 'Prorroga de la incapacidad con código '+self.incapacidadProrroga.Codigo;
         incapacidadPost(self.incapacidadProrroga, errorRegistro);
+        if (errorRegistro) {
+          swal($translate.instant('INCAPACIDADES.ERROR_REGISTRO'));
+        } else {
+          swal($translate.instant('INCAPACIDADES.REGISTRADA'));
+        }
       } else {
         var validar = validarCampos();
         var incapacidades = {"Conceptos":[]};
@@ -223,9 +228,6 @@ angular.module('ssClienteApp')
             vigContrato = self.proveedor.contratos[i].VigenciaContrato;
           }
         }
-        // console.log(self.proveedor);
-        
-        // console.log({numContrato, vigContrato});
         self.contrato = {"numContrato": numContrato, "vigContrato": vigContrato};
       }
       
