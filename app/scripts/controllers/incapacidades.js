@@ -15,53 +15,6 @@ angular.module('ssClienteApp')
     self.diasIncapacidad = 0;
     self.nominasPertenece = [];
 
-    function getPersonas() {
-      seguridadSocialService.get('incapacidades', 'documento=' + self.searchText).then(function (response) {
-        self.states = response.data;
-      });
-    }
-
-    //autocomplete
-    self.querySearch = querySearch;
-    self.selectedItemChange = selectedItemChange;
-    self.searchTextChange = searchTextChange;
-
-    function querySearch(query) {
-      if (self.states !== undefined) {
-        var results = query ? self.states.filter(createFilterFor(query)) : self.states, deferred;
-        if (self.simulateQuery) {
-          deferred = $q.defer();
-          $timeout(function () { deferred.resolve(results); }, Math.random() * 1000, false);
-          return deferred.promise;
-        } else {
-          return results;
-        }
-      }
-    }
-
-    function searchTextChange(text) {
-      $log.info('Text changed to ' + text);
-      if (text.length > 3) {
-        getPersonas();
-      }
-    }
-
-    function selectedItemChange(item) {
-      $log.info('Item changed to ' + JSON.stringify(item));
-      self.selected = true;
-      self.proveedor = item;
-      self.tipoDocumento = item.tipoDocumento;
-      self.numeroDocumento = item.documento;
-    }
-
-    function createFilterFor(query) {
-      // var lowercaseQuery = angular.lowercase(query);
-      var lowercaseQuery = query.toLowerCase();
-      return function filterFn(state) {
-        return (state.value.indexOf(lowercaseQuery) === 0);
-      };
-    }
-
     titanCrudService.get('concepto_nomina', 'query=NombreConcepto:prorroga_incapacidad').then(
       function(response) {
         self.conceptoProrroga = response.data[0];
@@ -172,6 +125,11 @@ angular.module('ssClienteApp')
         self.incapacidadProrroga.Concepto = self.conceptoProrroga;
         self.incapacidadProrroga.Descripcion = 'Prorroga de la incapacidad con código '+self.incapacidadProrroga.Codigo;
         incapacidadPost(self.incapacidadProrroga, errorRegistro);
+        if (errorRegistro) {
+          swal($translate.instant('INCAPACIDADES.ERROR_REGISTRO'));
+        } else {
+          swal($translate.instant('INCAPACIDADES.REGISTRADA'));
+        }
       } else {
         var validar = validarCampos();
         var incapacidades = {"Conceptos":[]};
@@ -223,9 +181,6 @@ angular.module('ssClienteApp')
             vigContrato = self.proveedor.contratos[i].VigenciaContrato;
           }
         }
-        // console.log(self.proveedor);
-        
-        // console.log({numContrato, vigContrato});
         self.contrato = {"numContrato": numContrato, "vigContrato": vigContrato};
       }
       

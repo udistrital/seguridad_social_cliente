@@ -13,31 +13,8 @@
             <hr class="col-xs-8 col-md-offset-1">
           </div>
 
-          <div class="col-md-2 col-md-offset-1">
-            <label> {{ 'INCAPACIDADES.NUM_DOCUMENTO' | translate }} </label>
-          </div>
-          <div class="col-md-4">
-            <md-autocomplete flex required md-input-name="autocompleteField" md-input-minlength="2" md-input-maxlength="18"
-              md-menu-class="autocomplete-custom-template" md-menu-container-class="custom-container" md-no-cache="incapacidades.noCache"
-              md-selected-item="incapacidades.selectedItem" md-search-text="incapacidades.searchText"
-              md-search-text-change="incapacidades.searchTextChange(incapacidades.searchText)" md-selected-item-change="incapacidades.selectedItemChange(item)"
-              md-items="item in incapacidades.querySearch(incapacidades.searchText)" md-item-text="item.display"
-              md-floating-label="Ingrese el número de documento">
-              <md-item-template>
-                <span class="item-title">
-                  <span> {{item.display}} </span>
-                </span>
-                <span class="item-metadata">
-                  <span>
-                    Documento: <strong>{{item.tipoDocumento}} {{item.value}}</strong>
-                  </span>
-                </span>
-              </md-item-template>
-              <md-not-found>
-                {{ 'INCAPACIDADES.SIN_RESULTADOS' | translate }} "{{incapacidades.searchText}}".
-              </md-not-found>
-            </md-autocomplete>
-          </div>
+          <buscar-proveedor proveedor="incapacidades.proveedor"></buscar-proveedor>
+
           <br>
           <div class="alert alert-danger" ng-if="incapacidades.noContrato">
             {{incapacidades.noContrato}}
@@ -45,25 +22,7 @@
         </div>
         <br>
 
-        <div class="form-group row">
-          <div>
-            <div class="col-md-2 col-md-offset-1">
-              <label> {{ 'INCAPACIDADES.TIPO_DOCUMENTO' | translate }} </label>
-            </div>
-            <div class="col-md-2">
-              {{incapacidades.tipoDocumento}}
-            </div>
-
-            <div class="col-md-2">
-              <label> {{ 'INCAPACIDADES.NUM_DOCUMENTO' | translate }} </label>
-            </div>
-            <div class="col-md-2">
-              {{incapacidades.numeroDocumento}}
-            </div>
-          </div>
-        </div>
-        <br>
-
+        <!-- Información de la incapacidad -->
         <div class="row">
           <h3 class="col-md-offset-1 font-weight-bold">{{'INCAPACIDADES.INFO_INCAPACIDAD' | translate}}</h3>
           <hr class="col-xs-8 col-md-offset-1">
@@ -78,28 +37,30 @@
           <label for="prorroga">
             {{'INCAPACIDADES.PRORROGA' | translate}}
           </label>
-          <input ng-disabled="incapacidades.proveedor === undefined" class="form-check-input" type="checkbox" id="prorroga"
-            ng-change="incapacidades.infoIncapacidades()" ng-model="incapacidades.prorroga">
+          <input ng-disabled="incapacidades.proveedor === undefined" class="form-check-input" type="checkbox"
+            id="prorroga" ng-change="incapacidades.infoIncapacidades()" ng-model="incapacidades.prorroga">
         </div>
         <br>
 
         <!-- Información de prorroga -->
         <div class="col-md-offset-1" ng-if="incapacidades.prorroga">
           <label for="">{{'INCAPACIDADES.SELECCIONAR_INC' | translate}}</label>
-          <lista-incapacidades contrato="incapacidades.contrato" incapacidad="incapacidades.incapacidadProrroga"></lista-incapacidades>
+          <lista-incapacidades contrato="incapacidades.contrato" incapacidad="incapacidades.incapacidadProrroga">
+          </lista-incapacidades>
 
           <div class="row">
             <label class="col-md-2 col-md-offset-1 control-label">{{ 'INCAPACIDADES.FECHA_INCIO' | translate }}</label>
             <label>{{incapacidades.incapacidadProrroga.FechaDesde | date:"dd-MM-yyyy"}}</label>
           </div>
-          
+
           <div class="row" ng-if="incapacidades.incapacidadProrroga !== undefined">
             <label for="col-md-2 col-md-offset-1 control-label">{{ 'INCAPACIDADES.FECHA_PRORROGA' | translate }}</label>
-            <md-datepicker ng-change="incapacidades.calcularDiasProrroga()" id="txtFechaProrroga" name="txtFechaProrroga" ng-model="incapacidades.fechaProrroga"
-                md-placeholder="Fecha de prorroga" required></md-datepicker>
+            <md-datepicker ng-change="incapacidades.calcularDiasProrroga()" id="txtFechaProrroga"
+              name="txtFechaProrroga" ng-model="incapacidades.fechaProrroga" md-placeholder="Fecha de prorroga"
+              required></md-datepicker>
           </div>
           <div class="row">
-            <label>{{incapacidades.diasProrroga}}</label>  {{ 'INCAPACIDADES.DIAS' | translate}}
+            <label>{{incapacidades.diasProrroga}}</label> {{ 'INCAPACIDADES.DIAS' | translate}}
           </div>
         </div>
 
@@ -116,8 +77,8 @@
                 <div class="col-md-12" ng-if="!incapacidades.tipoIncapacidad">{{ 'INCAPACIDADES.SELECCIONE_OPCION' |
                   translate
                   }} <span class="caret"></span></div>
-                <div class="col-md-12" ng-if="incapacidades.tipoIncapacidad">{{incapacidades.tipoIncapacidad.AliasConcepto}}<span
-                    class="caret"></span></div>
+                <div class="col-md-12" ng-if="incapacidades.tipoIncapacidad">
+                  {{incapacidades.tipoIncapacidad.AliasConcepto}}<span class="caret"></span></div>
               </button>
               <ul class="dropdown-menu">
                 <li ng-repeat="i in incapacidades.listaIncapacidades" ng-click="incapacidades.setTipoIncapacidad(i)"
@@ -142,8 +103,8 @@
               }}
             </label>
             <div class="col-md-1">
-              <md-datepicker ng-change="incapacidades.calcularDias()" id="txtFechaDesde" name="txtFechaDesde" ng-model="incapacidades.fechaDesde"
-                md-placeholder="AAAA-DD-mm" required></md-datepicker>
+              <md-datepicker ng-change="incapacidades.calcularDias()" id="txtFechaDesde" name="txtFechaDesde"
+                ng-model="incapacidades.fechaDesde" md-placeholder="AAAA-DD-mm" required></md-datepicker>
             </div>
 
             <label class="col-md-2 col-md-offset-2 control-label" for="txtFechaDesde">{{ 'INCAPACIDADES.FECHA_FIN' |
@@ -151,8 +112,9 @@
               }}
             </label>
             <div class="col-md-1">
-              <md-datepicker id="txtFechaDesde" ng-change="incapacidades.calcularDias()" name="txtFechaDesde" ng-model="incapacidades.fechaHasta"
-                md-mindate="incapacidades.minDate()" md-placeholder="AAAA-DD-mm" required></md-datepicker>
+              <md-datepicker id="txtFechaDesde" ng-change="incapacidades.calcularDias()" name="txtFechaDesde"
+                ng-model="incapacidades.fechaHasta" md-mindate="incapacidades.minDate()" md-placeholder="AAAA-DD-mm"
+                required></md-datepicker>
             </div>
           </div>
 
@@ -175,7 +137,8 @@
             <p class="col-md-offset-3">Seleccione las nóminas a las que esta persona pertenece</p>
             <div class="col-md-offset-3 row">
               <div class="row" ng-repeat="nomina in incapacidades.nominas">
-                <input type="checkbox" ng-checked="incapacidades.nominasPertenece.includes(nomina.Id)" ng-click="incapacidades.toggleSelection(nomina.Id)">
+                <input type="checkbox" ng-checked="incapacidades.nominasPertenece.includes(nomina.Id)"
+                  ng-click="incapacidades.toggleSelection(nomina.Id)">
                 {{nomina.TipoNomina.Descripcion}}
               </div>
             </div>
@@ -185,7 +148,8 @@
 
     <div class="panel-footer">
       <div class="col-md-offset-5">
-        <button type="submit" name="button" ng-click="incapacidades.registrarIncapacidad()" class="btn btn-success btn-output">
+        <button type="submit" name="button" ng-click="incapacidades.registrarIncapacidad()"
+          class="btn btn-success btn-output">
           {{
           'BTN.REGISTRAR' | translate }} </button>
       </div>

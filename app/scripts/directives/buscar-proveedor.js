@@ -18,7 +18,7 @@ angular.module('ssClienteApp')
         var ctrl = this;
 
         function getPersonas() {
-          seguridadSocialService.get('incapacidades', 'documento='+ctrl.searchText).then(function(response) {
+          seguridadSocialService.get('incapacidades/BuscarPersonas/'+ctrl.searchText, '').then(function(response) {
             ctrl.states = response.data;
           });
         }
@@ -42,14 +42,12 @@ angular.module('ssClienteApp')
         }
         
         function searchTextChange(text) {
-          $log.info('Text changed to ' + text);
           if (text.length > 3) {
             getPersonas();  
           }
         }
         
         function selectedItemChange(item) {
-          $log.info('Item changed to ' + JSON.stringify(item));
           $scope.proveedor = item;
           ctrl.selected = true;
           ctrl.tipoDocumento = item.tipoDocumento;
@@ -58,7 +56,6 @@ angular.module('ssClienteApp')
         
         function createFilterFor(query) {
           var lowercaseQuery = query.toLowerCase();
-          // var lowercaseQuery = angular.lowercase(query);
           return function filterFn(state) {
             return (state.value.indexOf(lowercaseQuery) === 0);
           };

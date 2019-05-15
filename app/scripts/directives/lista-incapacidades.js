@@ -38,7 +38,7 @@ angular.module('ssClienteApp')
         self.select = function(row) {
           $scope.incapacidad = row;
         }
-
+        
         seguridadSocialService.get('incapacidades/incapacidadesPersona/'+$scope.contrato.numContrato+'/'+$scope.contrato.vigContrato, '').then(function(response) {
           self.gridOptions.data = response.data;
         });
