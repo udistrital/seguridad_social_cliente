@@ -15,50 +15,6 @@ angular.module('ssClienteApp')
     self.diasIncapacidad = 0;
     self.nominasPertenece = [];
 
-    function getPersonas() {
-      seguridadSocialService.get('incapacidades/BuscarPersonas/'+self.searchText, '').then(function (response) {
-        self.states = response.data;
-      });
-    }
-
-    //autocomplete
-    self.querySearch = querySearch;
-    self.selectedItemChange = selectedItemChange;
-    self.searchTextChange = searchTextChange;
-
-    function querySearch(query) {
-      if (self.states !== undefined) {
-        var results = query ? self.states.filter(createFilterFor(query)) : self.states, deferred;
-        if (self.simulateQuery) {
-          deferred = $q.defer();
-          $timeout(function () { deferred.resolve(results); }, Math.random() * 1000, false);
-          return deferred.promise;
-        } else {
-          return results;
-        }
-      }
-    }
-
-    function searchTextChange(text) {
-      if (text.length > 3) {
-        getPersonas();
-      }
-    }
-
-    function selectedItemChange(item) {
-      self.selected = true;
-      self.proveedor = item;
-      self.tipoDocumento = item.tipoDocumento;
-      self.numeroDocumento = item.documento;
-    }
-
-    function createFilterFor(query) {
-      var lowercaseQuery = query.toLowerCase();
-      return function filterFn(state) {
-        return (state.value.indexOf(lowercaseQuery) === 0);
-      };
-    }
-
     titanCrudService.get('concepto_nomina', 'query=NombreConcepto:prorroga_incapacidad').then(
       function(response) {
         self.conceptoProrroga = response.data[0];

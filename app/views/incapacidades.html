@@ -13,48 +13,11 @@
             <hr class="col-xs-8 col-md-offset-1">
           </div>
 
-          <div class="col-md-2 col-md-offset-1">
-            <label> {{ 'BTN.BUSCAR' | translate }} </label>
-          </div>
-          <div class="col-md-4">
-            <md-autocomplete flex required md-input-name="autocompleteField" md-input-minlength="4"
-              md-input-maxlength="18" md-no-cache="incapacidades.noCache" md-selected-item="incapacidades.selectedItem"
-              md-search-text="incapacidades.searchText"
-              md-search-text-change="incapacidades.searchTextChange(incapacidades.searchText)"
-              md-selected-item-change="incapacidades.selectedItemChange(item)" placeholder="Escriba un número de cédula"
-              md-items="item in incapacidades.querySearch(incapacidades.searchText)" md-item-text="item.display">
-              <md-item-template>
-                <span class="item-title">
-                  <span> {{item.display}} </span>
-                </span>
-              </md-item-template>
-              <md-not-found>
-                {{ 'INCAPACIDADES.SIN_RESULTADOS' | translate }} "{{incapacidades.searchText}}".
-              </md-not-found>
-            </md-autocomplete>
-          </div>
+          <buscar-proveedor proveedor="incapacidades.proveedor"></buscar-proveedor>
+
           <br>
           <div class="alert alert-danger" ng-if="incapacidades.noContrato">
             {{incapacidades.noContrato}}
-          </div>
-        </div>
-        <br>
-
-        <div class="form-group row">
-          <div>
-            <div class="col-md-2 col-md-offset-1">
-              <label> {{ 'INCAPACIDADES.TIPO_DOCUMENTO' | translate }} </label>
-            </div>
-            <div class="col-md-2">
-              {{incapacidades.tipoDocumento}}
-            </div>
-
-            <div class="col-md-2">
-              <label> {{ 'INCAPACIDADES.NUM_DOCUMENTO' | translate }} </label>
-            </div>
-            <div class="col-md-2">
-              {{incapacidades.numeroDocumento}}
-            </div>
           </div>
         </div>
         <br>

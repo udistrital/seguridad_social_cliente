@@ -24,55 +24,6 @@ angular.module('ssClienteApp')
       fechaActual = new Date(response.data.fecha_actual);
     });
 
-    var proveedores = [];
-    administrativaAmazonService.get('informacion_proveedor', 'query=TipoPersona:NATURAL&fields=NomProveedor,Id').then(function (response) {
-      self.personas = response.data;
-
-      for (var i = 0; i < response.data.length; i++) {
-        proveedores.push(
-          {
-            display: response.data[i].NomProveedor,
-            value: response.data[i].NomProveedor.toLowerCase(),
-            id: response.data[i].Id
-          });
-      }
-    });
-
-    function querySearch(query) {
-      var results = query ? self.states.filter(createFilterFor(query)) : self.states,
-        deferred;
-      if (self.simulateQuery) {
-        deferred = $q.defer();
-        $timeout(function () { deferred.resolve(results); }, Math.random() * 1000, false);
-        return deferred.promise;
-      } else {
-        return results;
-      }
-    }
-
-    function searchTextChange(text) {
-      $log.info('Text changed to ' + text);
-    }
-
-    function selectedItemChange(item) {
-      $log.info('Item changed to ' + JSON.stringify(item));
-      idProveedor = item.id;
-    }
-
-    function createFilterFor(query) {
-      // var lowercaseQuery = angular.lowercase(query);
-      var lowercaseQuery = query.toLowerCase();
-      return function filterFn(state) {
-        return (state.value.indexOf(lowercaseQuery) === 0);
-      };
-    }
-
-    self.states = proveedores;
-    self.querySearch = querySearch;
-    self.selectedItemChange = selectedItemChange;
-    self.searchTextChange = searchTextChange;
-    //autocomplete
-
     seguridadSocialCrudService.get('zona_upc', 'limit=-1').then(function (response) {
       self.tipoZona = response.data;
     });
@@ -169,7 +120,6 @@ angular.module('ssClienteApp')
             if (response.statusText === 'Created') {
               swal('Beneficiario registrado');
             } else {
-              console.log(response.data);
               swal('No se ha logrado registrar el beneficiario');
             }
           });
