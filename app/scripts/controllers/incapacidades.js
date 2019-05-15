@@ -40,14 +40,12 @@ angular.module('ssClienteApp')
     }
 
     function searchTextChange(text) {
-      $log.info('Text changed to ' + text);
       if (text.length > 3) {
         getPersonas();
       }
     }
 
     function selectedItemChange(item) {
-      $log.info('Item changed to ' + JSON.stringify(item));
       self.selected = true;
       self.proveedor = item;
       self.tipoDocumento = item.tipoDocumento;
@@ -55,7 +53,6 @@ angular.module('ssClienteApp')
     }
 
     function createFilterFor(query) {
-      // var lowercaseQuery = angular.lowercase(query);
       var lowercaseQuery = query.toLowerCase();
       return function filterFn(state) {
         return (state.value.indexOf(lowercaseQuery) === 0);
