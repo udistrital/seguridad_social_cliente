@@ -1,5 +1,10 @@
 <br>
-<div class="panel panel-default">
+<div ng-if="!planillas.habilitarFormulario" class="col-md-3 col-md-offset-5">
+    <h3>{{'PLANILLAS.GENERANDO' | translate}}</h3>
+    <IMG SRC="../../images/loading.gif">
+</div>
+
+<div class="panel panel-default" ng-if="planillas.habilitarFormulario">
   <div class="panel-heading">
     <h4>{{ 'PLANILLAS.TITULO' | translate }}</h4>
   </div>

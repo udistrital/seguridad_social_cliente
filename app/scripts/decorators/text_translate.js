@@ -167,7 +167,8 @@ var text_es = {
     ANIO: "Año",
     MES: "Mes",
     TIPO_NOMINA: "Tipo de Nómina",
-    VIGENCIA: "Vigencia"
+    VIGENCIA: "Vigencia",
+    GENERANDO: "Generando planilla..."
   },
   IBC: {
     TITULO: "Ingreso Base de Cotización",
@@ -348,7 +349,8 @@ var text_en = {
     TIPO_NOMINA: "Pyroll type",
     VIGENCIA: "Validity",
     ALERTA: "Alert!",
-    ERROR: "Error!"
+    ERROR: "Error!",
+    GENERANDO: "Building the file..."
   },
   IBC: {
     TITULO: "IBC",

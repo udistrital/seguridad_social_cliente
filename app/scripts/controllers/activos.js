@@ -85,17 +85,17 @@ angular.module('ssClienteApp')
           self.nominaErrorMensaje = nominaObj.Nomina.Descripcion;
           self.errorMensajeParte2 = 'de para el periodo: ' + self.meses[self.mesPeriodo] + ' del ' + self.anioPeriodo;
         });
-
+        
       switch (nominaObj.Nomina.TipoNomina.Nombre) {
         case "HCH":
         case "CT":
-          seguridadSocialService.get('pago/CalcularSegSocialHonorarios/' + nominaObj.Id).then(function (response) {
+          seguridadSocialService.get('pago/CalcularSegSocialHonorarios/' + nominaObj.Id, '').then(function (response) {
             agregarInformacionGrid(response.data);
           });
           break;
 
         default:
-          seguridadSocialService.getServicio('pago/CalcularSegSocial', nominaObj.Id).then(function (response) {
+          seguridadSocialService.getServicio('pago/CalcularSegSocial', nominaObj.Id, '').then(function (response) {
             agregarInformacionGrid(response.data);
           });
           break;

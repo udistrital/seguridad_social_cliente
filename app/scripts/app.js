@@ -9,53 +9,55 @@
  * Main module of the application.
  */
 angular.module('ssClienteApp', [
-        'angular-loading-bar',
-        'ngAnimate',
-        'ngAria',
-        'ngCookies',
-        'ngMessages',
-        'ngResource',
-        'ngRoute',
-        'ngSanitize',
-        'ngTouch',
-        'afOAuth2',
-        'treeControl',
-        'ngMaterial',
-        'ui.grid',
-        'ui.grid.edit',
-        'ui.grid.rowEdit',
-        'ui.grid.cellNav',
-        'ui.grid.expandable',
-        'ui.grid.pinning',
-        'ui.grid.treeView',
-        'ui.grid.selection',
-        'ui.grid.exporter',
-        'ngStorage',
-        'ngWebSocket',
-        'angularMoment',
-        'ui.utils.masks',
-        'pascalprecht.translate',
-        'ngAnimate',
-        'ui.select',
-        'ui.knob',
-        'implicitToken',
-        'configuracionService'
-    ])
-    .run(function(amMoment) {
+    'angular-loading-bar',
+    'ngAnimate',
+    'ngAria',
+    'ngCookies',
+    'ngMessages',
+    'ngResource',
+    'ngRoute',
+    'ngSanitize',
+    'ngTouch',
+    'afOAuth2',
+    'treeControl',
+    'ngMaterial',
+    'ui.grid',
+    'ui.grid.edit',
+    'ui.grid.rowEdit',
+    'ui.grid.cellNav',
+    'ui.grid.expandable',
+    'ui.grid.pinning',
+    'ui.grid.treeView',
+    'ui.grid.selection',
+    'ui.grid.exporter',
+    'ngStorage',
+    'ngWebSocket',
+    'angularMoment',
+    'ui.utils.masks',
+    'pascalprecht.translate',
+    'ngAnimate',
+    'ui.select',
+    'ui.knob',
+    'implicitToken',
+    'configuracionService'
+])
+    .run(function (amMoment) {
         amMoment.changeLocale('es');
     })
-    .config(['cfpLoadingBarProvider', 'uiSelectConfig', function(cfpLoadingBarProvider, uiSelectConfig) {
+    .config(['cfpLoadingBarProvider', 'uiSelectConfig', function (cfpLoadingBarProvider, uiSelectConfig) {
+        // cfpLoadingBarProvider.parentSelector = '#loading-bar-container';
+        // cfpLoadingBarProvider.spinnerTemplate = '<div class="loading-div"><div><span class="fa loading-spinner"></div><div class="fa sub-loading-div">Por favor espere, cargando...</div></div>';
         cfpLoadingBarProvider.parentSelector = '#loading-bar-container';
         uiSelectConfig.theme = 'select2';
         uiSelectConfig.resetSearchInput = true;
         uiSelectConfig.appendToBody = true;
     }])
-    .config(function($mdDateLocaleProvider) {
-        $mdDateLocaleProvider.formatDate = function(date) {
+    .config(function ($mdDateLocaleProvider) {
+        $mdDateLocaleProvider.formatDate = function (date) {
             return date ? moment.utc(date).format('YYYY-MM-DD') : '';
         };
     })
-    .config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+    .config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
         $locationProvider.hashPrefix("");
         $routeProvider
             .when('/', {
@@ -99,7 +101,7 @@ angular.module('ssClienteApp', [
                 controllerAs: 'incapacidades'
             })
 
-        .when('/ver_incapacidades', {
+            .when('/ver_incapacidades', {
                 templateUrl: 'views/ver_incapacidades.html',
                 controller: 'VerIncapacidadesCtrl',
                 controllerAs: 'verIncapacidades'

@@ -17,6 +17,7 @@ angular.module('ssClienteApp')
 
     self.anios = [];
     self.proveedores = [];
+    self.habilitarFormulario = true;
 
     titanCrudService.get('tipo_nomina', '').then(function (response) {
       self.tiposLiquidacion = response.data;
@@ -83,6 +84,7 @@ angular.module('ssClienteApp')
 
     // se encarga de generar el archivo
     self.buscarPagos = function () {
+      self.habilitarFormulario = false;
       csvContent = '';
       self.divError = false;
       if (comprobarDatosIngresados()) {
@@ -150,6 +152,7 @@ angular.module('ssClienteApp')
                   document.body.removeChild(elem);
                 }
                 csvContent = '';
+                self.habilitarFormulario = true;
               });
               });
             });
