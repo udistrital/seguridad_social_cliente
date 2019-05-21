@@ -105,17 +105,35 @@ angular.module('ssClienteApp')
           } else {
 
             titanCrudService.get('detalle_preliquidacion', 'limit=-1&query=Concepto.NombreConcepto:ibc_liquidado,Preliquidacion.Id:' + periodoPago.Liquidacion).then(function (response) {
-              crearCabecera(self.mesPeriodo.value, self.anioPeriodo);
 
               var totalLiquidacion = response.data.length;
               var particion = Math.trunc(totalLiquidacion * 0.3);
-              seguridadSocialService.get('pago/GetInfoCabecera/' + periodoPago.Liquidacion, '').then(function (responseCabecera) {
-                self.infoAdicionalCabecera = responseCabecera.data
 
-                escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalPersonas, 5), 5);
-                escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalNomina, 12), 12);
-                escribirArchivo(self.infoAdicionalCabecera.CodigoUD, 2);
-                escribirArchivo(self.infoAdicionalCabecera.CodigoOperador, 2);
+              seguridadSocialService.get('pago/GetInfoCabecera/' + periodoPago.Liquidacion+'/'+self.tipoLiquidacion, '').then(function (responseCabecera) {
+                var informacionCabecera = responseCabecera.data
+
+                Object.keys(informacionCabecera).forEach(function (key) {
+                  Object.keys(informacionCabecera[key]).forEach(function (innerKey) {
+                    if (isNaN (informacionCabecera[key][innerKey]["Valor"])) {
+                      escribirArchivo(informacionCabecera[key][innerKey]["Valor"], informacionCabecera[key][innerKey]["Longitud"]);
+                    } else if(typeof informacionCabecera[key][innerKey]["Valor"] == "string") {
+                      escribirArchivo(informacionCabecera[key][innerKey]["Valor"], informacionCabecera[key][innerKey]["Longitud"]);
+                    } else {
+                      escribirArchivo(completarSecuenciaNumero(informacionCabecera[key][innerKey]["Valor"], informacionCabecera[key][innerKey]["Longitud"]), informacionCabecera[key][innerKey]["Longitud"]);
+                    }
+                    if (innerKey == "TipoRegistro") {
+                      escribirArchivo(completarSecuenciaNumero(contadorSecuencia, 5), 5);
+                    }
+                  });
+                });
+
+                console.log(csvContent);
+                csvContent += '\n';
+
+                // escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalPersonas, 5), 5);
+                // escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalNomina, 12), 12);
+                // escribirArchivo(self.infoAdicionalCabecera.CodigoUD, 2);
+                // escribirArchivo(self.infoAdicionalCabecera.CodigoOperador, 2);
 
               }).then(function () {
               getPersonas(totalLiquidacion, particion).then(function () {
@@ -136,21 +154,22 @@ angular.module('ssClienteApp')
                   });
                   contadorSecuencia++;
                 });
-
-                csvContent = csvContent.replace(/([^\r])\n/g, "$1\r\n");
-                var blob = new Blob([csvContent], { type: 'text/csv' });
-                var filename = 'Planilla_'+self.tipoLiquidacion+'.csv';
-                if (window.navigator.msSaveOrOpenBlob) {
-                  window.navigator.msSaveBlob(blob, filename);
-                }
-                else {
-                  var elem = window.document.createElement('a');
-                  elem.href = window.URL.createObjectURL(blob);
-                  elem.download = filename;
-                  document.body.appendChild(elem);
-                  elem.click();
-                  document.body.removeChild(elem);
-                }
+                // csvContent = csvContent.replace(/([^\r])\n/g, "$1\r\n");
+                // var blob = new Blob([csvContent], { type: 'text/csv' });
+                // var filename = 'Planilla_'+self.tipoLiquidacion+'_'+self.fechaActual+'.txt';
+                // if (window.navigator.msSaveOrOpenBlob) {
+                //   window.navigator.msSaveBlob(blob, filename);
+                // }
+                // else {
+                //   var elem = window.document.createElement('a');
+                //   elem.href = window.URL.createObjectURL(blob);
+                //   elem.download = filename;
+                //   document.body.appendChild(elem);
+                //   elem.click();
+                //   document.body.removeChild(elem);
+                // }
+                console.log(csvContent);
+                
                 csvContent = '';
                 self.habilitarFormulario = true;
               });
@@ -178,28 +197,29 @@ angular.module('ssClienteApp')
     };
 
 
-    /* Función para crear la cabecera del archivo plano
+    /* 
+    Función para crear la cabecera del archivo plano
     */
-    function crearCabecera(mes, anio) {
-      escribirArchivo('0100000', 7);
-      escribirArchivo("UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS", 200);
-      escribirArchivo("NI899999230", 18);
-      escribirArchivo("7E", 22);
-      escribirArchivo("S01", 51);
-      escribirArchivo("14-23", 6);
-      var mesPensionTemp = mes;
-      if (mes === 12) {
-        mes = 1
-        var mesPlanilla = (mes < 10 ? "0" + mes : "" + mes);
-        escribirArchivo(anio + "-" + mesPlanilla, 7);
-      } else {
-        var mesPlanilla = (mes < 10 ? "0" + (mes - 1) : "" + (mes - 1));
-        escribirArchivo(anio + "-" + mesPlanilla, 7);
-      }
+    // function crearCabecera(mes, anio) {
+    //   escribirArchivo('0100000', 7);
+    //   escribirArchivo("UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS", 200);
+    //   escribirArchivo("NI899999230", 18);
+    //   escribirArchivo("7E", 22);
+    //   escribirArchivo("S01", 51);
+    //   escribirArchivo("14-23", 6);
+    //   var mesPensionTemp = mes;
+    //   if (mes === 12) {
+    //     mes = 1
+    //     var mesPlanilla = (mes < 10 ? "0" + mes : "" + mes);
+    //     escribirArchivo(anio + "-" + mesPlanilla, 7);
+    //   } else {
+    //     var mesPlanilla = (mes < 10 ? "0" + (mes - 1) : "" + (mes - 1));
+    //     escribirArchivo(anio + "-" + mesPlanilla, 7);
+    //   }
 
-      var mesPlanilla = (mesPensionTemp < 10 ? "0" + mesPensionTemp : "" + mesPensionTemp)
-      escribirArchivo(anio + "-" + mesPlanilla, 27);
-    }
+    //   var mesPlanilla = (mesPensionTemp < 10 ? "0" + mesPensionTemp : "" + mesPensionTemp)
+    //   escribirArchivo(anio + "-" + mesPlanilla, 27);
+    // }
 
     function completarSecuenciaNum(numero, longitud) {
       var longFaltante = longitud - numero.toString().length;
