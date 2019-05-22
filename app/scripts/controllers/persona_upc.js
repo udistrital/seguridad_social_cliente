@@ -74,7 +74,7 @@ angular.module('ssClienteApp')
       if (m < 0 || (m === 0 && today.getDate() < birthday.getDate())) {
         age--;
       }
-      self.edadUpc = age;
+      
       for (var i = 0; i < self.rangosEdad.length; i++) {
         var element = self.rangosEdad[i];
         if (age >= element.EdadMin && age <= element.EdadMax) {
@@ -87,6 +87,7 @@ angular.module('ssClienteApp')
           }
         }
       }
+      self.edadUpc = age;
       traerValorUpc(self.zona, self.edad.Id);
     }
 
@@ -103,7 +104,7 @@ angular.module('ssClienteApp')
     self.guardarUpcAdicional = function () {
 
       var upcAdicional = {
-        PersonaAsociada: self.proveedor.documento,
+        PersonaAsociada: self.proveedor.idProveedor,
         ParametroEstandar: parseInt(self.tipoIdentificacion),
         NumDocumento: self.variablesForm.numDocumento,
         PrimerNombre: self.variablesForm.nombre,

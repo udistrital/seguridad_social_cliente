@@ -32,7 +32,7 @@ var text_es = {
     GUARDAR: "Guardar",
     BUSCAR: "Buscar",
     VER_REGISTROS: "Ver Registros",
-    GENERAR_PLANILLA: "Generar Planilla",
+    GENERAR_PLANILLA: "Generar archivo plano",
     CERRAR: "Cerrar",
     EDITAR: "Editar",
     REGISTRAR: "Registrar"
