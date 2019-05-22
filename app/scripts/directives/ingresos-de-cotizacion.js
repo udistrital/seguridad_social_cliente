@@ -67,7 +67,7 @@ angular.module('ssClienteApp')
                     };
                 }
               }
-              console.log($scope.persona)
+              
               for (var key in ingresos_cotizacion) {
                 if (ingresos_cotizacion.hasOwnProperty(key)) {
                   detalle_liquidacion.push(ingresos_cotizacion[key]);
