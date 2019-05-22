@@ -26,7 +26,7 @@ angular.module('ssClienteApp')
     seguridadSocialService.get('utils/GetActualDate', '').then(function (response) {
 
       if (Object.keys(response.data.fecha_actual).length !== 0) {
-        self.fechaActual = new Date(response.data.fecha_actual);
+        self.fechaActual = response.data.fecha_actual;
       }
     });
 
@@ -110,32 +110,23 @@ angular.module('ssClienteApp')
               var particion = Math.trunc(totalLiquidacion * 0.3);
 
               seguridadSocialService.get('pago/GetInfoCabecera/' + periodoPago.Liquidacion+'/'+self.tipoLiquidacion, '').then(function (responseCabecera) {
-                var informacionCabecera = responseCabecera.data
+                var informacionCabecera = responseCabecera.data;
 
+                console.log(informacionCabecera)
                 Object.keys(informacionCabecera).forEach(function (key) {
-                  Object.keys(informacionCabecera[key]).forEach(function (innerKey) {
-                    if (isNaN (informacionCabecera[key][innerKey]["Valor"])) {
-                      escribirArchivo(informacionCabecera[key][innerKey]["Valor"], informacionCabecera[key][innerKey]["Longitud"]);
-                    } else if(typeof informacionCabecera[key][innerKey]["Valor"] == "string") {
-                      escribirArchivo(informacionCabecera[key][innerKey]["Valor"], informacionCabecera[key][innerKey]["Longitud"]);
-                    } else {
-                      escribirArchivo(completarSecuenciaNumero(informacionCabecera[key][innerKey]["Valor"], informacionCabecera[key][innerKey]["Longitud"]), informacionCabecera[key][innerKey]["Longitud"]);
-                    }
-                    if (innerKey == "TipoRegistro") {
-                      escribirArchivo(completarSecuenciaNumero(contadorSecuencia, 5), 5);
-                    }
-                  });
+                  console.log(informacionCabecera[key]["Valor"]);
+
+                  if (isNaN (informacionCabecera[key]["Valor"])) {
+                    escribirArchivo(informacionCabecera[key]["Valor"], informacionCabecera[key]["Longitud"]);
+                  } else {
+                    escribirArchivo(completarSecuenciaNumero(informacionCabecera[key]["Valor"], informacionCabecera[key]["Longitud"]), informacionCabecera[key]["Longitud"]);
+                  }
                 });
 
-                console.log(csvContent);
                 csvContent += '\n';
 
-                // escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalPersonas, 5), 5);
-                // escribirArchivo(completarSecuenciaNum(self.infoAdicionalCabecera.TotalNomina, 12), 12);
-                // escribirArchivo(self.infoAdicionalCabecera.CodigoUD, 2);
-                // escribirArchivo(self.infoAdicionalCabecera.CodigoOperador, 2);
-
               }).then(function () {
+                
               getPersonas(totalLiquidacion, particion).then(function () {
                 var contadorSecuencia = 1; // secuencia del archivo plano
                 Object.keys(personasPlanilla).forEach(function (key) {
@@ -153,27 +144,28 @@ angular.module('ssClienteApp')
                     }
                   });
                   contadorSecuencia++;
-                });
-                // csvContent = csvContent.replace(/([^\r])\n/g, "$1\r\n");
-                // var blob = new Blob([csvContent], { type: 'text/csv' });
-                // var filename = 'Planilla_'+self.tipoLiquidacion+'_'+self.fechaActual+'.txt';
-                // if (window.navigator.msSaveOrOpenBlob) {
-                //   window.navigator.msSaveBlob(blob, filename);
-                // }
-                // else {
-                //   var elem = window.document.createElement('a');
-                //   elem.href = window.URL.createObjectURL(blob);
-                //   elem.download = filename;
-                //   document.body.appendChild(elem);
-                //   elem.click();
-                //   document.body.removeChild(elem);
-                // }
-                console.log(csvContent);
+
+              csvContent = csvContent.replace(/([^\r])\n/g, "$1\r\n");
+                var blob = new Blob([csvContent], { type: 'text/csv' });
+                var filename = 'Planilla_'+self.tipoLiquidacion+'_'+self.fechaActual+'.txt';
+                if (window.navigator.msSaveOrOpenBlob) {
+                  window.navigator.msSaveBlob(blob, filename);
+                }
+                else {
+                  var elem = window.document.createElement('a');
+                  elem.href = window.URL.createObjectURL(blob);
+                  elem.download = filename;
+                  document.body.appendChild(elem);
+                  elem.click();
+                  document.body.removeChild(elem);
+                }
                 
                 csvContent = '';
                 self.habilitarFormulario = true;
+                });
               });
               });
+
             });
           }
         });
