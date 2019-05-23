@@ -56,6 +56,7 @@ angular.module('ssClienteApp')
         }
 
         function getPersonas(limit, offset) {
+            personasPlanilla = [];
             var begin = 0;
             var numPeticiones = 0; // número de peticiones para las particiones
             for (var i = 0; i < limit; i += offset) {
@@ -64,8 +65,8 @@ angular.module('ssClienteApp')
 
             var start = new Date().getTime();
             var tiempoPromesas = 0;
-
-
+            console.log(periodoPago);
+            
             return seguridadSocialService.post('planillas/GenerarPlanillaActivos/' + offset + '/' + begin, periodoPago).then(function(response) {
                 var end = new Date().getTime();
                 tiempoPromesas = end - start;
@@ -112,7 +113,6 @@ angular.module('ssClienteApp')
                             seguridadSocialService.get('pago/GetInfoCabecera/' + periodoPago.Liquidacion + '/' + self.tipoLiquidacion, '').then(function(responseCabecera) {
                                 var informacionCabecera = responseCabecera.data;
 
-                                console.log(informacionCabecera)
                                 Object.keys(informacionCabecera).forEach(function(key) {
                                     console.log(informacionCabecera[key]["Valor"]);
 
@@ -198,31 +198,6 @@ angular.module('ssClienteApp')
             Noviembre: 11,
             Diciembre: 12
         };
-
-
-        /* 
-        Función para crear la cabecera del archivo plano
-        */
-        // function crearCabecera(mes, anio) {
-        //   escribirArchivo('0100000', 7);
-        //   escribirArchivo("UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS", 200);
-        //   escribirArchivo("NI899999230", 18);
-        //   escribirArchivo("7E", 22);
-        //   escribirArchivo("S01", 51);
-        //   escribirArchivo("14-23", 6);
-        //   var mesPensionTemp = mes;
-        //   if (mes === 12) {
-        //     mes = 1
-        //     var mesPlanilla = (mes < 10 ? "0" + mes : "" + mes);
-        //     escribirArchivo(anio + "-" + mesPlanilla, 7);
-        //   } else {
-        //     var mesPlanilla = (mes < 10 ? "0" + (mes - 1) : "" + (mes - 1));
-        //     escribirArchivo(anio + "-" + mesPlanilla, 7);
-        //   }
-
-        //   var mesPlanilla = (mesPensionTemp < 10 ? "0" + mesPensionTemp : "" + mesPensionTemp)
-        //   escribirArchivo(anio + "-" + mesPlanilla, 27);
-        // }
 
         function completarSecuenciaNum(numero, longitud) {
             var longFaltante = longitud - numero.toString().length;
