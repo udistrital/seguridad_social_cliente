@@ -16,7 +16,7 @@ angular.module('ssClienteApp')
       },
       
       templateUrl: 'views/directives/lista-incapacidades.html',
-      controller:function($scope, $q, titanCrudService, seguridadSocialService){
+      controller:function($scope, seguridadSocialService){
         var self = this;
 
         self.gridOptions = {
@@ -37,7 +37,7 @@ angular.module('ssClienteApp')
 
         self.select = function(row) {
           $scope.incapacidad = row;
-        }
+        };
         
         seguridadSocialService.get('incapacidades/incapacidadesPersona/'+$scope.contrato.numContrato+'/'+$scope.contrato.vigContrato, '').then(function(response) {
           self.gridOptions.data = response.data;

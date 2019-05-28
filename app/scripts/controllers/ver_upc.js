@@ -15,7 +15,7 @@ angular.module('ssClienteApp')
     self.init = function () {
       cargarGrilla();
       cargarGrillaBeneficiarios();
-    }
+    };
 
     self.gridBeneficiariosOp = {
       enableRowHeaderSelection: false,
@@ -47,7 +47,7 @@ angular.module('ssClienteApp')
           enableFiltering: false
         }
       ]
-    }
+    };
 
     self.gridOptions = {
       enableRowHeaderSelection: false,
@@ -98,7 +98,7 @@ angular.module('ssClienteApp')
           }).then(function () {
             var beneficiario = entity;
             beneficiario.Activo = false;
-            console.log(beneficiario);
+            
             
             if (self.opVista === 'Beneficiarios') {
               seguridadSocialCrudService.put('beneficiarios', beneficiario.Id, beneficiario).then(function (response) {
@@ -110,7 +110,7 @@ angular.module('ssClienteApp')
                   )
                   cargarGrillaBeneficiarios();
                 }
-              })
+              });
             } else {
               var beneficiarioAd = beneficiario;
               seguridadSocialCrudService.put('upc_adicional', beneficiarioAd.Id, beneficiarioAd).then(function (response) {
@@ -122,7 +122,7 @@ angular.module('ssClienteApp')
                   )
                   cargarGrilla();
                 }
-              })
+              });
             }
           });
 
