@@ -46,7 +46,6 @@ angular.module('ssClienteApp')
       self.gridPersonas = false;
       titanCrudService.get('preliquidacion', 'query=EstadoPreliquidacion.Activo:true,EstadoPreliquidacion.Nombre:Abierta,Mes:' + self.mesPeriodo + ',Ano:' + self.anioPeriodo)
         .then(function (response) {
-
           if (response.data !== null) {
             self.nominas = response.data;
             self.divNominas = true;
@@ -57,11 +56,13 @@ angular.module('ssClienteApp')
             self.divError = true;
             self.errorMensajeParte1 = "No se encontrarón nóminas liquidadas para " + self.meses[self.mesPeriodo] + " de " + self.anioPeriodo;
           }
+          self.cargando = false;
         }, function () {
           self.divNominas = false;
           self.nominas = null;
           self.divError = true;
           self.errorMensajeParte1 = "No se encontrarón nóminas liquidadas para " + self.meses[self.mesPeriodo] + " de " + self.anioPeriodo;
+          self.cargando = false;
         });
     };
 
@@ -100,6 +101,7 @@ angular.module('ssClienteApp')
           });
           break;
       }
+      self.cargando = false;
       // self.gridOptions.gridFooterTemplate = '<div class="ui-grid-bottom-panel" style="text-align: center">Total Personas: </div>';
     };
 
@@ -136,6 +138,7 @@ angular.module('ssClienteApp')
         }
 
         self.gridOptions.data = resultadosProveedores;
+        self.cargando = false;
       } else {
         self.gridOptions.data = null;
       }
@@ -224,6 +227,7 @@ angular.module('ssClienteApp')
           });
         }
       });
+      self.cargando = false;
     };
 
     self.gridOptions = {

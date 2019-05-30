@@ -4,7 +4,7 @@
         <h4>{{'ACTIVOS.TITULO' | translate}}</h4>
     </div>
     <br>
-    <form name="myForm" ng-submit="activos.buscarNomina()">
+    <form name="myForm" ng-submit="activos.buscarNomina(); activos.cargando=true">
         <div class="form-group row">
             <div class="col-md-1">
                 <label class="col-md-7 col-form-label">{{ 'ACTIVOS.ANIO' | translate }}</label>
@@ -40,7 +40,7 @@
                 <option ng-repeat="n in activos.nominas" value="{{n}}"><b>{{n.Nomina.Descripcion}}</b></option>
             </select>
         </div>
-        <button type="button" class="btn btn-primary btn-outline" name="button" ng-click="activos.nominaSeleccionada()"> {{
+        <button type="button" class="btn btn-primary btn-outline" name="button" ng-click="activos.nominaSeleccionada(); activos.cargando = true"> {{
             'BTN.VER_REGISTROS' | translate }} </button>
     </div>
 
@@ -48,7 +48,7 @@
         <strong> {{ 'ALERTA' | translate }} </strong><br> {{activos.errorMensajeParte1}} <b>{{activos.nominaErrorMensaje}}</b> {{activos.errorMensajeParte2}}
     </div>
 
-    <loadingcircle load="load"></loadingcircle>
+    <loadingcircle ng-if="activos.cargando" load="load"></loadingcircle>
     <div class="panel-body" ng-if="activos.gridPersonas">
         <hr size="50">
         <table style="width:100%;">
