@@ -92,19 +92,19 @@ angular.module('ssClienteApp')
                   ValorCalculado: $scope.persona.PensionTotal - $scope.persona.PensionUd
                 },
                 {
-                  Concepto: { AliasConcepto: 'Fondo de Solidaridad' },
+                  Concepto: { AliasConcepto: 'Valor Fondo de Solidaridad' },
                   ValorCalculado: $scope.persona.FondoSolidaridad
                 },
                 {
-                  Concepto: { AliasConcepto: 'ARL' },
+                  Concepto: { AliasConcepto: 'Valor ARL' },
                   ValorCalculado: $scope.persona.Arl
                 },
                 {
-                  Concepto: { AliasConcepto: 'Caja de compensación' },
+                  Concepto: { AliasConcepto: 'Valor Caja de compensación' },
                   ValorCalculado: $scope.persona.Caja
                 },
                 {
-                  Concepto: { AliasConcepto: 'ICBF' },
+                  Concepto: { AliasConcepto: 'Valor ICBF' },
                   ValorCalculado: $scope.persona.Icbf
                 }
               );
