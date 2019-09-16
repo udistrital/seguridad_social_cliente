@@ -2,57 +2,60 @@ workspace:
   base: /go
   path: src/github.com/udistrital/${DRONE_REPO##udistrital/}
   when:
-      branch: [master, test]
-      event: [push, pull_request]
+      branch: [master, develop]
+      event: push
 
 pipeline:
 
-  # build and test the go program
-  nodejs:
-    image: node:12.6.0
+  # run grunt sonar runner
+  grunt-sonar-runner:
+    image: timbru31/java-node
     commands:
-     - node --version
-     - npm i
-     - npm run build:test
+     - npm install -g grunt-cli bower
+     - npm install grunt --save-dev
+     - npm install grunt-sonar-runner --save-dev
+     - grunt sonarRunner:analysis
     when:
-      branch: [test]
-      event: [push, pull_request]
-      
-  nodejs:  
-    image: node:12.6.0
+      branch: [dev]
+      event: push
+
+  # install the AngularJS program
+  nodejs-build:
+    image: node:10.7.0
     commands:
-     - node --version
-     - npm i
-     - npm run build:prod
+     - npm install -g grunt-cli bower
+     - npm install natives
+     - npm install
+     - bower install --allow-root
+     - grunt build
     when:
-      branch: [master]
-      event: [push, pull_request]
+      branch: [master, develop]
+      event: push
 
   # upload app.zip to s3 bucket for CodePipline
   publish_s3:
     image: plugins/s3
     secrets: [ aws_access_key_id, aws_secret_access_key ]
-    region: "us-east-1"    
-    bucket: "cliente-pruebas"
+    region: "us-east-1"
+    bucket: "pruebaseguridadsocial.portaloas.udistrital.edu.co"
     source: dist/**/*
-    target: /pruebas${DRONE_REPO_NAME%%_cliente}.portaloas.udistrital.edu.co
+    target: /
     strip_prefix: dist/
     when:
-      branch: [test]
-      event: [push, pull_request] 
-    
-  # upload app.zip to s3 bucket for CodePipline
+      branch: [develop]
+      event: push
+
   publish_s3:
     image: plugins/s3
     secrets: [ aws_access_key_id, aws_secret_access_key ]
-    region: "us-east-1"    
-    bucket: "cliente-prod"
+    region: "us-east-1"
+    bucket: "seguridadsocial.portaloas.udistrital.edu.co"
     source: dist/**/*
-    target: /${DRONE_REPO_NAME%%_cliente}.portaloas.udistrital.edu.co
+    target: /
     strip_prefix: dist/
     when:
       branch: [master]
-      event: [push, pull_request] 
+      event: push
 
   #Notify results to telegram
   notify_telegram:
@@ -69,5 +72,5 @@ pipeline:
       {{/success}}
     when:
       status: [success, failure]
-      branch: [master, test]
-      event: [push, pull_request]
+      branch: [master, develop]
+      event: push
