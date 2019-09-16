@@ -41,7 +41,8 @@
     "test": "karma start test/karma.conf.js"
   },
   "dependencies": {
-    "angular-ui-router": "^1.0.3",
+    "@uirouter/angularjs": "^1.0.3",
+    "angular-peer": "^1.0.0",
     "natives": "^1.1.6"
   }
 }
