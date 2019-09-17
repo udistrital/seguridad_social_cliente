@@ -102,7 +102,7 @@ angular.module('ssClienteApp')
                 // roles='ASISTENTE_RECURSOS_HUMANOS_SS';
                 configuracionRequest.get('menu_opcion_padre/ArbolMenus/' + roles + '/ss','').then(function(response) {
                     $rootScope.my_menu = response.data;
-    
+                    console.log(response.data);
                 })
                 .catch(
                     function(response) {
