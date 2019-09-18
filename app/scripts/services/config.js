@@ -35,6 +35,38 @@
 
  /**
  * @ngdoc property
+ * @name ssClienteApp.service:CONF.conf_pruebas
+ * @propertyOf ssClienteApp.service:CONF
+ * @description
+ * Variables de configuración de preproducción - pruebas en la nube
+ */
+var conf_pruebas = {
+    AGORA_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/administrativa_amazon_api/v1/",
+    ARGO_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/administrativa_amazon_api/v1/",
+    TITAN_MID_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/titan_api_mid/v1/",
+    TITAN_CRUD_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/titan_api_crud/v1/",
+    RULER: "https://autenticacion.portaloas.udistrital.edu.co/apioas/ruler_api/v1/",
+    ADMINISTRATIVA_AMAZON_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/administrativa_amazon_api/v1/",
+    SS_CRUD_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/ss_crud_api/v1/",
+    SS_MID_SERVCE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/ss_mid_api/v1/",
+    // SESIONES_SERVICE:"https://autenticacion.portaloas.udistrital.edu.co/apioas/sesiones_crud/v1/",
+    CONFIGURACION_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/configuracion_crud_api/v1/",
+    TOKEN: {
+        AUTORIZATION_URL: "https://autenticacion.portaloas.udistrital.edu.co/oauth2/authorize",
+        URL_USER_INFO: "https://autenticacion.portaloas.udistrital.edu.co/oauth2/userinfo",
+        CLIENTE_ID:"98P9NqaTa6sDReC_IOTg7qlksG4a",
+        REDIRECT_URL: "https://pruebasseguridadsocial.portaloas.udistrital.edu.co",
+        RESPONSE_TYPE: "id_token token",
+        SCOPE: "openid email documento",
+        BUTTON_CLASS: "btn btn-warning btn-sm",
+        SIGN_OUT_URL: "https://autenticacion.portaloas.udistrital.edu.co/oidc/logout",
+        SIGN_OUT_REDIRECT_URL: "https://pruebasseguridadsocial.portaloas.udistrital.edu.co",
+        SIGN_OUT_APPEND_TOKEN: "true",
+    }
+};
+
+ /**
+ * @ngdoc property
  * @name ssClienteApp.service:CONF.conf_local
  * @propertyOf ssClienteApp.service:CONF
  * @description
@@ -65,38 +97,6 @@ var conf_local = {
         SIGN_OUT_APPEND_TOKEN: "true",
     }
     // AUTENTICATION_MID_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/autenticacion_mid/v1/"
-};
-
-/**
- * @ngdoc property
- * @name ssClienteApp.service:CONF.conf_local
- * @propertyOf ssClienteApp.service:CONF
- * @description
- * Variables de configuración de preproducción - pruebas en la nube
- */
-var conf_pruebas = {
-    AGORA_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/administrativa_amazon_api/v1/",
-    ARGO_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/administrativa_amazon_api/v1/",
-    TITAN_MID_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/titan_api_mid/v1/",
-    TITAN_CRUD_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/titan_api_crud/v1/",
-    RULER: "https://autenticacion.portaloas.udistrital.edu.co/apioas/ruler_api/v1/",
-    ADMINISTRATIVA_AMAZON_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/administrativa_amazon_api/v1/",
-    SS_CRUD_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/ss_crud_api/v1/",
-    SS_MID_SERVCE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/ss_mid_api/v1/",
-    // SESIONES_SERVICE:"https://autenticacion.portaloas.udistrital.edu.co/apioas/sesiones_crud/v1/",
-    CONFIGURACION_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/configuracion_crud_api/v1/",
-    TOKEN: {
-        AUTORIZATION_URL: "https://autenticacion.portaloas.udistrital.edu.co/oauth2/authorize",
-        URL_USER_INFO: "https://autenticacion.portaloas.udistrital.edu.co/oauth2/userinfo",
-        CLIENTE_ID:"98P9NqaTa6sDReC_IOTg7qlksG4a",
-        REDIRECT_URL: "https://pruebasseguridadsocial.portaloas.udistrital.edu.co",
-        RESPONSE_TYPE: "id_token token",
-        SCOPE: "openid email documento",
-        BUTTON_CLASS: "btn btn-warning btn-sm",
-        SIGN_OUT_URL: "https://autenticacion.portaloas.udistrital.edu.co/oidc/logout",
-        SIGN_OUT_REDIRECT_URL: "https://pruebasseguridadsocial.portaloas.udistrital.edu.co",
-        SIGN_OUT_APPEND_TOKEN: "true",
-    }
 };
 
 /**
