@@ -119,7 +119,10 @@ angular.module('ssClienteApp')
                     });
             } else {
               console.log("else de !angular.isUndefined($scope.token.role)", angular.isUndefined($scope.token.role))
+              console.log($scope.token.role)
             }
+
+            console.log("roles por fuera: ", $scope.token)
         }
         /*
         configuracionRequest.get('menu_opcion_padre/ArbolMenus/' + "ADMINISTRADOR_ARGO" + '/Argo', '').then(function(response) {
