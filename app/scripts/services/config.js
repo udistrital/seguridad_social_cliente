@@ -55,12 +55,12 @@ var conf_pruebas = {
         AUTORIZATION_URL: "https://autenticacion.portaloas.udistrital.edu.co/oauth2/authorize",
         URL_USER_INFO: "https://autenticacion.portaloas.udistrital.edu.co/oauth2/userinfo",
         CLIENTE_ID:"98P9NqaTa6sDReC_IOTg7qlksG4a",
-        REDIRECT_URL: "https://pruebasseguridadsocial.portaloas.udistrital.edu.co",
+        REDIRECT_URL: "https://pruebasseguridadsocial.portaloas.udistrital.edu.co/",
         RESPONSE_TYPE: "id_token token",
         SCOPE: "openid email documento",
         BUTTON_CLASS: "btn btn-warning btn-sm",
         SIGN_OUT_URL: "https://autenticacion.portaloas.udistrital.edu.co/oidc/logout",
-        SIGN_OUT_REDIRECT_URL: "https://pruebasseguridadsocial.portaloas.udistrital.edu.co",
+        SIGN_OUT_REDIRECT_URL: "https://pruebasseguridadsocial.portaloas.udistrital.edu.co/",
         SIGN_OUT_APPEND_TOKEN: "true",
     }
 };
