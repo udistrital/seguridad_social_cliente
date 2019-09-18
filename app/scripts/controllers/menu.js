@@ -14,7 +14,8 @@ angular.module('ssClienteApp')
             es: "btn btn-primary btn-circle btn-outline active",
             en: "btn btn-primary btn-circle btn-outline"
         };
-        $scope.menu_app = [{
+        $scope.menu_app = [
+          {
                 id: "seguridadsocial",
                 title: "SEGURIDAD SOCIAL",
                 url: "https://seguridadsocial.portaloas.udistrital.edu.co"
@@ -73,6 +74,7 @@ angular.module('ssClienteApp')
                     recorrerArbol(item[i].Opciones, padre + "," + item[i].Nombre);
                 }
             }
+            console.log("padres: ",padres);
             return padres;
         };
         
@@ -115,6 +117,8 @@ angular.module('ssClienteApp')
                         console.log("$rootScope.my_menu:", $rootScope.my_menu)
         
                     });
+            } else {
+              console.log("else de !angular.isUndefined($scope.token.role)", angular.isUndefined($scope.token.role))
             }
         }
         /*
