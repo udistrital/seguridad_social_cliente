@@ -78,41 +78,35 @@ angular.module('ssClienteApp')
         
         $scope.logout = function(){
             token_service.logout();
-            console.log("logout");
         };
         if(token_service.live_token()){
-          console.log("token is live");
 
             $scope.token = token_service.getPayload();            
             if (!angular.isUndefined($scope.token.role)){
-                console.log("$scope:", $scope.token.role);
                 var roles="";
                 if ( typeof $scope.token.role === "object" ) {
-                  console.log("$scope.token.role: ", $scope.token.role);
+
                   var rl = [];
                   for (var index = 0; index < $scope.token.role.length; index++) {
                     if ($scope.token.role[index].indexOf("/") < 0 ){
                       rl.push($scope.token.role[index]);
-                      console.log("$scope.token.role: ", $scope.token.role);
                     }
                   }
                   roles = rl.toString();
                 } else {
                   roles = $scope.token.role;
                 }
-                console.log("roles: ", roles);
+
     
                 roles = roles.replace(/,/g, '%2C');
                 console.log("roles: ", roles);
                 // roles='ASISTENTE_RECURSOS_HUMANOS_SS';
                 configuracionRequest.get('menu_opcion_padre/ArbolMenus/' + roles + '/ss','').then(function(response) {
                     $rootScope.my_menu = response.data;
-                    console.log("menus:", response.data);
                 })
                 .catch(
                     function(response) {
                         $rootScope.my_menu = response.data;
-                        console.log("$rootScope.my_menu:", $rootScope.my_menu)
         
                     });
             }
