@@ -19,7 +19,7 @@ angular.module('ssClienteApp')
         return $http.get(path+servicio+"/"+parametro, token_service.getHeader());
       },
       get: function (tabla,params) {
-        return $http.get(path+tabla+"/?"+params, token_service.getHeader());
+        return $http.get(path+tabla+"?"+params, token_service.getHeader());
       },
       post: function (tabla,elemento) {
         return $http.post(path+tabla,elemento, token_service.getHeader());
