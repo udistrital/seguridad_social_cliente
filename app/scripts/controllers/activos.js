@@ -97,6 +97,7 @@ angular.module('ssClienteApp')
 
         default:
           seguridadSocialService.getServicio('pago/CalcularSegSocial', nominaObj.Id, '').then(function (response) {
+            console.log("info calculada:", response);
             agregarInformacionGrid(response.data);
           });
           break;
