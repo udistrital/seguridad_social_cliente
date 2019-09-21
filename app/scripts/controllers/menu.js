@@ -86,10 +86,6 @@ angular.module('ssClienteApp')
             if (!angular.isUndefined($scope.token.role)){
                 var roles="";
                 if ( typeof $scope.token.role === "object" ) {
-<<<<<<< HEAD
-
-=======
->>>>>>> test
                   var rl = [];
                   for (var index = 0; index < $scope.token.role.length; index++) {
                     if ($scope.token.role[index].indexOf("/") < 0 ){
@@ -100,10 +96,6 @@ angular.module('ssClienteApp')
                 } else {
                   roles = $scope.token.role;
                 }
-<<<<<<< HEAD
-
-=======
->>>>>>> test
     
                 roles = roles.replace(/,/g, '%2C');
                 configuracionRequest.get('menu_opcion_padre/ArbolMenus/' + roles + '/ss','').then(function(response) {
@@ -112,10 +104,6 @@ angular.module('ssClienteApp')
                 .catch(
                     function(response) {
                         $rootScope.my_menu = response.data;
-<<<<<<< HEAD
-        
-=======
->>>>>>> test
                     });
             } 
         }
