@@ -31,7 +31,7 @@ pipeline:
       branch: [master, test]
       event: [push, pull_request]
 
-  # upload app.zip to s3 bucket for CodePipline
+  # upload app.zip to s3 bucket cliente-pruebas
   publish_s3:
     image: plugins/s3
     secrets: [ aws_access_key_id, aws_secret_access_key ]
@@ -44,12 +44,12 @@ pipeline:
       branch: test
       event: [push, pull_request]
 
-  # upload app.zip to s3 bucket for CodePipline
+  # upload app.zip to s3 bucket cliente-produccion
   publish_s3:
     image: plugins/s3
     secrets: [ aws_access_key_id, aws_secret_access_key ]
     region: "us-east-1"
-    bucket: "cliente-pruebas"
+    bucket: "cliente-prod"
     source: dist/**/*
     target: /${DRONE_REPO_NAME%%_cliente}.portaloas.udistrital.edu.co
     strip_prefix: dist/
