@@ -65,7 +65,6 @@ angular.module('ssClienteApp')
 
             var start = new Date().getTime();
             var tiempoPromesas = 0;
-            console.log(periodoPago);
             
             return seguridadSocialService.post('planillas/GenerarPlanillaActivos/' + offset + '/' + begin, periodoPago).then(function(response) {
                 var end = new Date().getTime();
@@ -114,7 +113,6 @@ angular.module('ssClienteApp')
                                 var informacionCabecera = responseCabecera.data;
 
                                 Object.keys(informacionCabecera).forEach(function(key) {
-                                    console.log(informacionCabecera[key]["Valor"]);
 
                                     if (isNaN(informacionCabecera[key]["Valor"])) {
                                         escribirArchivo(informacionCabecera[key]["Valor"], informacionCabecera[key]["Longitud"]);

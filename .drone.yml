@@ -31,8 +31,8 @@ pipeline:
       branch: [master, test]
       event: [push, pull_request]
 
-  # upload app.zip to s3 bucket cliente-pruebas
-  publish_s3:
+  # upload files to bucket s3 cliente-test
+  publish_s3_test:
     image: plugins/s3
     secrets: [ aws_access_key_id, aws_secret_access_key ]
     region: "us-east-1"
@@ -44,8 +44,8 @@ pipeline:
       branch: test
       event: [push, pull_request]
 
-  # upload app.zip to s3 bucket cliente-produccion
-  publish_s3:
+  # upload files to bucket s3 cliente-prod
+  publish_s3_prod:
     image: plugins/s3
     secrets: [ aws_access_key_id, aws_secret_access_key ]
     region: "us-east-1"

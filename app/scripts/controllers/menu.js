@@ -14,7 +14,8 @@ angular.module('ssClienteApp')
             es: "btn btn-primary btn-circle btn-outline active",
             en: "btn btn-primary btn-circle btn-outline"
         };
-        $scope.menu_app = [{
+        $scope.menu_app = [
+          {
                 id: "seguridadsocial",
                 title: "SEGURIDAD SOCIAL",
                 url: "https://seguridadsocial.portaloas.udistrital.edu.co"
@@ -85,7 +86,10 @@ angular.module('ssClienteApp')
             if (!angular.isUndefined($scope.token.role)){
                 var roles="";
                 if ( typeof $scope.token.role === "object" ) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> test
                   var rl = [];
                   for (var index = 0; index < $scope.token.role.length; index++) {
                     if ($scope.token.role[index].indexOf("/") < 0 ){
@@ -96,28 +100,25 @@ angular.module('ssClienteApp')
                 } else {
                   roles = $scope.token.role;
                 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> test
     
                 roles = roles.replace(/,/g, '%2C');
-                console.log("roles: ", roles);
-                // roles='ASISTENTE_RECURSOS_HUMANOS_SS';
                 configuracionRequest.get('menu_opcion_padre/ArbolMenus/' + roles + '/ss','').then(function(response) {
                     $rootScope.my_menu = response.data;
                 })
                 .catch(
                     function(response) {
                         $rootScope.my_menu = response.data;
+<<<<<<< HEAD
         
+=======
+>>>>>>> test
                     });
-            }
+            } 
         }
-        /*
-        configuracionRequest.get('menu_opcion_padre/ArbolMenus/' + "ADMINISTRADOR_ARGO" + '/Argo', '').then(function(response) {
-            $rootScope.my_menu = response.data;
-          });
-            /*configuracionRequest.update_menu(https://10.20.0.162:9443/store/apis/authenticate response.data);
-            $scope.menu_service = configuracionRequest.get_menu();*/
-
 
         var update_url = function() {
             $scope.breadcrumb = [''];
@@ -187,90 +188,5 @@ angular.module('ssClienteApp')
             });
         })(jQuery);
 });
-
-/*
-angular.module('ssClienteApp')
-.controller('menuCtrl', function($location, $http, $scope, token_service, notificacion, $translate) {
-  var paths = [];
-  $scope.language = {
-    es:"btn btn-primary btn-circle btn-outline active",
-    en:"btn btn-primary btn-circle btn-outline"
-  };
-  $scope.notificacion = notificacion;
-  $scope.actual = "";
-  $scope.token_service = token_service;
-  $scope.breadcrumb = [];
-
-  $http.get('http://10.20.0.254/configuracion_api/v1/menu_opcion_padre/ArbolMenus/ASISTENTE_RECURSOS_HUMANOS_SS/Titan').then(function(response) {
-    $scope.menu_service = response.data;
-    recorrerArbol(response.data, "")
-  });
-
-    var recorrerArbol = function(item, padre) {
-      var padres = "";
-      for (var i = 0; i < item.length; i++) {
-        if (item[i].Opciones === null) {
-          padres = padre + " , " + item[i].Nombre;
-          paths.push({
-            'path': item[i].Url,
-            'padre': padres.split(",")
-          });
-        } else {
-          recorrerArbol(item[i].Opciones, padre + "," + item[i].Nombre);
-        }
-      }
-      return padres;
-    };
-
-    var update_url = function() {
-      $scope.breadcrumb = [''];
-      for (var i = 0; i < paths.length; i++) {
-        if ($scope.actual === "/" + paths[i].path) {
-          $scope.breadcrumb = paths[i].padre;
-        } else if ('/' === $scope.actual) {
-          $scope.breadcrumb = [''];
-        }
-      }
-    };
-
-    $scope.logout = function(){
-      token_service.logout();
-    };
-
-    paths.push({padre:["","Notificaciones","Ver Notificaciones"],path:"notificaciones"});
-
-    $scope.$on('$routeChangeStart', function(next, current) {
-      $scope.actual = $location.path();
-      update_url();
-      console.log(next + current);
-    });
-
-    $scope.changeLanguage = function (key){
-      $translate.use(key);
-      switch (key) {
-        case 'es':
-        $scope.language.es = "btn btn-primary btn-circle btn-outline active";
-        $scope.language.en = "btn btn-primary btn-circle btn-outline";
-        break;
-        case 'en':
-        $scope.language.en = "btn btn-primary btn-circle btn-outline active";
-        $scope.language.es = "btn btn-primary btn-circle btn-outline";
-        break;
-        default:
-      }
-    };
-    //Pendiente por definir json del menu
-    (function($) {
-      $(document).ready(function() {
-        $('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
-          event.preventDefault();
-          event.stopPropagation();
-          $(this).parent().siblings().removeClass('open');
-          $(this).parent().toggleClass('open');
-        });
-      });
-    })(jQuery);
-  });
-  */
 
 

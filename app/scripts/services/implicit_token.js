@@ -21,7 +21,7 @@ if (window.localStorage.getItem('access_token') === null ||
   var req = new XMLHttpRequest();
   // consider using POST so query isn't logged
   var query = 'https://' + window.location.host + '?' + queryString;
-  // console.log(query);
+
   req.open('GET', query, true);
   if (params['id_token'] !== null && params['id_token'] !== undefined) {
     window.localStorage.setItem('access_token', params['access_token']);
