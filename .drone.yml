@@ -26,7 +26,6 @@ pipeline:
      - npm install
      - bower install --allow-root
      - grunt build
-
     when:
       branch: [master, test]
       event: [push, pull_request]
