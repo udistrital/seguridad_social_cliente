@@ -14,7 +14,7 @@ pipeline:
      - npm install grunt-sonar-runner --save-dev
      - grunt sonarRunner:analysis
     when:
-      branch: [dev]
+      branch: [test]
       event: push
 
   # build and test the go program
