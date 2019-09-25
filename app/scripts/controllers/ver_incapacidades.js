@@ -11,7 +11,7 @@ angular.module('ssClienteApp')
   .controller('VerIncapacidadesCtrl', function (titanCrudService, administrativaAmazonService) {
     var self = this;
 
-    titanCrudService.get('concepto_nomina_por_persona', 'query=Concepto.NaturalezaConcepto.Nombre:seguridad_social,Concepto.NombreConcepto__startswith:incapacidad,Activo:true&limit=-1')
+    titanCrudService.get('concepto_nomina_por_persona', 'query=Concepto.NaturalezaConcepto.Nombre:seguridad_social,Concepto.NombreConcepto__contains:incapacidad,Activo:true&limit=-1')
       .then(function (response) {
         var concepto_por_persona = response.data;
 
