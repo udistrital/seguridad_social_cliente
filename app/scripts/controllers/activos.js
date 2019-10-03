@@ -8,11 +8,12 @@
 * Controller of the ssClienteApp
 */
 angular.module('ssClienteApp')
-  .controller('ActivosCtrl', function (seguridadSocialService, titanCrudService, seguridadSocialCrudService, $translate) {
+  .controller('ActivosCtrl', function (seguridadSocialService, titanCrudService, seguridadSocialCrudService, administrativaAmazonService, $translate) {
     var self = this;
     var dataDescuentos = [];
     var nominaObj;   // Objeto json con la nómina seleccionada
     var personas = [];
+    var infoProveedores = {};
     self.novedadesDiv = false;
 
     self.anioPeriodo = new Date().getFullYear();
@@ -27,6 +28,13 @@ angular.module('ssClienteApp')
       7: $translate.instant("JULIO"), 8: $translate.instant("AGOSTO"), 9: $translate.instant("SEPTIEMBRE"),
       10: $translate.instant("OCTUBRE"), 11: $translate.instant("NOVIEMBRE"), 12: $translate.instant("DICIEMBRE")
     };
+
+    administrativaAmazonService.get('informacion_proveedor','limit=-1').then(function(response) {
+      response.data.forEach(function(element) {
+        infoProveedores[element["Id"]] = element["NomProveedor"];
+      });
+      
+    });
 
     //Crea un arreglo de objetos para tener los años desde el 1900 hasta el año actual con el metodo getFullYear()
     function calcularAnios() {
@@ -97,7 +105,9 @@ angular.module('ssClienteApp')
 
         default:
           seguridadSocialService.getServicio('pago/CalcularSegSocial', nominaObj.Id, '').then(function (response) {
-            console.log("info calculada:", response);
+            response.data.forEach(function(element) {
+              element["NombrePersona"] = infoProveedores[element["IdProveedor"]]
+            });
             agregarInformacionGrid(response.data);
           });
           break;
