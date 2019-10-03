@@ -107,5 +107,5 @@ var conf_local = {
  */
 angular.module("ssClienteApp")
   .constant("CONF", {
-      GENERAL: conf_local
+      GENERAL: conf_pruebas
   });
