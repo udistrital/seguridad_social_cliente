@@ -99,6 +99,9 @@ angular.module('ssClienteApp')
         case "HCH":
         case "CT":
           seguridadSocialService.get('pago/CalcularSegSocialHonorarios/' + nominaObj.Id, '').then(function (response) {
+            response.data.forEach(function(element) {
+              element["NombrePersona"] = infoProveedores[element["IdProveedor"]]
+            });
             agregarInformacionGrid(response.data);
           });
           break;
