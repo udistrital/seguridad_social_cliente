@@ -1,0 +1,55 @@
+<br>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4> {{ 'IBC_PARAFISCALES.TITULO' | translate }} </h4>
+  </div>
+  <div class="panel-body">
+    <button type="button" class="btn btn-warning btn-outline btn-block" ng-click="ibcParafiscales.habilitarEdicion()"> {{ 'BTN.HABILITAR_EDITAR' | translate }} </button> <br>
+    <label> {{ 'IBC_PARAFISCALES.SELECCION_CONCEPTOS' | translate }} </label>
+    <br>
+    <div class="col-md-4" ng-repeat="c in ibcParafiscales.conceptosActivos" >
+      <div>
+        <div class="row">
+          <div class="col-md-2" >
+            <input class="form-control" type="checkbox" id="{{c.Id}}"
+            ng-click="ibcParafiscales.actualizarConcepto(c)" ng-checked="{{c.Estado}}"/>
+          </div>
+          <div class="col-md-10">
+            <spam class="form-control" >
+              {{c.Descripcion}}
+            </spam>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <button type="button" class="btn btn-success btn-outline btn-block" data-toggle="modal" data-target="#myModal"> {{ 'BTN.GUARDAR' | translate }} </button>
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"> {{ 'IBC.CONCEPTOS_SELECCIONADOS' | translate }} </h4>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li ng-repeat="c in ibcParafiscales.conceptosActivos" ng-if="c.Estado"> {{c.Descripcion}} </li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal"> {{ 'BTN.CERRAR' | translate }} </button>
+            <button type="button" class="btn btn-primary btn-succes" ng-click="ibcParafiscales.guardar()" data-dismiss="modal"> {{ 'BTN.GUARDAR' | translate }}  </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
