@@ -35,6 +35,7 @@ var text_es = {
     GENERAR_PLANILLA: "Generar archivo plano",
     CERRAR: "Cerrar",
     EDITAR: "Editar",
+    HABILITAR_EDITAR: "Habilitar Edición",
     REGISTRAR: "Registrar"
   },
   VALIDACION: {
@@ -174,6 +175,10 @@ var text_es = {
     TITULO: "Ingreso Base de Cotización",
     SELECCION_CONCEPTOS: "Seleccione los conceptos para establecer el Ingreso Base de Cotiazción",
     CONCEPTOS_SELECCIONADOS: "Conceptos Seleccionados"
+  },
+  IBC_PARAFISCALES: {
+    TITULO: "Ingreso Base de Cotización Parafiscales",
+    SELECCION_CONCEPTOS: "Seleccione los conceptos para establecer el Ingreso Base de Cotiazción de Parafiscales"
   },
   CONCEPTO_PERSONA: {
     VALOR_NOVEDAD: "Valor",
