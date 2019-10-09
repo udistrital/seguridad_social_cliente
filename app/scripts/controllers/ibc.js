@@ -40,7 +40,7 @@ angular.module('ssClienteApp')
     }
 
     self.guardar = function () {
-      seguridadSocialService.post('conceptos_ibc/ActualizarConceptos/', self.conceptosActivos).then(function (response) {
+      seguridadSocialService.post('conceptos_ibc/ActualizarConceptos/ibc', self.conceptosActivos).then(function (response) {
         if (response.data.Code === "1") {
           swal('Conceptos actualizados exitosamente', '', 'success');
         } else {

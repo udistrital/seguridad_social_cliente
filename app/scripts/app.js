@@ -151,6 +151,11 @@ angular.module('ssClienteApp', [
                 controller: 'CambioEntidadCtrl',
                 controllerAs: 'cambioEntidad'
             })
+            .when('/ibc_parafiscales', {
+              templateUrl: 'views/ibc_parafiscales.html',
+              controller: 'IbcParafiscalesCtrl',
+              controllerAs: 'ibcParafiscales'
+            })
             .otherwise({
                 redirectTo: '/'
             });
