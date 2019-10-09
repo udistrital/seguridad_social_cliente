@@ -16,7 +16,6 @@
     ADMINISTRATIVA_AMAZON_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/administrativa_amazon_api/v1/",
     SS_CRUD_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/ss_crud_api/v1/",
     SS_MID_SERVCE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/ss_mid_api/v1/",
-    // SESIONES_SERVICE:"https://autenticacion.portaloas.udistrital.edu.co/apioas/sesiones_crud/v1/",
     CONFIGURACION_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/configuracion_crud_api/v1/",
     TOKEN: {
         AUTORIZATION_URL: "https://autenticacion.portaloas.udistrital.edu.co/oauth2/authorize",
@@ -49,7 +48,6 @@ var conf_pruebas = {
     ADMINISTRATIVA_AMAZON_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/administrativa_amazon_api/v1/",
     SS_CRUD_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/ss_crud_api/v1/",
     SS_MID_SERVCE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/ss_mid_api/v1/",
-    // SESIONES_SERVICE:"https://autenticacion.portaloas.udistrital.edu.co/apioas/sesiones_crud/v1/",
     CONFIGURACION_SERVICE: "https://autenticacion.portaloas.udistrital.edu.co/apioas/configuracion_crud_api/v1/",
     TOKEN: {
         AUTORIZATION_URL: "https://autenticacion.portaloas.udistrital.edu.co/oauth2/authorize",
