@@ -10,7 +10,7 @@
 module.exports = function (grunt) {
 
     // Test wich SonarQube
-    grunt.loadNpmTasks('grunt-sonar-runner');
+    //grunt.loadNpmTasks('grunt-sonar-runner');
 
     // Time how long tasks take. Can help when optimizing build times
     require('time-grunt')(grunt);
