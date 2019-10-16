@@ -121,7 +121,7 @@ var text_es = {
     REGISTRO: "Registrada seguridad social del mes de"
   },
   UPC_ADICIONAL: {
-    TITULO_REGISTRO: "Registrar Nueva UPC",
+    TITULO_REGISTRO: "Registrar Nuevo Beneficiario",
     TIPO_DOCUMENTO: "Tipo de Documento",
     NUM_DOCUMENTO: "Número de Documento",
     INFO_UPC: "Información de la UPC",
