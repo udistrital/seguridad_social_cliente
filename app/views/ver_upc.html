@@ -11,17 +11,19 @@
             </select>
             <br>
         </div>
-
+        <p class="form-text text-muted">¡Para editar los registros haz doble click sobre ellos!</p>
         <div ng-if="verUpc.opVista === 'Beneficiarios Adicionales'">
             <h4>{{'UPC_ADICIONAL.BENEFICIARIOS_ADICIONALES' | translate}}</h4>
             <br>
-            <div ui-grid="verUpc.gridOptions" ui-grid-auto-resize ui-grid-pagination ng-class="{'ui-grid-row-dirty': row.isDirty, 'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError,'ui-grid-tree-header-row': row.treeLevel > -1,'ui-grid-row-selected': row.isSelected}"
+            <div ui-grid="verUpc.gridOptions" ui-grid-auto-resize ui-grid-pagination ui-grid-edit
+                ng-class="{'ui-grid-row-dirty': row.isDirty, 'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError,'ui-grid-tree-header-row': row.treeLevel > -1,'ui-grid-row-selected': row.isSelected}"
                 class="grid"></div>
         </div>
         <div ng-if="verUpc.opVista === 'Beneficiarios'">
             <h4>{{'UPC_ADICIONAL.BENEFICIARIOS' | translate}}</h4>
             <br>
-            <div ui-grid="verUpc.gridBeneficiariosOp" ui-grid-auto-resize ui-grid-pagination ng-class="{'ui-grid-row-dirty': row.isDirty, 'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError,'ui-grid-tree-header-row': row.treeLevel > -1,'ui-grid-row-selected': row.isSelected}"
+            <div ui-grid="verUpc.gridBeneficiariosOp" ui-grid-auto-resize ui-grid-pagination ui-grid-edit
+                ng-class="{'ui-grid-row-dirty': row.isDirty, 'ui-grid-row-saving': row.isSaving, 'ui-grid-row-error': row.isError,'ui-grid-tree-header-row': row.treeLevel > -1,'ui-grid-row-selected': row.isSelected}"
                 class="grid"></div>
         </div>
     </div>
