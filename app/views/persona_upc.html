@@ -56,10 +56,13 @@
           <input ng-model="personaUpc.variablesForm.segundoApellido" type="text" class="form-control" name="input_apellido2" placeholder="Segundo Apellido">
         </div>
       </div>
+      <hr>
 
-      <div class="form-check row col-md-offset-2">
+      <div class="form-group form-check row col-md-offset-1">
         <input type="checkbox" class="form-check-input" ng-model="personaUpc.beneficiario">
         <label class="form-check-label" for="exampleCheck1">{{'UPC_ADICIONAL.BENEFICIARIO' | translate}}</label>
+        <br>
+        <small class="form-text text-muted">{{'UPC_ADICIONAL.AYUDA_UPC' | translate}}</small>
       </div>
       <br>
 
@@ -110,10 +113,16 @@
           </div>
         </div>
 
+        <div class="form-group form-check row col-md-offset-1">
+          <input type="checkbox" class="form-check-input" ng-model="personaUpc.descuento_ud">
+          <label class="form-check-label" for="exampleCheck1">{{'UPC_ADICIONAL.DESCUENTO_UD' | translate}}</label>
+          <br>
+          <small class="form-text text-muted">{{'UPC_ADICIONAL.DESCUENTO_UD_AYUDA' | translate}}</small>
+        </div>
       </div>
 
-      <h4 class="col-md-offset-5">{{ 'UPC_ADICIONAL.RESPONSABLE' | translate }}</h4>
       <hr>
+      <h4 class="col-md-offset-5">{{ 'UPC_ADICIONAL.RESPONSABLE' | translate }}</h4>
       <buscar-proveedor proveedor="personaUpc.proveedor"></buscar-proveedor>
     </div>
 

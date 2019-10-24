@@ -155,13 +155,16 @@ var text_es = {
     TITULO_TIPO_UPC: "Valor UPC Adicional",
     REGISTRAR_VALORES: "Registrar Nuevos Valores",
     SIN_UPC: "No existen UPC asociadas a esta persona",
-    GENERO: "Sexo",
+    GENERO: "Genero",
     BENEFICIARIO: "Beneficiario Adicional",
     RESOLUCION: "Resolución",
     VIGENCIA: "Vigencia",
     BENEFICIARIOS_ADICIONALES: "Beneficiarios Adicionales",
     BENEFICIARIOS: "Beneficiarios",
-    VER: "Ver"
+    VER: "Ver",
+    DESCUENTO_UD: "Valor descontado de la Universidad",
+    DESCUENTO_UD_AYUDA: "Marque esta casilla si el descuento de la UPC corresponderá a la universidad",
+    AYUDA_UPC: "Marque esta casilla si el beneficiario es de tipo UPC Adicional"
   },
   PLANILLAS: {
     TITULO: "Planillas",
@@ -330,7 +333,7 @@ var text_en = {
     VALOR: "Value",
     EDAD_MINIMA: "Min Age",
     EDAD_MAXIMA: "Max Age",
-    APLICA_GENERO: "Gener",
+    APLICA_GENERO: "Gender",
     ZONA_NORMAL: "Normal Zone",
     ZONA_ESPECIAL: "Special Zone",
     GRANDES_CIUDADES: "Citys",
