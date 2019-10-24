@@ -8,10 +8,10 @@
  * Controller of the ssClienteApp
  */
 angular.module('ssClienteApp')
-  .controller('PersonaUpcCtrl', function (administrativaAmazonService, seguridadSocialCrudService, titanCrudService, seguridadSocialService, $scope, $timeout, $q, $log) {
+  .controller('PersonaUpcCtrl', function (administrativaAmazonService, seguridadSocialCrudService, titanCrudService, seguridadSocialService) {
     var self = this;
-    var idProveedor = 0;
     var fechaActual = null;
+    var nominas = {};
 
     self.variablesForm = {
       numDocumento: self.numDocumento,
@@ -29,17 +29,17 @@ angular.module('ssClienteApp')
     });
 
     seguridadSocialCrudService.get('rango_edad_upc', 'query=AplicaGenero__icontains:M').then(function (response) {
-      var response = response.data;
+      var data = response.data;
       self.generos = {};
-      for (var i = 0; i < response.length; i++) {
-        const element = response[i];
-        if (self.generos.length == 0) {
+      for (var i = 0; i < data.length; i++) {
+        const element = data[i];
+        if (self.generos.length === 0) {
           self.generos[element.AplicaGenero] = true;
         } else if (!self.generos[element.AplicaGenero]) {
           self.generos[element.AplicaGenero] = true;
         }
       }
-    })
+    });
 
     seguridadSocialCrudService.get('rango_edad_upc', 'limit=-1&sortby=EdadMin&order=asc').then(
       function (response) {
@@ -53,6 +53,14 @@ angular.module('ssClienteApp')
     administrativaAmazonService.get('parametro_estandar', 'query=ClaseParametro:Tipo%20Documento&limit=-1').then(function (response) {
       self.tipoDocumento = response.data;
     });
+
+    titanCrudService.get('nomina', 'limit=0').then(function (response) { // Honorarios
+      if (response.status === 200) {
+        response.data.forEach(function(data) {
+          nominas[data.TipoNomina.Nombre] = data;
+        });
+      }
+    }); 
 
     self.cambiarZona = function () {
       if (self.edad !== null) {
@@ -89,7 +97,7 @@ angular.module('ssClienteApp')
       }
       self.edadUpc = age;
       traerValorUpc(self.zona, self.edad.Id);
-    }
+    };
 
     function traerValorUpc(idZona, idRangoEdad) {
       seguridadSocialCrudService.get('tipo_upc', 'limit=1&query=ZonaUpc:' + idZona + ',RangoEdadUpc:' + idRangoEdad).then(function (response) {
@@ -102,7 +110,6 @@ angular.module('ssClienteApp')
     };
 
     self.guardarUpcAdicional = function () {
-
       var upcAdicional = {
         PersonaAsociada: self.proveedor.idProveedor,
         ParametroEstandar: parseInt(self.tipoIdentificacion),
@@ -129,6 +136,7 @@ angular.module('ssClienteApp')
         upcAdicional.TipoUpc = idTipoUpc;
         seguridadSocialCrudService.post('upc_adicional', upcAdicional).then(function (response) {
           if (response.statusText === 'Created') {
+            //registrar_concepto_titan();
             swal('Beneficiario Adicional Adicional Registrada');
             self.reset();
           } else {
@@ -136,6 +144,36 @@ angular.module('ssClienteApp')
           }
         });
       }
-
     };
+
+    function registrar_concepto_titan() {
+      titanCrudService.get('concepto_nomina', 'query=AliasConcepto:upc_adicional').then(function (response) {
+
+        if (response.status === 200) {
+          var novedad = {
+            ValorNovedad: self.variablesForm.valorUpc.Valor,
+            NumCuotas: 999,
+            Activo: true,
+            FechaDesde: fechaActual, 
+            FechaHasta: fechaActual,
+            FechaRegistro: fechaActual,
+            Concepto: response.data[0],
+            Persona: parseInt(self.proveedor.idProveedor),
+          };
+
+          for (const data of self.proveedor.contratos) {
+            if (data.NumeroContrato.includes("DVE")) {
+              novedad.NumeroContrato = data.NumeroContrato;
+              novedad.VigenciaContrato = data.VigenciaContrato;
+              novedad.Nomina = {"Id":nominas["HCH"].Id};
+              titanCrudService.post('concepto_nomina_por_persona', novedad).then(function(response) {(response.status == 200) ? console.log("ok") : console.log("error")});
+              novedad.Nomina = {"Id":nominas["HCS"].Id};
+              titanCrudService.post('concepto_nomina_por_persona', novedad).then(function(response) {(response.status == 200) ? console.log("ok") : console.log("error")});
+            }
+          }
+        }
+      });
+    }
+
+
   });
