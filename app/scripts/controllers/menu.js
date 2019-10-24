@@ -98,7 +98,7 @@ angular.module('ssClienteApp')
                 }
     
                 roles = roles.replace(/,/g, '%2C');
-                configuracionRequest.get('menu_opcion_padre/ArbolMenus/' + roles + '/ss','').then(function(response) {
+                configuracionRequest.get('menu_opcion_padre/ArbolMenus/' + roles + '/seguridad_social','').then(function(response) {
                     $rootScope.my_menu = response.data;
                 })
                 .catch(
