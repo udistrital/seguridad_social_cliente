@@ -161,7 +161,7 @@ angular.module('ssClienteApp')
             Persona: parseInt(self.proveedor.idProveedor),
           };
 
-          for (const data of self.proveedor.contratos) {
+          for (let data of self.proveedor.contratos) {
             if (data.NumeroContrato.includes("DVE")) {
               novedad.NumeroContrato = data.NumeroContrato;
               novedad.VigenciaContrato = data.VigenciaContrato;
