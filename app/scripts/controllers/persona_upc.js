@@ -161,7 +161,8 @@ angular.module('ssClienteApp')
             Persona: parseInt(self.proveedor.idProveedor),
           };
 
-          for (let data of self.proveedor.contratos) {
+          for (var i = 0; i < self.proveedores.contratos.length; i++) {
+            const data = self.proveedores.contratos[i];
             if (data.NumeroContrato.includes("DVE")) {
               novedad.NumeroContrato = data.NumeroContrato;
               novedad.VigenciaContrato = data.VigenciaContrato;
@@ -174,6 +175,4 @@ angular.module('ssClienteApp')
         }
       });
     }
-
-
   });
